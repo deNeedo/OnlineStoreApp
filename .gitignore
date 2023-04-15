@@ -1,4 +1,4 @@
 ./server/.vscode
 .git
-./*.code-workspace
+./*/*.code-workspace
 ./server/target/*

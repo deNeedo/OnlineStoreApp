@@ -23,7 +23,7 @@ public class Server
 	{
 		DataSource dataSource = createDataSource();
 		Connection conn = dataSource.getConnection();
-		PreparedStatement stmt = conn.prepareStatement("select * from users where login like '"+ data.split(" ")[0] +"' and password like '" + data.split(" ")[1] + "'");
+		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[0] +"' and password like '" + data.split(" ")[1] + "'");
 		ResultSet rs = stmt.executeQuery();
         String message = "none\n";
 		while (rs.next()) {message = "one\n";}

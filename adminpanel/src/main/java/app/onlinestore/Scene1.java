@@ -33,24 +33,30 @@ public class Scene1
     public Stage stage;
     public Scene scene;
     public Parent root;
+    public Socket socket;
+    public DataOutputStream dos;
+    public BufferedReader br;
 
     public void login(ActionEvent event) throws Exception
     {
         // Create client socket
-        Socket socket = new Socket("localhost", 888);
+        socket = new Socket("localhost", 888);
         // to send data to the server
-        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+        dos = new DataOutputStream(socket.getOutputStream());
         // to read data coming from the server
-        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String username = txtButton.getText();
         String pass = passButton.getText();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
-        root = loader.load();
+        this.root = loader.load();
 
         Scene2 scene2 = loader.getController();
+        scene2.socket = socket;
+        scene2.dos = dos;
+        scene2.br = br;
         scene2.displayName(username);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         if(username.isEmpty())
         {

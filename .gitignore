@@ -4,3 +4,4 @@
 */target
 *.idea
 *module-info.java
+*javafx*

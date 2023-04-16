@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.onlinestore.Scene1">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <AnchorPane fx:id="scenePane" prefHeight="403.0" prefWidth="551.0">
+      <children>
+         <Label layoutX="214.0" layoutY="26.0" text="Admin panel">
+            <font>
+               <Font size="22.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtButton" layoutX="201.0" layoutY="89.0" />
+         <Button fx:id="logButt" layoutX="244.0" layoutY="183.0" mnemonicParsing="false" onAction="#login" text="Login">
+            <font>
+               <Font size="17.0" />
+            </font>
+         </Button>
+         <Label fx:id="errMess" layoutX="182.0" layoutY="273.0" prefHeight="27.0" prefWidth="189.0" textFill="RED">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+         <TextField fx:id="passButton" layoutX="202.0" layoutY="126.0" />
+         <Label layoutX="115.0" layoutY="93.0" text="Login" />
+         <Label layoutX="105.0" layoutY="130.0" text="Password" />
+      </children>
+   </AnchorPane>
+</VBox>

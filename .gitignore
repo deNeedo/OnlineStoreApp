@@ -1,0 +1,7 @@
+.vscode
+*/.vscode
+*.code-workspace
+*/target
+*.idea
+*module-info.java
+*javafx*

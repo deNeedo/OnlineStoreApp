@@ -81,7 +81,8 @@ COPY onlinestore.users (user_id, type, first_name, last_name, email, password, p
 3	Customer	Grzegorz	Piasek	grzegorzpiasek@gmail.com	piasek112	+48 229 156 651	ul. Krolewska 31, Krakow 30-039
 4	Customer	Zuzanna	Tyrawa	tyrawazuzanna@gmail.com	pilka1234	+48 149 994 499	ul. Wroclawska 2, Krakow 30-024
 5	Customer	Adam	Gora	adamgora@gmail.com	gorka123	+48 252 553 762	ul. Bronowicka 27/13, Krakow 30-085
-6	Employee	Anna	Kowalska	annakowalska@gmail.com	anna5251	 	 
+6	Employee	Anna	Kowalska	annakowalska@gmail.com	anna5251	
+7 	Employee	Wiktoria	Kowalska	wiktoriakowalska@gmail.com	a5251
 \.
 
 

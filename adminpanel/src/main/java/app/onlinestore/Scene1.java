@@ -40,7 +40,7 @@ public class Scene1
     public void login(ActionEvent event) throws Exception
     {
         // Create client socket
-        socket = new Socket("localhost", 888);
+        socket = new Socket("localhost", 80);
         // to send data to the server
         dos = new DataOutputStream(socket.getOutputStream());
         // to read data coming from the server
@@ -76,6 +76,7 @@ public class Scene1
             }
             else
             {
+                dos.writeBytes("admin-login-try ");
                 dos.writeBytes(username + " " + pass + "\n");
                 if (br.readLine().equals("one"))
                 {

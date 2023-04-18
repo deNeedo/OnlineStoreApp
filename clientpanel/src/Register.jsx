@@ -11,6 +11,7 @@ export const Register = (props) => {
         e.preventDefault();
         
         // * Now only logging the inputted data
+        // send data to server
         console.log(email);
         console.log(pass);
         console.log(name);

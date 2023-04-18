@@ -1,0 +1,41 @@
+.App {
+    text-align: center;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #fefae0;
+}
+
+.auth-form-container, .login-form, .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    text-align: left;
+    padding: 0.3rem 0;
+}
+
+input {
+    margin: 0.5rem 0;
+    padding: 1rem 3rem;
+    border-radius: 15px;
+    border: none;
+}
+
+button {
+    border: none;
+    background-color: #dda15e;
+    padding: 10px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.link-btn {
+    background: none;
+    color: #283618;
+    text-decoration: underline;
+}
+

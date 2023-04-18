@@ -1,41 +1,93 @@
 .App {
-    text-align: center;
     display: flex;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
-    background-color: #fefae0;
+    background-color: #ffffff;
+    font-family: 'Lato';
 }
 
-.auth-form-container, .login-form, .register-form {
+.auth-form-container{
+ padding: 30px;
+ border-radius: 15px;
+ box-shadow: 10px 10px 15px 10px rgba(0,0,0,0.15);
+
+}
+
+.login-form, .register-form {
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 label {
     text-align: left;
-    padding: 0.3rem 0;
+    font-size: 1rem;
+    font-family: 'Lato';
+    font-weight: 600;
+    padding: 0.3rem;
+}
+
+.welcome-mess-box {
+    text-align: center;
+}
+
+.welcome-mess{
+    font-weight: 600;
+    font-size: 1.75rem;
 }
 
 input {
-    margin: 0.5rem 0;
-    padding: 1rem 3rem;
-    border-radius: 15px;
-    border: none;
-}
+    font-size: 1rem;
+    margin: 0.5rem;
+    margin: 10% 0% 10% 0%;
+    border: 0.5rem 1rem;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #e5e5e5
+  }
+  input:focus {
+    border-color: #283618;
+  }
 
 button {
     border: none;
-    background-color: #dda15e;
-    padding: 10px 25px;
+    background-color: #283618;
+    padding: 10px 0 10px 0;
     border-radius: 15px;
     cursor: pointer;
+    color: #ffffff;
 }
+
+button:hover {
+    transform: scale(1.01);
+}
+
 
 .link-btn {
     background: none;
-    color: #283618;
+    color: #808080;
     text-decoration: underline;
+    width: 100%;
 }
+
+.wave {
+    font-size: 30px;
+    animation-name: wave-animation;  
+    animation-duration: 3s;        
+    animation-iteration-count: infinite;  
+    transform-origin: 70% 70%;      
+    display: inline-block;
+  }
+  
+  @keyframes wave-animation {
+      0% { transform: rotate( 0.0deg) }
+     10% { transform: rotate(14.0deg) }  
+     20% { transform: rotate(-9.0deg) }
+     30% { transform: rotate(14.0deg) }
+     40% { transform: rotate(-4.0deg) }
+     50% { transform: rotate(10.0deg) }
+     60% { transform: rotate( 0.0deg) }  
+    100% { transform: rotate( 0.0deg) }
+  }
 

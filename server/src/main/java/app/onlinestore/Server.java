@@ -5,22 +5,33 @@ import javax.sql.DataSource;
 import org.postgresql.ds.PGSimpleDataSource;
 import java.io.*;
 import java.sql.*;
+import java.util.*;
 import java.net.*;
 
 public class Server
 {
-    static int STATUS = 1;
-	private final static String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=8vu:sigiwy"; // todo: getting this from a file
-    private static DataSource createDataSource()
+    private static int STATUS = 1;
+    protected static String postgrespass;
+    private static String getProperty()
+    {
+        Properties prop = new Properties();
+        String fileName = "postgres.config";
+        try (FileInputStream fis = new FileInputStream(fileName)) {prop.load(fis);}
+        catch (Exception e) {e.printStackTrace(); return null;}
+        return prop.getProperty("postgres.pass");
+    }
+    
+    private static DataSource createDataSource(String pass)
 	{
         final PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=" + pass;
         dataSource.setUrl(url);
         return dataSource;
     }
 	
-	public static void login_admin(String data, DataOutputStream dos) throws Exception
+	public static void login_admin(String data, DataOutputStream dos, String pass) throws Exception
 	{
-		DataSource dataSource = createDataSource();
+		DataSource dataSource = createDataSource(pass);
 		Connection conn = dataSource.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + data.split(" ")[2] + "' and type like 'administrator'" );
 		ResultSet rs = stmt.executeQuery();
@@ -41,6 +52,7 @@ public class Server
 	{
 		ServerSocket serverSocket = null;
         Socket socket = null;
+        postgrespass = getProperty();
         try {serverSocket = new ServerSocket(80); System.out.println("Server initialized");}
         catch (Exception e) {e.printStackTrace(); return;}
         while (STATUS == 1)
@@ -75,7 +87,7 @@ class ClientCon extends Thread
             {
                 message = br.readLine();
                 if ((message == null)) {System.out.println("Connection closed, ID:" + socket.getPort()); socket.close(); return;}
-                else if (message.contains("admin-login-try")) {System.out.println("Admin panel login try"); Server.login_admin(message, dos);}
+                else if (message.contains("admin-login-try")) {System.out.println("Admin panel login try"); Server.login_admin(message, dos, Server.postgrespass);}
                 else if (message.contains("Sec-WebSocket-Key:")) {System.out.println("Web page login try"); Server.login_client(message, dos);}
             }
             catch (Exception e) {e.printStackTrace(); return;}

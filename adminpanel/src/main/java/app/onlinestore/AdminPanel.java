@@ -13,7 +13,7 @@ public class AdminPanel extends Application
     {
         try
         {
-            Parent root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("StartPanel.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

@@ -1,6 +1,5 @@
 DROP TABLE onlinestore.users;
 
-
 CREATE SCHEMA onlinestore;
 
 CREATE TABLE onlinestore.users
@@ -20,35 +19,35 @@ ALTER TABLE onlinestore.users OWNER TO postgres;
 INSERT INTO onlinestore.users VALUES
 (1, 'administrator', NULL, NULL, 'admin@onlinestore.app', 'admin123', NULL, NULL),
 (2, 'employee', 'Anna', 'Kowalska', 'annakowalska@gmail.com', 'anna5251', NULL, NULL),
-(3,	'customer', 'Grzegorz', 'Piasek', 'grzegorzpiasek@gmail.com', 'piasek112', '229 156 651', 'ul. Krolewska 31, Krakow 30-039');
+(3,	'customer', 'Grzegorz', 'Piasek', 'grzegorzpiasek@gmail.com', 'piasek112', '229 156 651', 'ul. Krolewska 31, Krakow 30-039')
 -- and so on...
 
 --
 -- Name: users_user_id_seq; Type: SEQUENCE; Schema: onlinestore; Owner: postgres
 --
 
-CREATE SEQUENCE onlinestore.users_user_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+-- CREATE SEQUENCE onlinestore.users_user_id_seq
+--     AS integer
+--     START WITH 1
+--     INCREMENT BY 1
+--     NO MINVALUE
+--     NO MAXVALUE
+--     CACHE 1;
 
 
-ALTER TABLE onlinestore.users_user_id_seq OWNER TO postgres;
+-- ALTER TABLE onlinestore.users_user_id_seq OWNER TO postgres;
 
 --
 -- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: onlinestore; Owner: postgres
 --
 
-ALTER SEQUENCE onlinestore.users_user_id_seq OWNED BY onlinestore.users.user_id;
+-- ALTER SEQUENCE onlinestore.users_user_id_seq OWNED BY onlinestore.users.user_id;
 
 --
 -- Name: users user_id; Type: DEFAULT; Schema: onlinestore; Owner: postgres
 --
 
-ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onlinestore.users_user_id_seq'::regclass);
+-- ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onlinestore.users_user_id_seq'::regclass);
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: onlinestore; Owner: postgres
@@ -67,13 +66,13 @@ ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onl
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: onlinestore; Owner: postgres
 --
 
-SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 6, true);
+-- SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 6, true);
 
 --
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: onlinestore; Owner: postgres
 --
 
-ALTER TABLE ONLY onlinestore.users ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+-- ALTER TABLE ONLY onlinestore.users ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
 --
 -- PostgreSQL database dump complete

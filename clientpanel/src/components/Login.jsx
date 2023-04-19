@@ -7,9 +7,22 @@ export const Login = (props) => {
     const handelSubmit = (e) => {
         e.preventDefault();
         
-        // * Now only logging the inputted data
+        // logging the inputted data
         console.log(email);
         console.log(pass);
+
+        // sending data to server
+        let socket = new WebSocket("ws://localhost:80");
+        socket.onopen = function(event)
+        {
+            console.log("Client connected to the server")
+            // socket.send("a");
+        };
+        socket.onmessage = function(event)
+        {
+            console.log("Incoming message:" + event.data)
+        };
+        
     }
 
     return (

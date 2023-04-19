@@ -12,15 +12,26 @@ export const Login = (props) => {
         console.log(pass);
 
         // sending data to server
-        let socket = new WebSocket("ws://localhost:80");
+        let socket = new WebSocket("ws://localhost:80/app/onlinestore");
         socket.onopen = function(event)
         {
-            console.log("Client connected to the server")
-            // socket.send("a");
+            console.log("Connection established.")
+            let message = "client-login-try ".concat(email).concat(" ").concat(pass);
+            socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            console.log("Incoming message:" + event.data)
+            if (event.data == "found") {console.log("Login OK");}
+            else
+            {
+                console.log("Login NOT OK");
+                let message = "connection-close-try";
+                socket.send(message, 0, message.length, 80, "localhost");
+            }
+        };
+        socket.onclose = function(event)
+        {
+            console.log("Connection closed.");
         };
         
     }

@@ -1,8 +1,7 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
-import { Login } from './Login';
-import { Register } from './Register';
+import { Login } from './components/Login';
+import { Register } from './components/Register';
 
 // * import logo from './logo.svg';
 
@@ -15,11 +14,9 @@ function App() {
     
     return (
         <div className='App'>
-           {
+          {
             currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm}  />
-
-           }
-
+          }
         </div>
     );
 }

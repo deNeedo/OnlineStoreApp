@@ -1,7 +1,5 @@
 package app.onlinestore;
 
-import java.util.concurrent.TimeUnit;
-import javax.websocket.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +10,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import java.net.URI;
+import javax.websocket.ClientEndpoint;
+import javax.websocket.CloseReason;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import org.glassfish.tyrus.client.ClientManager;
 
+@ClientEndpoint
 public class Scene1
 {
     @FXML
@@ -31,12 +38,14 @@ public class Scene1
     public Scene scene;
     public Parent root;
     public static Session session;
-    public static String result;
+    public static String result = "";
 
     public static void setSession(Session session) {Scene1.session = session;}
 
     public void login(ActionEvent event) throws Exception
     {
+        ClientManager client = ClientManager.createClient();
+        client.connectToServer(Scene1.class, new URI("ws://localhost:80/app/onlinestore"));
         String login = txtButton.getText();
         String pass = passButton.getText();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
@@ -49,17 +58,18 @@ public class Scene1
         if(login.isEmpty())
         {
             errMess.setText("Write your username");
+            Scene1.session.getBasicRemote().sendText("connection-close-try");
         }
         else
         {
             if(pass.isEmpty())
             {
                 errMess.setText("Write your password");
+                Scene1.session.getBasicRemote().sendText("connection-close-try");
             }
             else
             {
                 session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
-                TimeUnit.MILLISECONDS.sleep(100);
                 if (result.equals("found"))
                 {
                     scene = new Scene(root);
@@ -69,8 +79,18 @@ public class Scene1
                 else
                 {
                     errMess.setText("Wrong login/password");
+                    Scene1.session.getBasicRemote().sendText("connection-close-try");
                 }
             }
         }
     }
+    @OnOpen
+    public void onOpen(Session session) {Scene1.setSession(session);}
+    @OnMessage
+    public void onMessage(Session session, String message)
+    {
+        if (message.contains("found")) {Scene1.result = message;}
+    }
+    @OnClose
+    public void onClose(Session session, CloseReason closeReason) {}
 }

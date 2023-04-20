@@ -63,10 +63,10 @@ public class App
 		while (rs.next()) {message = "found";}
         if (message.contains("not found"))
         {
-            stmt = conn.prepareStatement("insert into onlinestore.users (user_id, type, login, password, first_name, last_name, phone_number) values (?, ?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1, 100); stmt.setString(2, "customer"); stmt.setString(3, data.split(" ")[1]);
-            stmt.setString(4, data.split(" ")[2]); stmt.setString(5, data.split(" ")[3]);
-            stmt.setString(6, data.split(" ")[4]); stmt.setString(7, data.split(" ")[5]);
+            stmt = conn.prepareStatement("insert into onlinestore.users (type, login, password, first_name, last_name, phone_number) values (?, ?, ?, ?, ?, ?)");
+            stmt.setString(1, "customer"); stmt.setString(2, data.split(" ")[1]);
+            stmt.setString(3, data.split(" ")[2]); stmt.setString(4, data.split(" ")[3]);
+            stmt.setString(5, data.split(" ")[4]); stmt.setString(6, data.split(" ")[5]);
             stmt.executeUpdate();
         }
         return message;

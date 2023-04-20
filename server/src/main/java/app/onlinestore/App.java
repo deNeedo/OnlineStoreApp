@@ -1,6 +1,5 @@
 package app.onlinestore;
 
-// import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +11,7 @@ import java.io.FileInputStream;
 
 public class App
 {
-    protected final static String postgrespass = getProperty();
+    protected static final String postgrespass = getProperty();
     private static String getProperty()
     {
         Properties prop = new Properties();

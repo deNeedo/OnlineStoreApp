@@ -1,5 +1,7 @@
 package app.onlinestore;
 
+import java.util.concurrent.TimeUnit;
+import javax.websocket.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,12 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.*;
-import java.net.*;
-
 public class Scene1
 {
-
     @FXML
     TextField txtButton;
 
@@ -29,56 +27,40 @@ public class Scene1
     @FXML
     Label errMess;
 
-
     public Stage stage;
     public Scene scene;
     public Parent root;
-    public Socket socket;
-    public DataOutputStream dos;
-    public BufferedReader br;
+    public static Session session;
+    public static String result;
+
+    public static void setSession(Session session) {Scene1.session = session;}
 
     public void login(ActionEvent event) throws Exception
     {
-        // Create client socket
-        socket = new Socket("localhost", 88);
-        // to send data to the server
-        dos = new DataOutputStream(socket.getOutputStream());
-        // to read data coming from the server
-        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        String username = txtButton.getText();
+        String login = txtButton.getText();
         String pass = passButton.getText();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
-        this.root = loader.load();
+        root = loader.load();
 
         Scene2 scene2 = loader.getController();
-        scene2.socket = socket;
-        scene2.dos = dos;
-        scene2.br = br;
-        scene2.displayName(username);
-        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene2.displayName();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        if(username.isEmpty())
+        if(login.isEmpty())
         {
             errMess.setText("Write your username");
-            dos.close();
-            br.close();
-            socket.close();
         }
         else
         {
             if(pass.isEmpty())
             {
                 errMess.setText("Write your password");
-                dos.close();
-                br.close();
-                socket.close();
             }
             else
             {
-                dos.writeBytes("admin-login-try ");
-                dos.writeBytes(username + " " + pass + "\n");
-                if (br.readLine().equals("one"))
+                session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
+                TimeUnit.MILLISECONDS.sleep(100);
+                if (result.equals("found"))
                 {
                     scene = new Scene(root);
                     stage.setScene(scene);
@@ -87,9 +69,6 @@ public class Scene1
                 else
                 {
                     errMess.setText("Wrong login/password");
-                    dos.close();
-                    br.close();
-                    socket.close();
                 }
             }
         }

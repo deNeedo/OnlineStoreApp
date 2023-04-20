@@ -25,8 +25,5 @@ public class AppServerEndpoint
         else {session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE, "")); return null;}
     }
     @OnClose
-    public void onClose(Session session, CloseReason closeReason)
-    {
-        logger.info("Connection " + session.getId() + " closed.");
-    }
+    public void onClose(Session session, CloseReason closeReason) {logger.info("Connection " + session.getId() + " closed.");}
 }

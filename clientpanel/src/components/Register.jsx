@@ -10,12 +10,31 @@ export const Register = (props) => {
     const handelSubmit = (e) => {
         e.preventDefault();
         
-        // * Now only logging the inputted data
-        // send data to server
+        // logging the inputted data
         console.log(email);
         console.log(pass);
         console.log(name);
         console.log(surname);
+        console.log(phone);
+
+        let socket = new WebSocket("ws://localhost:80/app/onlinestore");
+        socket.onopen = function(event)
+        {
+            console.log("Connection established.")
+            let message = "client-register-try ".concat(email).concat(" ").concat(pass).concat(" ").concat(name).concat(" ").concat(surname).concat(" ").concat(phone);
+            socket.send(message, 0, message.length, 80, "localhost");
+        };
+        socket.onmessage = function(event)
+        {
+            if (event.data == "found") {console.log("Register NOT OK");}
+            else {console.log("Register OK");}
+            let message = "connection-close-try";
+            socket.send(message, 0, message.length, 80, "localhost");
+        };
+        socket.onclose = function(event)
+        {
+            console.log("Connection closed.");
+        };
     }
 
 

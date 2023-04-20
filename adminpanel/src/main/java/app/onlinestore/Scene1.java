@@ -10,13 +10,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import java.net.URI;
+import javax.websocket.ClientEndpoint;
+import javax.websocket.CloseReason;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import org.glassfish.tyrus.client.ClientManager;
 
-import java.io.*;
-import java.net.*;
-
+@ClientEndpoint
 public class Scene1
 {
-
     @FXML
     TextField txtButton;
 
@@ -29,56 +34,43 @@ public class Scene1
     @FXML
     Label errMess;
 
-
     public Stage stage;
     public Scene scene;
     public Parent root;
-    public Socket socket;
-    public DataOutputStream dos;
-    public BufferedReader br;
+    public static Session session;
+    public static String result = "";
+
+    public static void setSession(Session session) {Scene1.session = session;}
 
     public void login(ActionEvent event) throws Exception
     {
-        // Create client socket
-        socket = new Socket("localhost", 88);
-        // to send data to the server
-        dos = new DataOutputStream(socket.getOutputStream());
-        // to read data coming from the server
-        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        String username = txtButton.getText();
+        ClientManager client = ClientManager.createClient();
+        client.connectToServer(Scene1.class, new URI("ws://localhost:80/app/onlinestore"));
+        String login = txtButton.getText();
         String pass = passButton.getText();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
-        this.root = loader.load();
+        root = loader.load();
 
         Scene2 scene2 = loader.getController();
-        scene2.socket = socket;
-        scene2.dos = dos;
-        scene2.br = br;
-        scene2.displayName(username);
-        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene2.displayName();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        if(username.isEmpty())
+        if(login.isEmpty())
         {
             errMess.setText("Write your username");
-            dos.close();
-            br.close();
-            socket.close();
+            Scene1.session.getBasicRemote().sendText("connection-close-try");
         }
         else
         {
             if(pass.isEmpty())
             {
                 errMess.setText("Write your password");
-                dos.close();
-                br.close();
-                socket.close();
+                Scene1.session.getBasicRemote().sendText("connection-close-try");
             }
             else
             {
-                dos.writeBytes("admin-login-try ");
-                dos.writeBytes(username + " " + pass + "\n");
-                if (br.readLine().equals("one"))
+                session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
+                if (result.equals("found"))
                 {
                     scene = new Scene(root);
                     stage.setScene(scene);
@@ -87,11 +79,18 @@ public class Scene1
                 else
                 {
                     errMess.setText("Wrong login/password");
-                    dos.close();
-                    br.close();
-                    socket.close();
+                    Scene1.session.getBasicRemote().sendText("connection-close-try");
                 }
             }
         }
     }
+    @OnOpen
+    public void onOpen(Session session) {Scene1.setSession(session);}
+    @OnMessage
+    public void onMessage(Session session, String message)
+    {
+        if (message.contains("found")) {Scene1.result = message;}
+    }
+    @OnClose
+    public void onClose(Session session, CloseReason closeReason) {}
 }

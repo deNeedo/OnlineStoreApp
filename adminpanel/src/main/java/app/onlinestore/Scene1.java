@@ -22,75 +22,72 @@ import org.glassfish.tyrus.client.ClientManager;
 @ClientEndpoint
 public class Scene1
 {
-    @FXML
-    TextField txtButton;
+    @FXML TextField txtButton;
+    @FXML TextField passButton;
+    @FXML AnchorPane scenePane;
+    @FXML Label errMess;
 
-    @FXML
-    TextField passButton;
-
-    @FXML
-    AnchorPane scenePane;
-
-    @FXML
-    Label errMess;
-
+    private FXMLLoader loader = new FXMLLoader();
+    private Session session1;
+    private String result = "not found";
+    private Scene2 scene2;
     public Stage stage;
     public Scene scene;
     public Parent root;
-    public static Session session;
-    public static String result = "";
 
-    public static void setSession(Session session) {Scene1.session = session;}
+    public Session getSession() {return this.session1;}
+
+    public String connect()
+    {
+        try {this.session1 = ClientManager.createClient().connectToServer(Scene1.class, new URI("ws://localhost:80/app/onlinestore"));}
+        catch (Exception e) {e.printStackTrace(); return "Error";}
+        return "Success";
+    }
 
     public void login(ActionEvent event) throws Exception
     {
-        ClientManager client = ClientManager.createClient();
-        client.connectToServer(Scene1.class, new URI("ws://localhost:80/app/onlinestore"));
+        if (this.root == null) {this.root = this.loader.load(getClass().getResource("scene2.fxml").openStream()); this.scene2 = this.loader.getController();}
         String login = txtButton.getText();
         String pass = passButton.getText();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
-        root = loader.load();
 
-        Scene2 scene2 = loader.getController();
-        scene2.displayName();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        this.scene2.displayName();
+
+        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         if(login.isEmpty())
         {
             errMess.setText("Write your username");
-            Scene1.session.getBasicRemote().sendText("connection-close-try");
         }
         else
         {
             if(pass.isEmpty())
             {
                 errMess.setText("Write your password");
-                Scene1.session.getBasicRemote().sendText("connection-close-try");
             }
             else
             {
-                session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
-                if (result.equals("found"))
+                session1.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
+                if (this.result.equals("found"))
                 {
-                    scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
+                    this.scene = new Scene(this.root);
+                    this.stage.setScene(this.scene);
+                    this.stage.show();
                 }
                 else
                 {
                     errMess.setText("Wrong login/password");
-                    Scene1.session.getBasicRemote().sendText("connection-close-try");
                 }
             }
         }
     }
     @OnOpen
-    public void onOpen(Session session) {Scene1.setSession(session);}
+    public void onOpen(Session session) {}
     @OnMessage
     public void onMessage(Session session, String message)
     {
-        if (message.contains("found")) {Scene1.result = message;}
+        if (message.contains("found")) {this.result = message;}
     }
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {}
+    
 }

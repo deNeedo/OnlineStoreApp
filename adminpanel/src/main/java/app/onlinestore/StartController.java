@@ -1,5 +1,6 @@
 package app.onlinestore;
 
+import javax.websocket.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,17 +23,24 @@ public class StartController
     @FXML Button start_button;
 
     private FXMLLoader loader = new FXMLLoader();
-    private Scene1 scene1;
-    public Stage stage;
-    public Scene scene;
-    public Parent root;
+    private AdminPanel previous;
+    private Session session;
+    public Scene1 next;
+    private Parent base;
+    private Stage stage;
 
+    public Session getSession() {return this.session;}
+    public void setPrevious(AdminPanel previous) {this.previous = previous;}
     public void connect(ActionEvent event) throws Exception
     {
-        if (this.root == null) {this.root = this.loader.load(getClass().getResource("scene1.fxml").openStream()); this.scene1 = this.loader.getController();}
+        if (this.base == null)
+        {
+            this.base = this.loader.load(getClass().getResource("scene1.fxml").openStream());
+            this.next = this.loader.getController(); this.next.setPrevious(this); 
+        }
         if (connect_button.getText().contains("Disconnect"))
         {
-            this.scene1.getSession().getBasicRemote().sendText("connection-close-try");
+            this.session.getBasicRemote().sendText("connection-close-try");
             connect_indicator.setFill(new Color(1, 0, 0, 1));
             connect_status.setText("Disconnected");
             connect_button.setText("Connect");
@@ -40,24 +48,26 @@ public class StartController
         }
         else
         {
-            String status = this.scene1.connect();
-            if (status.contains("Success"))
+            String status = this.previous.connect();
+            if (status.contains("success"))
             {
+                this.session = this.previous.getSession();
                 connect_message.setText("");
                 connect_indicator.setFill(new Color(0, 1, 0, 1));
                 connect_status.setText("Connected");
                 connect_button.setText("Disconnect");
                 start_button.setDisable(false);
             }
-            else {connect_message.setText("Cannot connect");}
+            else
+            {
+                connect_message.setText("Cannot connect");
+            }
         }
     }
 
     public void enter(ActionEvent event) throws Exception
     {
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        this.scene = new Scene(this.root);
-        this.stage.setScene(this.scene);
-        this.stage.show();
+        this.stage.setScene(new Scene(this.base)); this.stage.show();
     }
 }

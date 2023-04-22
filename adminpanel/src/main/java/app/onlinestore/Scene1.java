@@ -10,16 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.net.URI;
-import javax.websocket.ClientEndpoint;
-import javax.websocket.CloseReason;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import org.glassfish.tyrus.client.ClientManager;
 
-@ClientEndpoint
+import java.util.concurrent.TimeUnit;
+
+import javax.websocket.Session;
+
 public class Scene1
 {
     @FXML TextField txtButton;
@@ -28,31 +23,25 @@ public class Scene1
     @FXML Label errMess;
 
     private FXMLLoader loader = new FXMLLoader();
-    private Session session1;
-    private String result = "not found";
-    private Scene2 scene2;
-    public Stage stage;
-    public Scene scene;
-    public Parent root;
+    private StartController previous;
+    private Session session;
+    private String message;
+    public Scene2 next;
+    private Parent base;
+    private Stage stage;
 
-    public Session getSession() {return this.session1;}
-
-    public String connect()
-    {
-        try {this.session1 = ClientManager.createClient().connectToServer(Scene1.class, new URI("ws://localhost:80/app/onlinestore"));}
-        catch (Exception e) {e.printStackTrace(); return "Error";}
-        return "Success";
-    }
-
+    public Session getSession() {return this.session;}
+    public void setPrevious(StartController previous) {this.previous = previous;}
+    public void setMessage(String message) {this.message = message;}
     public void login(ActionEvent event) throws Exception
     {
-        if (this.root == null) {this.root = this.loader.load(getClass().getResource("scene2.fxml").openStream()); this.scene2 = this.loader.getController();}
+        if (this.base == null)
+        {
+            this.base = this.loader.load(getClass().getResource("scene2.fxml").openStream());
+            this.next = this.loader.getController(); this.next.setPrevious(this); this.session = this.previous.getSession();
+        }
         String login = txtButton.getText();
         String pass = passButton.getText();
-
-        this.scene2.displayName();
-
-        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         if(login.isEmpty())
         {
@@ -66,12 +55,12 @@ public class Scene1
             }
             else
             {
-                session1.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
-                if (this.result.equals("found"))
+                this.session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
+                TimeUnit.MILLISECONDS.sleep(100);
+                if (this.message.contains("success"))
                 {
-                    this.scene = new Scene(this.root);
-                    this.stage.setScene(this.scene);
-                    this.stage.show();
+                    this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    this.stage.setScene(new Scene(this.base)); this.stage.show();
                 }
                 else
                 {
@@ -80,14 +69,4 @@ public class Scene1
             }
         }
     }
-    @OnOpen
-    public void onOpen(Session session) {}
-    @OnMessage
-    public void onMessage(Session session, String message)
-    {
-        if (message.contains("found")) {this.result = message;}
-    }
-    @OnClose
-    public void onClose(Session session, CloseReason closeReason) {}
-    
 }

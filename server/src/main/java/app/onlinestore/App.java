@@ -35,8 +35,8 @@ public class App
 		Connection conn = dataSource.getConnection();
 		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + data.split(" ")[2] + "' and type like 'administrator'" );
 		ResultSet rs = stmt.executeQuery();
-        String message = "not found";
-		while (rs.next()) {message = "found";}
+        String message = "error";
+		while (rs.next()) {message = "success";}
         return message;
     }
     public static String client_login(String data) throws Exception

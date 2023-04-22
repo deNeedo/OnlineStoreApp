@@ -1,37 +1,38 @@
 package app.onlinestore;
 
+import javax.websocket.Session;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
-import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class Scene2
 {
     @FXML
     Label nameLabel;
 
-    public Stage stage;
-    public Scene scene;
-    public Parent root;
+    private FXMLLoader loader = new FXMLLoader();
+    private Scene1 previous;
+    private Session session;
+    private Parent base;
+    private Stage stage;
 
+    public void setPrevious(Scene1 previous) {this.previous = previous;}
     public void logout(ActionEvent event) throws Exception
     {
-        Scene1.session.getBasicRemote().sendText("connection-close-try");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene1.fxml"));
-        root = loader.load();
-        loader.getController();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void displayName()
-    {
-        nameLabel.setText("Welcome to Admin Panel");
+        System.out.println(this);
+        if (this.base == null)
+        {
+            this.base = this.loader.load(getClass().getResource("scene1.fxml").openStream());
+            this.session = this.previous.getSession();
+        }
+        this.session.getBasicRemote().sendText("connection-close-try");
+        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        this.stage.setScene(new Scene(this.base)); this.stage.show();
     }
 }

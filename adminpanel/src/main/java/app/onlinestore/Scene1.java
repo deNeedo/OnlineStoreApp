@@ -57,7 +57,7 @@ public class Scene1
             else
             {
                 this.session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
-                TimeUnit.MILLISECONDS.sleep(100);
+                while (this.message == null) {TimeUnit.MICROSECONDS.sleep(1);}
                 if (this.message.contains("success"))
                 {
                     this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -68,6 +68,7 @@ public class Scene1
                 {
                     errMess.setText("Wrong login/password");
                 }
+                this.message = null;
             }
         }
     }

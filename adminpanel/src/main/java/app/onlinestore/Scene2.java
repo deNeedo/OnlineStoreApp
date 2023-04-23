@@ -25,7 +25,6 @@ public class Scene2
     public void setPrevious(Scene1 previous) {this.previous = previous;}
     public void logout(ActionEvent event) throws Exception
     {
-        System.out.println(this);
         if (this.base == null)
         {
             this.base = this.loader.load(getClass().getResource("scene1.fxml").openStream());

@@ -16,7 +16,7 @@
       </Label>
       <TextField fx:id="txtButton" layoutX="217.0" layoutY="90.0" />
       <PasswordField fx:id="passButton" layoutX="217.0" layoutY="127.0" />
-      <Button fx:id="logButt" layoutX="260.0" layoutY="184.0" mnemonicParsing="false" onAction="#login" text="Login">
+      <Button fx:id="logButt" layoutX="14.0" layoutY="348.0" mnemonicParsing="false" onAction="#login" text="Login">
          <font>
             <Font size="17.0" />
          </font>
@@ -28,5 +28,10 @@
       </Label>
       <Label layoutX="131.0" layoutY="94.0" text="Login" />
       <Label layoutX="121.0" layoutY="131.0" text="Password" />
+      <Button fx:id="exitButt1" layoutX="522.0" layoutY="348.0" mnemonicParsing="false" onAction="#exit" text="Exit">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

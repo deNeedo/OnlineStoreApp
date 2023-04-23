@@ -23,11 +23,12 @@ public class StartController
     @FXML Button start_button;
 
     private FXMLLoader loader = new FXMLLoader();
-    private AdminPanel previous;
-    private Session session;
+    public AdminPanel previous;
+    public Session session;
     public Scene1 next;
-    private Parent base;
-    private Stage stage;
+    public Parent base;
+    public Stage stage;
+    public Scene scene;
 
     public Session getSession() {return this.session;}
     public void setPrevious(AdminPanel previous) {this.previous = previous;}
@@ -36,7 +37,7 @@ public class StartController
         if (this.base == null)
         {
             this.base = this.loader.load(getClass().getResource("scene1.fxml").openStream());
-            this.next = this.loader.getController(); this.next.setPrevious(this); 
+            this.next = this.loader.getController(); this.next.setPrevious(this);
         }
         if (connect_button.getText().contains("Disconnect"))
         {
@@ -64,10 +65,11 @@ public class StartController
             }
         }
     }
-
     public void enter(ActionEvent event) throws Exception
     {
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        this.stage.setScene(new Scene(this.base)); this.stage.show();
+        this.stage.setResizable(false);
+        if (this.scene == null) {this.scene = new Scene(this.base);}
+        this.stage.setScene(this.scene); this.stage.show();
     }
 }

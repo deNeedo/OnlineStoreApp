@@ -18,8 +18,10 @@ import javafx.stage.Stage;
 public class AdminPanel extends Application
 {
     private FXMLLoader loader = new FXMLLoader();
-    private Session session;
+    public Session session;
     public StartController next;
+    public Parent base;
+    public Scene scene;
 
     public Session getSession() {return this.session;}
     public String connect()
@@ -30,7 +32,7 @@ public class AdminPanel extends Application
     @OnOpen
     public void onOpen(Session session) {this.session = session;}
     @OnMessage
-    public void onMessage(Session session, String message) {this.next.next.setMessage(message);}
+    public void onMessage(Session session, String message) {this.next.next.message = message;}
     @OnClose
     public void onClose(Session session) {}
     @Override
@@ -38,10 +40,11 @@ public class AdminPanel extends Application
     {
         Image icon = new Image("icon.png");
         stage.getIcons().add(icon); stage.setTitle("Admin Panel");
-        Parent base = this.loader.load(getClass().getResource("start.fxml").openStream());
-        next = this.loader.getController(); next.setPrevious(this);
+        this.base = this.loader.load(getClass().getResource("start.fxml").openStream());
+        this.next = this.loader.getController(); this.next.setPrevious(this);
+        this.scene = new Scene(this.base);
         stage.setResizable(false);
-        stage.setScene(new Scene(base)); stage.show();
+        stage.setScene(this.scene); stage.show();
     }
     public static void main(String[] args) throws Exception {launch();}
 }

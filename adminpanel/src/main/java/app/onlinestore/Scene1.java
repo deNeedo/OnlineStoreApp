@@ -24,16 +24,16 @@ public class Scene1
     @FXML Label errMess;
 
     private FXMLLoader loader = new FXMLLoader();
-    private StartController previous;
-    private Session session;
-    private String message;
+    public StartController previous;
+    public Session session;
+    public String message;
     public Scene2 next;
-    private Parent base;
-    private Stage stage;
+    public Parent base;
+    public Stage stage;
+    public Scene scene;
 
     public Session getSession() {return this.session;}
     public void setPrevious(StartController previous) {this.previous = previous;}
-    public void setMessage(String message) {this.message = message;}
     public void login(ActionEvent event) throws Exception
     {
         if (this.base == null)
@@ -44,32 +44,30 @@ public class Scene1
         String login = txtButton.getText();
         String pass = passButton.getText();
 
-        if(login.isEmpty())
-        {
-            errMess.setText("Write your username");
-        }
+        if(login.isEmpty()) {errMess.setText("Write your username");}
         else
         {
-            if(pass.isEmpty())
-            {
-                errMess.setText("Write your password");
-            }
+            if(pass.isEmpty()) {errMess.setText("Write your password");}
             else
             {
                 this.session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
-                while (this.message == null) {TimeUnit.MICROSECONDS.sleep(1);}
+                while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
                 if (this.message.contains("success"))
                 {
                     this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    stage.setResizable(false);
-                    this.stage.setScene(new Scene(this.base)); this.stage.show();
+                    this.stage.setResizable(false); errMess.setText(""); txtButton.setText(""); passButton.setText("");
+                    if (this.scene == null) {this.scene = new Scene(this.base);}
+                    this.stage.setScene(this.scene); this.stage.show();
                 }
-                else
-                {
-                    errMess.setText("Wrong login/password");
-                }
+                else {errMess.setText("Wrong login/password");}
                 this.message = null;
             }
         }
+    }
+    public void exit(ActionEvent event)
+    {
+        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        this.stage.setResizable(false);
+        this.stage.setScene(this.previous.previous.scene); this.stage.show();
     }
 }

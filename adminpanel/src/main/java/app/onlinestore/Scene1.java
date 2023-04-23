@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -18,7 +19,7 @@ import javax.websocket.Session;
 public class Scene1
 {
     @FXML TextField txtButton;
-    @FXML TextField passButton;
+    @FXML PasswordField passButton;
     @FXML AnchorPane scenePane;
     @FXML Label errMess;
 
@@ -60,6 +61,7 @@ public class Scene1
                 if (this.message.contains("success"))
                 {
                     this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    stage.setResizable(false);
                     this.stage.setScene(new Scene(this.base)); this.stage.show();
                 }
                 else

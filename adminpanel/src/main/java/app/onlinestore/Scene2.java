@@ -33,6 +33,7 @@ public class Scene2
         }
         this.session.getBasicRemote().sendText("connection-close-try");
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        this.stage.setResizable(false);
         this.stage.setScene(new Scene(this.base)); this.stage.show();
     }
 }

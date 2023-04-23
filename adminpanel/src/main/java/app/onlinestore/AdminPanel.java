@@ -40,6 +40,7 @@ public class AdminPanel extends Application
         stage.getIcons().add(icon); stage.setTitle("Admin Panel");
         Parent base = this.loader.load(getClass().getResource("start.fxml").openStream());
         next = this.loader.getController(); next.setPrevious(this);
+        stage.setResizable(false);
         stage.setScene(new Scene(base)); stage.show();
     }
     public static void main(String[] args) throws Exception {launch();}

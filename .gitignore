@@ -5,3 +5,6 @@
 *.idea
 *module-info.java
 *javafx*
+*reduced*
+*node_modules*
+*.config

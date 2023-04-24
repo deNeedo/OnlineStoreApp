@@ -7,84 +7,67 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.*;
-import java.net.*;
+import java.util.concurrent.TimeUnit;
+
+import javax.websocket.Session;
 
 public class Scene1
 {
+    @FXML TextField txtButton;
+    @FXML PasswordField passButton;
+    @FXML AnchorPane scenePane;
+    @FXML Label errMess;
 
-    @FXML
-    TextField txtButton;
-
-    @FXML
-    TextField passButton;
-
-    @FXML
-    AnchorPane scenePane;
-
-    @FXML
-    Label errMess;
-
-
+    private FXMLLoader loader = new FXMLLoader();
+    public StartController previous;
+    public Session session;
+    public String message;
+    public Scene2 next;
+    public Parent base;
     public Stage stage;
     public Scene scene;
-    public Parent root;
 
+    public Session getSession() {return this.session;}
+    public void setPrevious(StartController previous) {this.previous = previous;}
     public void login(ActionEvent event) throws Exception
     {
-        // Create client socket
-        Socket socket = new Socket("localhost", 888);
-        // to send data to the server
-        DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-        // to read data coming from the server
-        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        String username = txtButton.getText();
-        String pass = passButton.getText();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene2.fxml"));
-        root = loader.load();
-
-        Scene2 scene2 = loader.getController();
-        scene2.displayName(username);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        if(username.isEmpty())
+        if (this.base == null)
         {
-            errMess.setText("Write your username");
-            dos.close();
-            br.close();
-            socket.close();
+            this.base = this.loader.load(getClass().getResource("scene2.fxml").openStream());
+            this.next = this.loader.getController(); this.next.setPrevious(this); this.session = this.previous.getSession();
         }
+        String login = txtButton.getText();
+        String pass = passButton.getText();
+
+        if(login.isEmpty()) {errMess.setText("Write your username");}
         else
         {
-            if(pass.isEmpty())
-            {
-                errMess.setText("Write your password");
-                dos.close();
-                br.close();
-                socket.close();
-            }
+            if(pass.isEmpty()) {errMess.setText("Write your password");}
             else
             {
-                dos.writeBytes(username + " " + pass + "\n");
-                if (br.readLine().equals("one"))
+                this.session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
+                while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
+                if (this.message.contains("success"))
                 {
-                    scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
+                    this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    this.stage.setResizable(false); errMess.setText(""); txtButton.setText(""); passButton.setText("");
+                    if (this.scene == null) {this.scene = new Scene(this.base);}
+                    this.stage.setScene(this.scene); this.stage.show();
                 }
-                else
-                {
-                    errMess.setText("Wrong login/password");
-                    dos.close();
-                    br.close();
-                    socket.close();
-                }
+                else {errMess.setText("Wrong login/password");}
+                this.message = null;
             }
         }
+    }
+    public void exit(ActionEvent event)
+    {
+        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        this.stage.setResizable(false);
+        this.stage.setScene(this.previous.previous.scene); this.stage.show();
     }
 }

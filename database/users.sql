@@ -1,7 +1,6 @@
-DROP TABLE onlinestore.users;
-
-CREATE SCHEMA onlinestore;
---
+CREATE schema onlinestore; 
+DROP table onlinestore.items;
+DROP table onlinestore.users;
 -- PostgreSQL database dump
 --
 
@@ -19,9 +18,56 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: onlinestore; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA onlinestore;
+
+
+ALTER SCHEMA onlinestore OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: items; Type: TABLE; Schema: onlinestore; Owner: postgres
+--
+
+CREATE TABLE onlinestore.items (
+    id_item integer NOT NULL,
+    item_name character varying(25),
+    type character varying(20),
+    price numeric(10,2),
+    quantity integer,
+    input_date date
+);
+
+
+ALTER TABLE onlinestore.items OWNER TO postgres;
+
+--
+-- Name: items_id_item_seq; Type: SEQUENCE; Schema: onlinestore; Owner: postgres
+--
+
+CREATE SEQUENCE onlinestore.items_id_item_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE onlinestore.items_id_item_seq OWNER TO postgres;
+
+--
+-- Name: items_id_item_seq; Type: SEQUENCE OWNED BY; Schema: onlinestore; Owner: postgres
+--
+
+ALTER SEQUENCE onlinestore.items_id_item_seq OWNED BY onlinestore.items.id_item;
+
 
 --
 -- Name: users; Type: TABLE; Schema: onlinestore; Owner: postgres
@@ -64,10 +110,25 @@ ALTER SEQUENCE onlinestore.users_user_id_seq OWNED BY onlinestore.users.user_id;
 
 
 --
+-- Name: items id_item; Type: DEFAULT; Schema: onlinestore; Owner: postgres
+--
+
+ALTER TABLE ONLY onlinestore.items ALTER COLUMN id_item SET DEFAULT nextval('onlinestore.items_id_item_seq'::regclass);
+
+
+--
 -- Name: users user_id; Type: DEFAULT; Schema: onlinestore; Owner: postgres
 --
 
 ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onlinestore.users_user_id_seq'::regclass);
+
+
+--
+-- Data for Name: items; Type: TABLE DATA; Schema: onlinestore; Owner: postgres
+--
+
+COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date) FROM stdin;
+\.
 
 
 --
@@ -82,10 +143,25 @@ COPY onlinestore.users (user_id, type, first_name, last_name, login, password, p
 
 
 --
+-- Name: items_id_item_seq; Type: SEQUENCE SET; Schema: onlinestore; Owner: postgres
+--
+
+SELECT pg_catalog.setval('onlinestore.items_id_item_seq', 1, false);
+
+
+--
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: onlinestore; Owner: postgres
 --
 
 SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 3, true);
+
+
+--
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: onlinestore; Owner: postgres
+--
+
+ALTER TABLE ONLY onlinestore.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id_item);
 
 
 --
@@ -99,4 +175,3 @@ ALTER TABLE ONLY onlinestore.users
 --
 -- PostgreSQL database dump complete
 --
-

@@ -1,17 +1,75 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const Login = (props) => {
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+
+    const navigate = useNavigate();
+    
+    const [input, setInput] = useState({
+        email: '',
+        pass: ''
+        });
+        
+    const [error, setError] = useState({
+        email: '',
+        pass: ''
+        })
+        
+    const onInputChange = e => {
+        const { name, value } = e.target;
+        setInput(prev => ({
+        ...prev,
+        [name]: value
+        }));
+        validateInput(e);
+    }
+    
+    const validateInput = e => {
+        let { name, value } = e.target;
+        setError(prev => {
+        const stateObj = { ...prev, [name]: "" };
+    
+        switch (name) {           
+            case "email":
+                if (!value) {
+                    stateObj[name] = "Please enter email.";
+                }
+                break;
+    
+            case "pass":
+            if (!value) {
+                stateObj[name] = "Please enter Password.";
+            } 
+            break;
+        }
+    
+        return stateObj;
+        });
+    }
+
+
+    // * Login data for testng purposes
+    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
+     const users = [{ email: "jeremi@jeremi.pl", pass: "test1234" }];
+
 
     const handelSubmit = (e) => {
         e.preventDefault();
         
-        // logging the inputted data
-        console.log(email);
-        console.log(pass);
+        // * Login for testing puroses
+        const account = users.find((user) => user.email === input.email);
+        if (account && account.pass === input.pass) {
+            navigate('/dashboard');
+        } else {
+            
+        }
 
-        // sending data to server
+        // * Logging data in console
+        console.log(input.email);
+        console.log(input.pass);
+        console.log(authenticated);
+
+        // * Sending data to server
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
         socket.onopen = function(event)
         {
@@ -33,24 +91,41 @@ export const Login = (props) => {
         {
             console.log("Connection closed.");
         };
-        
-    }
+         }
 
-    return (
-        <div className="auth-form-container">
-            <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
+    const isEnabled = input.email.length > 0 & input.pass.length > 0;
+
+return (
+    <div className="auth-form-container">
+        <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
             
-            <form className="login-form" onSubmit={handelSubmit}>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type='email' placeholder="Email" id='email' name='email' />
+        <form className="login-form" onSubmit={handelSubmit}>
+            <input 
+                     type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.email && <span className='err'>{error.email}</span>}
 
-                <input value={pass} onChange={(e) => setPass(e.target.value)} type='password' placeholder="Password" id='password' name='password' />
+                <input 
+                    type="password"
+                    name="pass"
+                    id="pass"
+                    placeholder="Password" 
+                    value={input.pass} 
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.pass && <span className='err'>{error.pass}</span>}
 
-                <button type="submit">Log In</button>
-            </form>
-            <button className="link-btn">Forgot password? Click here to reset!</button>
+                <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
+        </form>
             
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here!</button>
-        </div>
+        <button className="link-btn">Forgot password? Click here to reset!</button>
+            
+        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here!</button>
+    </div>
+)}
 
-    )
-}
+export default Login;

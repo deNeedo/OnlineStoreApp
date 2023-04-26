@@ -1,6 +1,7 @@
 package app.onlinestore;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -24,15 +25,12 @@ public class App
     {
         Server server = new Server("localhost", 80, "/app", AppServerEndpoint.class);
         try {server.start(); while (true) {}} // for now to make the server run in infinite loop
-        catch (Exception e) {throw new RuntimeException(e);}
+        catch (Exception e) {e.printStackTrace();}
         finally {server.stop();}
     }
     public static String admin_login(String data) throws Exception
     {
-        final PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=" + App.postgrespass;
-        dataSource.setUrl(url);
-		Connection conn = dataSource.getConnection();
+		Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
 		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + data.split(" ")[2] + "' and type like 'administrator'" );
 		ResultSet rs = stmt.executeQuery();
         String message = "error";

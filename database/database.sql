@@ -1,11 +1,5 @@
-CREATE schema onlinestore; 
 DROP table onlinestore.items;
 DROP table onlinestore.users;
--- PostgreSQL database dump
---
-
--- Dumped from database version 15.2
--- Dumped by pg_dump version 15.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -75,12 +69,12 @@ ALTER SEQUENCE onlinestore.items_id_item_seq OWNED BY onlinestore.items.id_item;
 
 CREATE TABLE onlinestore.users (
     user_id integer NOT NULL,
-    type character varying(50),
+    type character varying(30),
     first_name character varying(50),
     last_name character varying(50),
     login character varying(50),
-    password character varying(50),
-    phone_number character varying(11),
+    password character varying(64),
+    phone_number character varying(15),
     address character varying(255)
 );
 
@@ -136,9 +130,7 @@ COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date) F
 --
 
 COPY onlinestore.users (user_id, type, first_name, last_name, login, password, phone_number, address) FROM stdin;
-1	administrator	\N	\N	admin@onlinestore.app	admin123	\N	\N
-2	employee	Anna	Kowalska	annakowalska@gmail.com	anna5251	\N	\N
-3	customer	Grzegorz	Piasek	grzegorzpiasek@gmail.com	piasek112	229 156 651	ul. Krolewska 31, Krakow 30-039
+1	administrator	\N	\N	admin@onlinestore.app	fb01b886c430381fbc115a79ae9623a98d21750246b5a4b745c783a8a744896e	\N	\N
 \.
 
 
@@ -153,7 +145,7 @@ SELECT pg_catalog.setval('onlinestore.items_id_item_seq', 1, false);
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: onlinestore; Owner: postgres
 --
 
-SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 3, true);
+SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 1, true);
 
 
 --
@@ -175,3 +167,4 @@ ALTER TABLE ONLY onlinestore.users
 --
 -- PostgreSQL database dump complete
 --
+

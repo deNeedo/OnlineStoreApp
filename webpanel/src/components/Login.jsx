@@ -48,23 +48,9 @@ export const Login = (props) => {
         });
     }
 
-
-    // * Login data for testng purposes
-    // const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
-    // const users = [{ email: "jeremi@jeremi.pl", pass: "test1234" }];
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        // * Login for testing puroses
-        // const account = users.find((user) => user.email === input.email);
-        // if (account && account.pass === input.pass) {
-        //     navigate('/dashboard');
-        // } else {
-            
-        // }
-
         // * Logging data in console
         console.log(input.email);
         console.log(input.pass);

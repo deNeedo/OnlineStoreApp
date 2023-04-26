@@ -1,14 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; 
-
+import React from "react";
 
 const Success = () => {
-
-    // const navigate = useNavigate();
-    // const routeChange = () =>{ 
-    //     navigate('/login');
-    //   }
-    
     
     return (
         <div>

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 export const Register = (props) => {
 
+    const navigate = useNavigate();
+    const routeChange = () => {navigate('/success');}
+
     const [input, setInput] = useState({
         email: '',
         pass: '',
@@ -122,13 +125,17 @@ export const Register = (props) => {
         socket.onopen = function(event)
         {
             console.log("Connection established.")
-            let message = "client-register-try ".concat(email).concat(" ").concat(pass).concat(" ").concat(name).concat(" ").concat(surname).concat(" ").concat(phone);
+            let message = "client-register-try ".concat(input.email).concat(" ").concat(input.pass).concat(" ").concat(input.name).concat(" ").concat(input.surname).concat(" ").concat(input.phone);
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
             if (event.data == "found") {console.log("Register NOT OK");}
-            else {console.log("Register OK");}
+            else
+            {
+                console.log("Register OK");
+                return routeChange();
+            }
             let message = "connection-close-try";
             socket.send(message, 0, message.length, 80, "localhost");
         };
@@ -136,19 +143,16 @@ export const Register = (props) => {
         {
             console.log("Connection closed.");
         };
+    }
 
-        }
 
     const isEnabled = input.name.length > 0 & input.surname.length > 0 & input.phone.length > 0 & input.email.length > 0 & input.pass.length > 0 & input.confirmPass.length > 0 & input.pass == input.confirmPass & agreement;
 
-    const navigate = useNavigate();
-    const routeChange = () =>{ 
-        navigate('/success');
-      }
+   
     
 return (
     <div className="auth-form-container">
-        <span className="welcome-mess">Wecome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
+        <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
 
             
         <form className="register-form" onSubmit={handleSubmit}>
@@ -217,7 +221,7 @@ return (
                     /> I agree to the terms and conditions
             </div>
 
-            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit"  onClick={routeChange}>Register</button>
+            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit"  /*onClick={routeChange}*/>Register</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have the account? Login here!</button>      
     </div>    

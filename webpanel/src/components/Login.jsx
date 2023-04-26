@@ -65,7 +65,7 @@ export const Login = (props) => {
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "found")
+            if (event.data == "success")
             {
                 console.log("Login OK");
                 routeChange();

@@ -124,13 +124,13 @@ export const Register = (props) => {
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
         socket.onopen = function(event)
         {
-            console.log("Connection established.")
+            console.log("Connection established.");
             let message = "client-register-try ".concat(input.email).concat(" ").concat(input.pass).concat(" ").concat(input.name).concat(" ").concat(input.surname).concat(" ").concat(input.phone);
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "found") {console.log("Register NOT OK");}
+            if (event.data == "error") {console.log("Register NOT OK");}
             else
             {
                 console.log("Register OK");

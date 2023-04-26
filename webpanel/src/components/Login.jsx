@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export const Login = (props) => {
 
     const navigate = useNavigate();
+    const routeChange = () => {navigate('/dashboard');}
     
     const [input, setInput] = useState({
         email: '',
@@ -47,39 +48,28 @@ export const Login = (props) => {
         });
     }
 
-
-    // * Login data for testng purposes
-    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
-     const users = [{ email: "jeremi@jeremi.pl", pass: "test1234" }];
-
-
-    const handelSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         
-        // * Login for testing puroses
-        const account = users.find((user) => user.email === input.email);
-        if (account && account.pass === input.pass) {
-            navigate('/dashboard');
-        } else {
-            
-        }
-
         // * Logging data in console
         console.log(input.email);
         console.log(input.pass);
-        console.log(authenticated);
 
         // * Sending data to server
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
         socket.onopen = function(event)
         {
             console.log("Connection established.")
-            let message = "client-login-try ".concat(email).concat(" ").concat(pass);
+            let message = "client-login-try ".concat(input.email).concat(" ").concat(input.pass);
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "found") {console.log("Login OK");}
+            if (event.data == "found")
+            {
+                console.log("Login OK");
+                routeChange();
+            }
             else
             {
                 console.log("Login NOT OK");
@@ -99,7 +89,7 @@ return (
     <div className="auth-form-container">
         <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
             
-        <form className="login-form" onSubmit={handelSubmit}>
+        <form className="login-form" onSubmit={handleSubmit}>
             <input 
                      type="email"
                     name="email"

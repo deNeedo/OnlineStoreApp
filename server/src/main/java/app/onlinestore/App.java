@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import org.postgresql.ds.PGSimpleDataSource;
 import org.glassfish.tyrus.server.Server;
 import java.util.Properties;
 import java.io.FileInputStream;
@@ -39,10 +38,7 @@ public class App
     }
     public static String client_login(String data) throws Exception
     {
-        final PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=" + App.postgrespass;
-        dataSource.setUrl(url);
-		Connection conn = dataSource.getConnection();
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
 		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + data.split(" ")[2] + "' and type like 'customer'" );
 		ResultSet rs = stmt.executeQuery();
         String message = "not found";
@@ -51,10 +47,7 @@ public class App
     }
     public static String client_register(String data) throws Exception
     {
-        final PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=" + App.postgrespass;
-        dataSource.setUrl(url);
-		Connection conn = dataSource.getConnection();
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
 		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] + "'");
 		ResultSet rs = stmt.executeQuery();
         String message = "not found";

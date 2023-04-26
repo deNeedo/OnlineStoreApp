@@ -1,6 +1,8 @@
 import React, { useState } from "react";
- 
+import { useNavigate } from 'react-router-dom'; 
+
 export const Register = (props) => {
+
     const [input, setInput] = useState({
         email: '',
         pass: '',
@@ -139,6 +141,11 @@ export const Register = (props) => {
 
     const isEnabled = input.name.length > 0 & input.surname.length > 0 & input.phone.length > 0 & input.email.length > 0 & input.pass.length > 0 & input.confirmPass.length > 0 & input.pass == input.confirmPass & agreement;
 
+    const navigate = useNavigate();
+    const routeChange = () =>{ 
+        navigate('/success');
+      }
+    
 return (
     <div className="auth-form-container">
         <span className="welcome-mess">Wecome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
@@ -210,8 +217,10 @@ return (
                     /> I agree to the terms and conditions
             </div>
 
-            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Register</button>
+            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit"  onClick={routeChange}>Register</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have the account? Login here!</button>      
     </div>    
 )}
+
+export default Register;

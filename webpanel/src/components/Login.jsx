@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const Login = (props) => {
+
+    const navigate = useNavigate();
+    
     const [input, setInput] = useState({
         email: '',
         pass: ''
@@ -44,12 +48,26 @@ export const Login = (props) => {
     }
 
 
+    // * Login data for testng purposes
+    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
+     const users = [{ email: "jeremi@jeremi.pl", pass: "test1234" }];
+
+
     const handelSubmit = (e) => {
         e.preventDefault();
         
+        // * Login for testing puroses
+        const account = users.find((user) => user.email === input.email);
+        if (account && account.pass === input.pass) {
+            navigate('/dashboard');
+        } else {
+            
+        }
+
         // * Logging data in console
         console.log(input.email);
         console.log(input.pass);
+        console.log(authenticated);
 
         // * Sending data to server
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
@@ -73,7 +91,7 @@ export const Login = (props) => {
         {
             console.log("Connection closed.");
         };
-    }
+         }
 
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
 
@@ -109,3 +127,5 @@ return (
         <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here!</button>
     </div>
 )}
+
+export default Login;

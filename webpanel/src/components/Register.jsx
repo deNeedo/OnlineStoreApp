@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 export const Register = (props) => {
 
     const navigate = useNavigate();
-    const routeChange = () => {navigate('/success');}
+    const registerRedirect = () => {navigate('/success');}
+    const loginRedirect = () => {navigate('/login');}
 
     const [input, setInput] = useState({
         email: '',
@@ -134,7 +135,7 @@ export const Register = (props) => {
             else
             {
                 console.log("Register OK");
-                return routeChange();
+                return registerRedirect();
             }
             let message = "connection-close-try";
             socket.send(message, 0, message.length, 80, "localhost");
@@ -151,80 +152,82 @@ export const Register = (props) => {
    
     
 return (
-    <div className="auth-form-container">
-        <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
+    <div className="wrapper">
+        <div className="auth-form-container">
+            <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
 
-            
-        <form className="register-form" onSubmit={handleSubmit}>
-            <input 
-                type="name"
-                name="name"
-                id="name"
-                placeholder="Name"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.name && <span className='err'>{error.name}</span>}
                 
-            <input
-                type="surname"
-                name="surname"
-                id="surname"
-                placeholder="Surname"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.surname && <span className='err'>{error.surname}</span>}
-
-            <input
-                type="phone"
-                name="phone"
-                id="phone"
-                placeholder="Phone"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.phone && <span className='err'>{error.phone}</span>}
-
-            <input 
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.email && <span className='err'>{error.email}</span>}
-
-            <input 
-                type="password"
-                name="pass"
-                id="pass"
-                placeholder="Password" 
-                value={input.pass} 
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.pass && <span className='err'>{error.pass}</span>}
-
-            <input 
-                type="password" 
-                name="confirmPass"
-                id="confirmPass"
-                placeholder="Retype Password"
-                value={input.confirmPass}
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
-
-
-            <div className="terms">
+            <form className="register-form" onSubmit={handleSubmit}>
+                <input 
+                    type="name"
+                    name="name"
+                    id="name"
+                    placeholder="Name"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.name && <span className='err'>{error.name}</span>}
+                    
                 <input
-                    type="checkbox"
-                    name="agreement"
-                    onChange={handleChange}
-                    /> I agree to the terms and conditions
-            </div>
+                    type="surname"
+                    name="surname"
+                    id="surname"
+                    placeholder="Surname"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.surname && <span className='err'>{error.surname}</span>}
 
-            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit"  /*onClick={routeChange}*/>Register</button>
-        </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have the account? Login here!</button>      
-    </div>    
+                <input
+                    type="phone"
+                    name="phone"
+                    id="phone"
+                    placeholder="Phone"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.phone && <span className='err'>{error.phone}</span>}
+
+                <input 
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.email && <span className='err'>{error.email}</span>}
+
+                <input 
+                    type="password"
+                    name="pass"
+                    id="pass"
+                    placeholder="Password" 
+                    value={input.pass} 
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.pass && <span className='err'>{error.pass}</span>}
+
+                <input 
+                    type="password" 
+                    name="confirmPass"
+                    id="confirmPass"
+                    placeholder="Retype Password"
+                    value={input.confirmPass}
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
+
+
+                <div className="terms">
+                    <input
+                        type="checkbox"
+                        name="agreement"
+                        onChange={handleChange}
+                        /> I agree to the terms and conditions
+                </div>
+
+                <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Register</button>
+            </form>
+            <button className="link-btn" onClick={loginRedirect}>Already have the account? Login here!</button>      
+        </div>   
+    </div> 
 )}
 
 export default Register;

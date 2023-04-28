@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 export const Login = (props) => {
 
     const navigate = useNavigate();
-    const routeChange = () => {navigate('/dashboard');}
+    const loginRedirect = () => {navigate('/dashboard');}
+    const registerRedirect = () => {navigate('/register');}
+    const forgotPassRedirect = () => {navigate('/password-reset')}
     
     const [input, setInput] = useState({
         email: '',
@@ -68,7 +70,7 @@ export const Login = (props) => {
             if (event.data == "success")
             {
                 console.log("Login OK");
-                routeChange();
+                loginRedirect();
             }
             else
             {
@@ -86,35 +88,37 @@ export const Login = (props) => {
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
 
 return (
-    <div className="auth-form-container">
-        <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
-            
-        <form className="login-form" onSubmit={handleSubmit}>
-            <input 
-                     type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email"
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.email && <span className='err'>{error.email}</span>}
-
+    <div className="wrapper">
+        <div className="auth-form-container">
+            <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
+                
+            <form className="login-form" onSubmit={handleSubmit}>
                 <input 
-                    type="password"
-                    name="pass"
-                    id="pass"
-                    placeholder="Password" 
-                    value={input.pass} 
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.pass && <span className='err'>{error.pass}</span>}
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Email"
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.email && <span className='err'>{error.email}</span>}
 
-                <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
-        </form>
-            
-        <button className="link-btn">Forgot password? Click here to reset!</button>
-            
-        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here!</button>
+                    <input 
+                        type="password"
+                        name="pass"
+                        id="pass"
+                        placeholder="Password" 
+                        value={input.pass} 
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.pass && <span className='err'>{error.pass}</span>}
+
+                    <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
+            </form>
+                
+            <button className="link-btn" onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
+                
+            <button className="link-btn" onClick={registerRedirect}>Don't have an account? Register here!</button>
+        </div>
     </div>
 )}
 

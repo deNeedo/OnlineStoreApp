@@ -1,13 +1,21 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
+import successCss from './css/Success.module.css'
 
 const Success = () => {
+
+    const navigate = useNavigate();
+    const loginRedirect = () => {navigate('/login');}
     
     return (
-        <div>
-            <p>You have successfully registered!</p>
+        <div className={successCss['wrapper']}>
+            <div className={successCss['content-box']}>
+                <p className={successCss["message"]}>You have successfully registered!</p>
 
-            {/* <button onClick={routeChange}>Back to login page</button> */}
+                <button className={successCss['gologin-button']} onClick = {loginRedirect} > Go to login page </button>
+            </div>
         </div>
         );
     };
+
 export default Success;

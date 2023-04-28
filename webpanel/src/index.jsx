@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Success from './components/Success';
+import PasswordReset from './components/PasswordReset';
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -18,6 +19,7 @@ root.render(
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="register" element={<Register />} />
         <Route path="success" element={<Success />} />
+        <Route path="password-reset" element={<PasswordReset/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

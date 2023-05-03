@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
+import registerCss from './css/Register.module.css';
 
 export const Register = (props) => {
 
+    const { notifications, dismissNotification, notify } = useNotifications();
+
     const navigate = useNavigate();
-    const registerRedirect = () => {navigate('/success');}
+    const registerRedirect = () => {navigate('/dashboard');}
     const loginRedirect = () => {navigate('/login');}
+    const termsRedirect = () => {navigate('/terms');}
 
     const [input, setInput] = useState({
         email: '',
@@ -131,9 +136,12 @@ export const Register = (props) => {
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "error") {console.log("Register NOT OK");}
-            else
+            if (event.data == "error") {
+                notify("Email already in use. Please Login!", 'error');
+                console.log("Register NOT OK");
+            } else
             {
+                notify("Registration successful!", 'success');
                 console.log("Register OK");
                 return registerRedirect();
             }
@@ -154,8 +162,13 @@ export const Register = (props) => {
 return (
     <div className="wrapper">
         <div className="auth-form-container">
-            <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
 
+            {/* // * Notification setup */}
+            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+
+            <div className = "welcome-mess-box">
+                <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
+            </div>
                 
             <form className="register-form" onSubmit={handleSubmit}>
                 <input 
@@ -215,12 +228,12 @@ return (
                 {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
 
 
-                <div className="terms">
+                <div className={registerCss["terms"]}>
                     <input
                         type="checkbox"
                         name="agreement"
                         onChange={handleChange}
-                        /> I agree to the terms and conditions
+                        /> I agree to the <button className={registerCss["terms-btn"]} onClick={termsRedirect}>terms & conditions</button>
                 </div>
 
                 <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Register</button>

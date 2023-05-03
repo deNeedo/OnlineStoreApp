@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import dashboardCss from './css/Dashboard.module.css'
+import dashboardCss from './css/Dashboard.module.css';
+import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 
 
 const Dashboard = () => {
+
+    const { notifications, dismissNotification, notify } = useNotifications();
 
     const navigate = useNavigate();
     const loginRedirect = () => {navigate('/login');}
@@ -17,10 +20,14 @@ const Dashboard = () => {
     return ( 
         <div className={dashboardCss['wrapper']}>
             <div className={dashboardCss['content-box']}>
-                <p className={dashboardCss["welcome-mess"]}>Welcome to the Dashboard</p>
-                <p>You have successfully logged in!</p>
 
-                <button className={dashboardCss['logout-button']} onClick = {loginRedirect} > Log out </button>
+            {/* // * Notification setup */}
+            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+            
+                <p className={dashboardCss["welcome-mess"]}>Welcome to the Dashboard</p>
+
+                <button className={dashboardCss['logout-button']} onClick = {function(event){ loginRedirect(); notify("You have been logged out.", 'info')}} > Log out </button>
+
             </div>
         </div>
 

@@ -15,13 +15,18 @@
     display: flex;
 }
 
-.gologin-button {
-    margin-top: 0%;
-    width: 75%;
+.back-button {
+    margin-top: 2%;
+    width: 15%;
     background-color: #283618;
 
 }
 
-.message {
-    font-size: 24px;;
+.welcome-mess {
+    font-size: 24px;
+}
+
+.content {
+    max-width: 70%;
+    font-size: 16px;
 }

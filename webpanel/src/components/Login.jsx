@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 
 export const Login = (props) => {
+
+    const { notifications, dismissNotification, notify } = useNotifications();
 
     const navigate = useNavigate();
     const loginRedirect = () => {navigate('/dashboard');}
@@ -70,11 +73,13 @@ export const Login = (props) => {
             if (event.data == "success")
             {
                 console.log("Login OK");
+                notify("Login correct!", 'success');
                 loginRedirect();
             }
             else
             {
                 console.log("Login NOT OK");
+                notify("Email or Password are invalid", 'error');
                 let message = "connection-close-try";
                 socket.send(message, 0, message.length, 80, "localhost");
             }
@@ -90,6 +95,11 @@ export const Login = (props) => {
 return (
     <div className="wrapper">
         <div className="auth-form-container">
+
+            {
+            /* // * Notification setup */}
+            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+
             <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
                 
             <form className="login-form" onSubmit={handleSubmit}>

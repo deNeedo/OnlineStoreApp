@@ -119,38 +119,22 @@ export const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            
-        // * Logging data in console
-        console.log(input.email);
-        console.log(input.pass);
-        console.log(input.name);
-        console.log(input.surname);
-        console.log(input.phone);
-
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
-        socket.onopen = function(event)
+        socket.onopen = function()
         {
-            console.log("Connection established.");
             let message = "client-register-try ".concat(input.email).concat(" ").concat(input.pass).concat(" ").concat(input.name).concat(" ").concat(input.surname).concat(" ").concat(input.phone);
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "error") {
-                notify("Email already in use. Please Login!", 'error');
-                console.log("Register NOT OK");
-            } else
+            if (event.data == "error") {notify("Email already in use. Please Login!", 'error');}
+            else
             {
                 notify("Registration successful!", 'success');
-                console.log("Register OK");
-                return registerRedirect();
+                loginRedirect;
             }
             let message = "connection-close-try";
             socket.send(message, 0, message.length, 80, "localhost");
-        };
-        socket.onclose = function(event)
-        {
-            console.log("Connection closed.");
         };
     }
 

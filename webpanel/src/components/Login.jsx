@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 
-export const Login = (props) => {
+export const Login = () => {
 
     const { notifications, dismissNotification, notify } = useNotifications();
 
     const navigate = useNavigate();
-    const loginRedirect = () => {navigate('/dashboard');}
+    const dashboardRedirect = () => {navigate('/dashboard');}
     const registerRedirect = () => {navigate('/register');}
     const forgotPassRedirect = () => {navigate('/password-reset')}
     
@@ -53,18 +53,11 @@ export const Login = (props) => {
         });
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        // * Logging data in console
-        console.log(input.email);
-        console.log(input.pass);
-
-        // * Sending data to server
+    const handleSubmit = (event) => {
+        event.preventDefault();
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
-        socket.onopen = function(event)
+        socket.onopen = function()
         {
-            console.log("Connection established.")
             let message = "client-login-try ".concat(input.email).concat(" ").concat(input.pass);
             socket.send(message, 0, message.length, 80, "localhost");
         };
@@ -72,24 +65,14 @@ export const Login = (props) => {
         {
             if (event.data == "success")
             {
-                console.log("Login OK");
                 notify("Login correct!", 'success');
-                loginRedirect();
+                dashboardRedirect();
             }
-            else
-            {
-                console.log("Login NOT OK");
-                notify("Email or Password are invalid", 'error');
-                let message = "connection-close-try";
-                socket.send(message, 0, message.length, 80, "localhost");
-            }
+            else {notify("Email or Password are invalid", 'error');}
+            let message = "connection-close-try";
+            socket.send(message, 0, message.length, 80, "localhost");
         };
-        socket.onclose = function(event)
-        {
-            console.log("Connection closed.");
-        };
-         }
-
+    }
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
 
 return (

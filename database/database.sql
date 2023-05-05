@@ -12,18 +12,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: onlinestore; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA onlinestore;
-
-
-ALTER SCHEMA onlinestore OWNER TO postgres;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+
+CREATE SCHEMA onlinestore;
 
 --
 -- Name: items; Type: TABLE; Schema: onlinestore; Owner: postgres
@@ -47,7 +41,7 @@ ALTER TABLE onlinestore.items OWNER TO postgres;
 
 CREATE SEQUENCE onlinestore.items_id_item_seq
     AS integer
-    START WITH 1
+    START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -64,46 +58,6 @@ ALTER SEQUENCE onlinestore.items_id_item_seq OWNED BY onlinestore.items.id_item;
 
 
 --
--- Name: users; Type: TABLE; Schema: onlinestore; Owner: postgres
---
-
-CREATE TABLE onlinestore.users (
-    user_id integer NOT NULL,
-    type character varying(30),
-    first_name character varying(50),
-    last_name character varying(50),
-    login character varying(50),
-    password character varying(64),
-    phone_number character varying(15),
-    address character varying(255)
-);
-
-
-ALTER TABLE onlinestore.users OWNER TO postgres;
-
---
--- Name: users_user_id_seq; Type: SEQUENCE; Schema: onlinestore; Owner: postgres
---
-
-CREATE SEQUENCE onlinestore.users_user_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE onlinestore.users_user_id_seq OWNER TO postgres;
-
---
--- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: onlinestore; Owner: postgres
---
-
-ALTER SEQUENCE onlinestore.users_user_id_seq OWNED BY onlinestore.users.user_id;
-
-
---
 -- Name: items id_item; Type: DEFAULT; Schema: onlinestore; Owner: postgres
 --
 
@@ -111,26 +65,47 @@ ALTER TABLE ONLY onlinestore.items ALTER COLUMN id_item SET DEFAULT nextval('onl
 
 
 --
--- Name: users user_id; Type: DEFAULT; Schema: onlinestore; Owner: postgres
---
-
-ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onlinestore.users_user_id_seq'::regclass);
-
-
---
 -- Data for Name: items; Type: TABLE DATA; Schema: onlinestore; Owner: postgres
 --
 
 COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date) FROM stdin;
-\.
-
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: onlinestore; Owner: postgres
---
-
-COPY onlinestore.users (user_id, type, first_name, last_name, login, password, phone_number, address) FROM stdin;
-1	administrator	\N	\N	admin@onlinestore.app	fb01b886c430381fbc115a79ae9623a98d21750246b5a4b745c783a8a744896e	\N	\N
+38	Chives	Vegetables	\N	\N	\N
+39	Yellow pepper	Vegetables	\N	\N	\N
+40	Cauliflower	Vegetables	\N	\N	\N
+41	Rasberry tomato	Vegetables	\N	\N	\N
+42	Potato	Vegetables	\N	\N	\N
+43	Cabbage	Vegetables	\N	\N	\N
+44	Kohlrabi 	Vegetables	\N	\N	\N
+45	Radish	Vegetables	\N	\N	\N
+46	Cherry tomato	Vegetables	\N	\N	\N
+47	Avocado	Vegetables	\N	\N	\N
+48	Iceberg lettuce	Vegetables	\N	\N	\N
+49	Carrot	Vegetables	\N	\N	\N
+50	Broccoli	Vegetables	\N	\N	\N
+51	Garlic	Vegetables	\N	\N	\N
+52	Zucchini 	Vegetables	\N	\N	\N
+53	Valerianella	Vegetables	\N	\N	\N
+54	Spinach	Vegetables	\N	\N	\N
+55	Rucola	Vegetables	\N	\N	\N
+56	Onion	Vegetables	\N	\N	\N
+57	Celery	Vegetables	\N	\N	\N
+58	Dill	Vegetables	\N	\N	\N
+59	Parsley	Vegetables	\N	\N	\N
+60	Red pepper	Vegetables	\N	\N	\N
+61	Cucomber	Vegetables	\N	\N	\N
+62	Tomato	Vegetables	\N	\N	\N
+63	Mushroom	Vegetables	\N	\N	\N
+64	Beetroot	Vegetables	\N	\N	\N
+65	Leek	Vegetables	\N	\N	\N
+66	Chili	Vegetables	\N	\N	\N
+67	Sweetcorn	Vegetables	\N	\N	\N
+68	Aubergine	Vegetables	\N	\N	\N
+69	Red cabbage	Vegetables	\N	\N	\N
+70	Soya	Vegetables	\N	\N	\N
+71	Asparagus	Vegetables	\N	\N	\N
+72	Kale	Vegetables	\N	\N	\N
+73	Turnip	Vegetables	\N	\N	\N
+74	Sweet potato	Vegetables	\N	\N	\N
 \.
 
 
@@ -138,14 +113,7 @@ COPY onlinestore.users (user_id, type, first_name, last_name, login, password, p
 -- Name: items_id_item_seq; Type: SEQUENCE SET; Schema: onlinestore; Owner: postgres
 --
 
-SELECT pg_catalog.setval('onlinestore.items_id_item_seq', 1, false);
-
-
---
--- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: onlinestore; Owner: postgres
---
-
-SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 1, true);
+SELECT pg_catalog.setval('onlinestore.items_id_item_seq', 74, true);
 
 
 --
@@ -154,14 +122,6 @@ SELECT pg_catalog.setval('onlinestore.users_user_id_seq', 1, true);
 
 ALTER TABLE ONLY onlinestore.items
     ADD CONSTRAINT items_pkey PRIMARY KEY (id_item);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: onlinestore; Owner: postgres
---
-
-ALTER TABLE ONLY onlinestore.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
 
 --

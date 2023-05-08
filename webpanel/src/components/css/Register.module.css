@@ -1,0 +1,14 @@
+.terms-btn {
+
+    margin-top: 0;
+    background: none;
+    color: #808080;
+    text-decoration: underline;
+}
+
+.terms {
+    margin-top: 0;
+    color: #808080;
+    font-size: 0.9rem;
+    font-family: 'Lato';
+}

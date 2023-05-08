@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 
-export const Login = (props) => {
+export const Login = () => {
+
+    const { notifications, dismissNotification, notify } = useNotifications();
 
     const navigate = useNavigate();
-    const routeChange = () => {navigate('/dashboard');}
+    const dashboardRedirect = () => {navigate('/dashboard');}
+    const registerRedirect = () => {navigate('/register');}
+    const forgotPassRedirect = () => {navigate('/password-reset')}
     
     const [input, setInput] = useState({
         email: '',
@@ -48,73 +53,65 @@ export const Login = (props) => {
         });
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        // * Logging data in console
-        console.log(input.email);
-        console.log(input.pass);
-
-        // * Sending data to server
+    const handleSubmit = (event) => {
+        event.preventDefault();
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
-        socket.onopen = function(event)
+        socket.onopen = function()
         {
-            console.log("Connection established.")
             let message = "client-login-try ".concat(input.email).concat(" ").concat(input.pass);
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "found")
+            if (event.data == "success")
             {
-                console.log("Login OK");
-                routeChange();
+                notify("Login correct!", 'success');
+                dashboardRedirect();
             }
-            else
-            {
-                console.log("Login NOT OK");
-                let message = "connection-close-try";
-                socket.send(message, 0, message.length, 80, "localhost");
-            }
+            else {notify("Email or Password are invalid", 'error');}
+            let message = "connection-close-try";
+            socket.send(message, 0, message.length, 80, "localhost");
         };
-        socket.onclose = function(event)
-        {
-            console.log("Connection closed.");
-        };
-         }
-
+    }
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
 
 return (
-    <div className="auth-form-container">
-        <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
-            
-        <form className="login-form" onSubmit={handleSubmit}>
-            <input 
-                     type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email"
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.email && <span className='err'>{error.email}</span>}
+    <div className="wrapper">
+        <div className="auth-form-container">
 
+            {
+            /* // * Notification setup */}
+            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+
+            <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
+                
+            <form className="login-form" onSubmit={handleSubmit}>
                 <input 
-                    type="password"
-                    name="pass"
-                    id="pass"
-                    placeholder="Password" 
-                    value={input.pass} 
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.pass && <span className='err'>{error.pass}</span>}
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Email"
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.email && <span className='err'>{error.email}</span>}
 
-                <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
-        </form>
-            
-        <button className="link-btn">Forgot password? Click here to reset!</button>
-            
-        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here!</button>
+                    <input 
+                        type="password"
+                        name="pass"
+                        id="pass"
+                        placeholder="Password" 
+                        value={input.pass} 
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.pass && <span className='err'>{error.pass}</span>}
+
+                    <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
+            </form>
+                
+            <button className="link-btn" onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
+                
+            <button className="link-btn" onClick={registerRedirect}>Don't have an account? Register here!</button>
+        </div>
     </div>
 )}
 

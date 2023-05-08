@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
+import registerCss from './css/Register.module.css';
 
 export const Register = (props) => {
 
+    const { notifications, dismissNotification, notify } = useNotifications();
+
     const navigate = useNavigate();
-    const routeChange = () => {navigate('/success');}
+    const registerRedirect = () => {navigate('/dashboard');}
+    const loginRedirect = () => {navigate('/login');}
+    const termsRedirect = () => {navigate('/terms');}
 
     const [input, setInput] = useState({
         email: '',
@@ -113,35 +119,22 @@ export const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            
-        // * Logging data in console
-        console.log(input.email);
-        console.log(input.pass);
-        console.log(input.name);
-        console.log(input.surname);
-        console.log(input.phone);
-
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
-        socket.onopen = function(event)
+        socket.onopen = function()
         {
-            console.log("Connection established.")
             let message = "client-register-try ".concat(input.email).concat(" ").concat(input.pass).concat(" ").concat(input.name).concat(" ").concat(input.surname).concat(" ").concat(input.phone);
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            if (event.data == "found") {console.log("Register NOT OK");}
+            if (event.data == "error") {notify("Email already in use. Please Login!", 'error');}
             else
             {
-                console.log("Register OK");
-                return routeChange();
+                notify("Registration successful!", 'success');
+                loginRedirect;
             }
             let message = "connection-close-try";
             socket.send(message, 0, message.length, 80, "localhost");
-        };
-        socket.onclose = function(event)
-        {
-            console.log("Connection closed.");
         };
     }
 
@@ -151,80 +144,87 @@ export const Register = (props) => {
    
     
 return (
-    <div className="auth-form-container">
-        <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
+    <div className="wrapper">
+        <div className="auth-form-container">
 
-            
-        <form className="register-form" onSubmit={handleSubmit}>
-            <input 
-                type="name"
-                name="name"
-                id="name"
-                placeholder="Name"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.name && <span className='err'>{error.name}</span>}
-                
-            <input
-                type="surname"
-                name="surname"
-                id="surname"
-                placeholder="Surname"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.surname && <span className='err'>{error.surname}</span>}
+            {/* // * Notification setup */}
+            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-            <input
-                type="phone"
-                name="phone"
-                id="phone"
-                placeholder="Phone"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.phone && <span className='err'>{error.phone}</span>}
-
-            <input 
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.email && <span className='err'>{error.email}</span>}
-
-            <input 
-                type="password"
-                name="pass"
-                id="pass"
-                placeholder="Password" 
-                value={input.pass} 
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.pass && <span className='err'>{error.pass}</span>}
-
-            <input 
-                type="password" 
-                name="confirmPass"
-                id="confirmPass"
-                placeholder="Retype Password"
-                value={input.confirmPass}
-                onChange={onInputChange}
-                onBlur={validateInput}></input>
-            {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
-
-
-            <div className="terms">
-                <input
-                    type="checkbox"
-                    name="agreement"
-                    onChange={handleChange}
-                    /> I agree to the terms and conditions
+            <div className = "welcome-mess-box">
+                <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
             </div>
+                
+            <form className="register-form" onSubmit={handleSubmit}>
+                <input 
+                    type="name"
+                    name="name"
+                    id="name"
+                    placeholder="Name"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.name && <span className='err'>{error.name}</span>}
+                    
+                <input
+                    type="surname"
+                    name="surname"
+                    id="surname"
+                    placeholder="Surname"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.surname && <span className='err'>{error.surname}</span>}
 
-            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit"  /*onClick={routeChange}*/>Register</button>
-        </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have the account? Login here!</button>      
-    </div>    
+                <input
+                    type="phone"
+                    name="phone"
+                    id="phone"
+                    placeholder="Phone"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.phone && <span className='err'>{error.phone}</span>}
+
+                <input 
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.email && <span className='err'>{error.email}</span>}
+
+                <input 
+                    type="password"
+                    name="pass"
+                    id="pass"
+                    placeholder="Password" 
+                    value={input.pass} 
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.pass && <span className='err'>{error.pass}</span>}
+
+                <input 
+                    type="password" 
+                    name="confirmPass"
+                    id="confirmPass"
+                    placeholder="Retype Password"
+                    value={input.confirmPass}
+                    onChange={onInputChange}
+                    onBlur={validateInput}></input>
+                {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
+
+
+                <div className={registerCss["terms"]}>
+                    <input
+                        type="checkbox"
+                        name="agreement"
+                        onChange={handleChange}
+                        /> I agree to the <button className={registerCss["terms-btn"]} onClick={termsRedirect}>terms & conditions</button>
+                </div>
+
+                <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Register</button>
+            </form>
+            <button className="link-btn" onClick={loginRedirect}>Already have the account? Login here!</button>      
+        </div>   
+    </div> 
 )}
 
 export default Register;

@@ -1,0 +1,32 @@
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    font-family: 'Lato';
+}
+
+.content-box {
+    font-family: 'Lato';
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.back-button {
+    margin-top: 2%;
+    width: 15%;
+    background-color: #283618;
+
+}
+
+.welcome-mess {
+    font-size: 24px;
+}
+
+.content {
+    max-width: 70%;
+    font-size: 16px;
+}

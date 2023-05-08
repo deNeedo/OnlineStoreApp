@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.glassfish.tyrus.server.Server;
+
+// import java.util.Arrays;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.security.MessageDigest;
@@ -49,6 +51,14 @@ public class App
 		ResultSet rs = stmt.executeQuery();
         String message = "error";
 		while (rs.next()) {message = "success";}
+        return message;
+    }
+    public static String get_products() throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.items" );
+		ResultSet rs = stmt.executeQuery(); String message = "";
+		while (rs.next()) {message += rs.getString("id_item") + " " + rs.getString("item_name") + " " + rs.getString("type") + "\n";}
         return message;
     }
     public static String client_login(String data) throws Exception

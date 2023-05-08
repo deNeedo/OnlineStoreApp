@@ -26,6 +26,17 @@ const Home = () => {
         fetchProducts();
       }, []);
 
+    let socket = new WebSocket("ws://localhost:80/app/onlinestore");
+    socket.onopen = function()
+    {
+        let message = "get-products";
+        socket.send(message, 0, message.length, 80, "localhost");
+    };
+    socket.onmessage = function(event)
+    {
+        console.log(event.data.split("\n")) // data from the server displayed in console
+    };
+
     return ( 
         <div className={homeCss['wrapper']}>
             <div className={homeCss['content-box']}>

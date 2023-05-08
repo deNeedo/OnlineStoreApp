@@ -18,6 +18,7 @@ public class AppServerEndpoint
         if (message.contains("admin-login-try")) {return App.admin_login(message);}
         else if (message.contains("client-login-try")) {return App.client_login(message);}
         else if (message.contains("client-register-try")) {return App.client_register(message);}
+        else if (message.contains("get-products")) {return App.get_products();}
         else {session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE, "")); return null;}
     }
 }

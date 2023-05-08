@@ -1,3 +1,34 @@
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    font-family: 'Lato';
+}
+
+.auth-form-container{
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 10px 10px 15px 10px rgba(0,0,0,0.15);
+    width: 30%;
+}
+
+.register-form {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-mess-box {
+    text-align: center;
+}
+
+.welcome-mess{
+    font-weight: 600;
+    font-size: 1.75rem;
+}
+
 .terms-btn {
 
     margin-top: 0;
@@ -7,8 +38,10 @@
 }
 
 .terms {
+    align-items: center;
     margin-top: 0;
     color: #808080;
     font-size: 0.9rem;
     font-family: 'Lato';
 }
+

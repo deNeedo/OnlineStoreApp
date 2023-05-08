@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
+import loginCss from './css/Login.module.css';
 
 export const Login = () => {
 
     const { notifications, dismissNotification, notify } = useNotifications();
 
     const navigate = useNavigate();
-    const dashboardRedirect = () => {navigate('/dashboard');}
+    const loginRedirect = () => {navigate('/home');}
     const registerRedirect = () => {navigate('/register');}
     const forgotPassRedirect = () => {navigate('/password-reset')}
     
@@ -66,7 +67,7 @@ export const Login = () => {
             if (event.data == "success")
             {
                 notify("Login correct!", 'success');
-                dashboardRedirect();
+                loginRedirect();
             }
             else {notify("Email or Password are invalid", 'error');}
             let message = "connection-close-try";
@@ -76,16 +77,16 @@ export const Login = () => {
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
 
 return (
-    <div className="wrapper">
-        <div className="auth-form-container">
+    <div className={loginCss['wrapper']}>
+        <div className={loginCss["auth-form-container"]}>
 
             {
             /* // * Notification setup */}
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-            <div className="welcome-mess-box"><span className="welcome-mess">Hello, </span><span className="wave">👋</span><span className="welcome-mess"> please log in</span></div>
+            <div className={loginCss["welcome-mess-box"]}><span className={loginCss["welcome-mess"]}>Hello, </span><span className='wave'>👋</span><span className={loginCss["welcome-mess"]}> please log in</span></div>
                 
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form className={loginCss["login-form"]} onSubmit={handleSubmit}>
                 <input 
                         type="email"
                         name="email"
@@ -108,9 +109,9 @@ return (
                     <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
             </form>
                 
-            <button className="link-btn" onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
+            <button className='link-btn' onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
                 
-            <button className="link-btn" onClick={registerRedirect}>Don't have an account? Register here!</button>
+            <button className='link-btn' onClick={registerRedirect}>Don't have an account? Register here!</button>
         </div>
     </div>
 )}

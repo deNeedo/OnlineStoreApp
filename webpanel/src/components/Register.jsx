@@ -144,17 +144,16 @@ export const Register = (props) => {
    
     
 return (
-    <div className="wrapper">
-        <div className="auth-form-container">
+    <div className={registerCss['wrapper']}>
+        <div className={registerCss["auth-form-container"]}>
 
-            {/* // * Notification setup */}
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-            <div className = "welcome-mess-box">
-                <span className="welcome-mess"> Welcome! </span><span className="wave">👋</span><span className="welcome-mess"> Please register</span>
+            <div className={registerCss["welcome-mess-box"]}>
+                <span className={registerCss["welcome-mess"]}> Welcome! </span><span className='wave'>👋</span><span className={registerCss["welcome-mess"]}> Please register</span>
             </div>
                 
-            <form className="register-form" onSubmit={handleSubmit}>
+            <form className={registerCss["register-form"]} onSubmit={handleSubmit}>
                 <input 
                     type="name"
                     name="name"

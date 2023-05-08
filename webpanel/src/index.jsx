@@ -7,9 +7,9 @@ import { NotificationsProvider, setUpNotifications } from "reapop";
 import App from './App';
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
 import PasswordReset from './components/PasswordReset';
 import Terms from './components/Terms';
+import Home from './components/Home';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,10 +28,10 @@ root.render(
                 <Routes>
                     <Route path="/" element={<Navigate to="/login"/>}/>
                     <Route path="login" element={<Login />} />
-                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="register" element={<Register />} />
                     <Route path="password-reset" element={<PasswordReset/>} />
                     <Route path="terms" element={<Terms/>} />
+                    <Route path="home" element={<Home/>} />
                 </Routes>
             </BrowserRouter>
         </NotificationsProvider>

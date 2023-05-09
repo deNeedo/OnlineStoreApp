@@ -71,10 +71,18 @@ public class App
 		while (rs.next()) {message = "success";}
         return message;
     }
-    public static String get_products() throws Exception
+    public static String get_products(String data) throws Exception
     {
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.items" );
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass); PreparedStatement stmt;
+
+        if (data.split(" ").length > 1)
+        {
+            StringBuilder pattern = new StringBuilder();
+            for (int m = 1; m < data.split(" ").length; m++) {pattern.append(data.split(" ")[m]); pattern.append(" ");}
+            pattern.deleteCharAt(pattern.length() - 1);
+            stmt = conn.prepareStatement("select * from onlinestore.items where upper(item_name) like upper('%" + pattern + "%')");
+        }
+        else {stmt = conn.prepareStatement("select * from onlinestore.items");}
 		ResultSet rs = stmt.executeQuery(); String message = createJSON(rs, new JSONArray()).toJSONString();
 		// while (rs.next()) {message += "{\"id_item\"" + rs.getString(1) + "]";}// + " " + rs.getString("item_name") + " " + rs.getString("type") + "\n";}
         return message;

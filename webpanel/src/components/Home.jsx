@@ -6,45 +6,57 @@ import Header from './Header';
 
 export const Home = () => {
 
-
     const { notifications, dismissNotification, notify } = useNotifications();
     const navigate = useNavigate();
     const loginRedirect = () => {navigate('/login');}
-    
     const [data, setData] = useState([]);
+
+    useEffect(() => {
+        let socket = new WebSocket("ws://localhost:80/app/onlinestore");
+        socket.onopen = function()
+        {
+            let message = "get-products ";
+            socket.send(message, 0, message.length, 80, "localhost");
+        };
+        socket.onmessage = function(event)
+        {
+            setData(JSON.parse(event.data));
+            let message = "connection-close-try";
+            socket.send(message, 0, message.length, 80, "localhost");
+        };
+    }, [])
 
     const onInputChange = e => {
         let socket = new WebSocket("ws://localhost:80/app/onlinestore");
         socket.onopen = function()
         {
-            let message = "get-products";
+            let message = "get-products " + e.target.value;
             socket.send(message, 0, message.length, 80, "localhost");
         };
         socket.onmessage = function(event)
         {
-            setData(JSON.parse(event.data)); // data from the server displayed in console
+            setData(JSON.parse(event.data));
+            let message = "connection-close-try";
+            socket.send(message, 0, message.length, 80, "localhost");
         };
-
     }
-
-
+    
     return ( 
         <div className={homeCss['wrapper']}>
                 <Header/>
             <div className={homeCss['content-box']}>
-
+                <div className={homeCss['search-box']}>
                 <input 
                         type="text" 
-                        placeholder="Search for Your favorite vegetables and fruits..." 
-                        className={homeCss["search-input"]} 
-                        onChange={(e) => onInputChange()} 
+                        placeholder="Search for Your favorite vegetables and fruits" 
+                        className={homeCss["search-input"]}
+                        onChange={onInputChange}
                     />
+                </div>
 
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
                 <p className={homeCss["welcome-mess"]}>Welcome to the Home page</p>
-
-                {/* {<Table data={data}/>} */}
 
                 <table>
                     <tbody>

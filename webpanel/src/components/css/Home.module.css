@@ -1,29 +1,30 @@
 .wrapper {
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
+    max-width: 1440px;
     font-family: 'Lato';
+    
 }
 
 .content-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #ffffff;
 }
 
 .logout-button {
     margin-top: 0%;
-    width: 75%;
+    width: 20%;
     background-color: #283618;
-
 }
 
 .welcome-mess {
     font-size: 24px;
-
 }
 
 .search-box {
-    
 }
 
 input.search-input {
@@ -33,7 +34,6 @@ input.search-input {
     outline: 0;
     border-width: 0 0 2px;
     border-color: #e5e5e5;
-    width: 100%;
   }
 
 .search-input:focus {

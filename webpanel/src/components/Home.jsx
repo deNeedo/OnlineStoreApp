@@ -2,50 +2,42 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import homeCss from './css/Home.module.css';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
-import axios from 'axios';
-import Table from "./Table";
+import Header from './Header';
 
-const Home = () => {
+export const Home = () => {
+
 
     const { notifications, dismissNotification, notify } = useNotifications();
-    const [loading, setLoading] = useState(false);
-
     const navigate = useNavigate();
     const loginRedirect = () => {navigate('/login');}
-
-    const [query, setQuery] = useState("");
+    
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true);
-          const res = await axios.get("http://localhost:5000");
-          setData(res.data);
-          setLoading(false);
+    const onInputChange = e => {
+        let socket = new WebSocket("ws://localhost:80/app/onlinestore");
+        socket.onopen = function()
+        {
+            let message = "get-products";
+            socket.send(message, 0, message.length, 80, "localhost");
         };
-        fetchProducts();
-      }, []);
+        socket.onmessage = function(event)
+        {
+            setData(JSON.parse(event.data)); // data from the server displayed in console
+        };
 
-    let socket = new WebSocket("ws://localhost:80/app/onlinestore");
-    socket.onopen = function()
-    {
-        let message = "get-products";
-        socket.send(message, 0, message.length, 80, "localhost");
-    };
-    socket.onmessage = function(event)
-    {
-        console.log(event.data.split("\n")) // data from the server displayed in console
-    };
+    }
+
 
     return ( 
         <div className={homeCss['wrapper']}>
+                <Header/>
             <div className={homeCss['content-box']}>
                 <div className={homeCss['search-box']}>
                 <input 
                         type="text" 
                         placeholder="Search for Your favorite vegetables and fruits" 
                         className={homeCss["search-input"]} 
-                        onChange={(e) => setQuery(e.target.value)} 
+                        onChange={(e) => onInputChange()} 
                     />
                 </div>
 
@@ -53,7 +45,22 @@ const Home = () => {
                 
                 <p className={homeCss["welcome-mess"]}>Welcome to the Home page</p>
 
-                {<Table data={data}/>}
+                {/* {<Table data={data}/>} */}
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                        </tr>
+                            {data.map((item) => (
+                        <tr key={item.id_item}>
+                            <td> {item.item_name} </td>
+                            <td> {item.type} </td>
+                        </tr>
+                            ))}
+                    </tbody>
+                </table>
 
                 <button className={homeCss['logout-button']} onClick={function() {loginRedirect(); notify("You have been logged out.", 'info')}}> Log out </button>
             </div>

@@ -38,7 +38,7 @@ public class App
         }
         return sb.toString();
     }
-    private static JSONObject createJSON(ResultSet rs, JSONArray arr) throws Exception
+    private static JSONArray createJSON(ResultSet rs, JSONArray arr) throws Exception
     {
         while (rs.next())
         {
@@ -52,7 +52,7 @@ public class App
             arr.add(obj);
         }
         JSONObject obj = new JSONObject(); obj.put("", arr);
-        return obj;
+        return arr;
     }
     public static void main(String[] args)
     {

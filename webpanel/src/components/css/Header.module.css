@@ -1,0 +1,35 @@
+nav {
+    height: 50px;
+    border: 1px solid #dfdfdf;
+    border-radius: 15px;
+    background-color: #283618;
+}
+
+.header{
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    width: 40px;
+    padding: 0 20px;
+
+}
+
+.link-btn {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-family: 'Lato';
+
+}
+
+.components {
+    display: flex;
+    flex-direction: row;
+}
+

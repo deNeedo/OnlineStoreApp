@@ -32,14 +32,13 @@ export const Home = () => {
         <div className={homeCss['wrapper']}>
                 <Header/>
             <div className={homeCss['content-box']}>
-                <div className={homeCss['search-box']}>
+
                 <input 
                         type="text" 
-                        placeholder="Search for Your favorite vegetables and fruits" 
+                        placeholder="Search for Your favorite vegetables and fruits..." 
                         className={homeCss["search-input"]} 
                         onChange={(e) => onInputChange()} 
                     />
-                </div>
 
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 

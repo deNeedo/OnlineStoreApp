@@ -8,7 +8,11 @@ const Header = () => {
     return (
         <nav>
             <div className={headerCss['header']}>
-                <img className={headerCss['logo']} src={Logo} alt="Logo" />
+                <div className={headerCss['logo-and-title']}>
+                    <img className={headerCss['logo']} src={Logo} alt="Logo" />
+                    <span className={headerCss['title']}>Veggie store</span>
+                </div>
+
                 <div className={headerCss['components']}>
                 <NavLink to="/login" className={headerCss['link-btn']}>Login</NavLink>
 

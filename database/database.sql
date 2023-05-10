@@ -137,7 +137,7 @@ COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, p
 8	Radish	Vegetables	\N	\N	\N	\N
 9	Cherry tomato	Vegetables	\N	\N	\N	\N
 10	Avocado	Vegetables	\N	\N	\N	\N
-11	Iceberg lettuce	Vegetables	\N	\N	\N	\N
+11	Lettuce	Vegetables	\N	\N	\N	\N
 12	Carrot	Vegetables	\N	\N	\N	\N
 13	Broccoli	Vegetables	\N	\N	\N	\N
 14	Garlic	Vegetables	\N	\N	\N	\N
@@ -150,7 +150,7 @@ COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, p
 21	Dill	Vegetables	\N	\N	\N	\N
 22	Parsley	Vegetables	\N	\N	\N	\N
 23	Red pepper	Vegetables	\N	\N	\N	\N
-24	Cucomber	Vegetables	\N	\N	\N	\N
+24	Cucumber	Vegetables	\N	\N	\N	\N
 25	Tomato	Vegetables	\N	\N	\N	\N
 26	Mushroom	Vegetables	\N	\N	\N	\N
 27	Beetroot	Vegetables	\N	\N	\N	\N
@@ -163,7 +163,7 @@ COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, p
 34	Asparagus	Vegetables	\N	\N	\N	\N
 35	Kale	Vegetables	\N	\N	\N	\N
 36	Turnip	Vegetables	\N	\N	\N	\N
-37	Sweet potato	Vegetables	\N	\N	\N	\N
+37	Sweet potato	Vegetables	\N	\N	\N	\N ../../img/sweetPotato.jpg
 5	Potato	Vegetables	\N	\N	\N	../../img/potato.jpg
 \.
 

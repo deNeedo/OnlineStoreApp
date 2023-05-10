@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.glassfish.tyrus.server.Server;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.util.Properties;
+
 import java.io.FileInputStream;
 import java.security.MessageDigest;
 
@@ -34,6 +38,22 @@ public class App
         }
         return sb.toString();
     }
+    private static JSONArray createJSON(ResultSet rs, JSONArray arr) throws Exception
+    {
+        while (rs.next())
+        {
+            JSONObject obj = new JSONObject();
+            obj.put("id_item", rs.getInt("id_item"));
+            obj.put("item_name", rs.getString("item_name"));
+            obj.put("type", rs.getString("type"));
+            obj.put("price", rs.getDouble("price"));
+            obj.put("quantity", rs.getInt("quantity"));
+            obj.put("input_date", rs.getString("input_date"));
+            arr.add(obj);
+        }
+        JSONObject obj = new JSONObject(); obj.put("", arr);
+        return arr;
+    }
     public static void main(String[] args)
     {
         Server server = new Server("localhost", 80, "/app", AppServerEndpoint.class);
@@ -49,6 +69,22 @@ public class App
 		ResultSet rs = stmt.executeQuery();
         String message = "error";
 		while (rs.next()) {message = "success";}
+        return message;
+    }
+    public static String get_products(String data) throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass); PreparedStatement stmt;
+
+        if (data.split(" ").length > 1)
+        {
+            StringBuilder pattern = new StringBuilder();
+            for (int m = 1; m < data.split(" ").length; m++) {pattern.append(data.split(" ")[m]); pattern.append(" ");}
+            pattern.deleteCharAt(pattern.length() - 1);
+            stmt = conn.prepareStatement("select * from onlinestore.items where upper(item_name) like upper('%" + pattern + "%')");
+        }
+        else {stmt = conn.prepareStatement("select * from onlinestore.items");}
+		ResultSet rs = stmt.executeQuery(); String message = createJSON(rs, new JSONArray()).toJSONString();
+		// while (rs.next()) {message += "{\"id_item\"" + rs.getString(1) + "]";}// + " " + rs.getString("item_name") + " " + rs.getString("type") + "\n";}
         return message;
     }
     public static String client_login(String data) throws Exception

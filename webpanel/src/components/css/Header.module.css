@@ -3,9 +3,12 @@ nav {
     border: none;
     border-radius: 0 0 15px 15px;
     background-color: #283618;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.15);
     width: 1440px;
     z-index: 1;
     display: flex;
+    position: sticky;
+    top: 0;
 }
 
 .header{

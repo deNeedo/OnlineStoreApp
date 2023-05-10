@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import TermsCss from './css/Terms.module.css';
+import Header from "./Header";
+import Footer from "./Footer";
 
 
 const Terms = () => {
@@ -11,7 +13,8 @@ const Terms = () => {
     
     return ( 
         <div className={TermsCss['wrapper']}>
-            <div className={TermsCss['content-box']}>
+            <Header/>
+                <div className={TermsCss['content-box']}>
             
                 <p className={TermsCss["welcome-mess"]}>Our Terms & Conditions</p>
 
@@ -34,7 +37,7 @@ const Terms = () => {
                 </div>
 
                 <button className={TermsCss['back-button']} onClick = {registerRedirect} > Back to Registration </button>
-
+            <Footer/>
             </div>
         </div>
         );

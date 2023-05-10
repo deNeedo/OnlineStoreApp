@@ -4,6 +4,7 @@ footer {
     border: none;
     border-radius: 15px 15px 0 0;
     background-color: #283618;
+    box-shadow: 5px 5px 10px 10px rgba(0,0,0,0.15);
     width: 95%;
     margin: 0 auto;
     display: flex;

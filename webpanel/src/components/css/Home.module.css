@@ -20,10 +20,6 @@
     background-color: #283618;
 }
 
-.temp-table{
-    margin-bottom: 10%;
-}
-
 input.search-input {
     width: 40%;
     font-size: 1.25rem;
@@ -36,4 +32,35 @@ input.search-input {
 .search-input:focus {
     border-color: #283618;
   }
+
+.products {
+    width: 80%;
+}
+
+.product-box{
+    padding: 10px;
+    border: solid #808080 1px;
+    border-radius: 15px;
+}
+
+.product-name{
+    font-family: 'Lato';
+    color:#283618;
+    size: 3rem;
+
+}
+
+.product-price{
+    font-family: 'Lato';
+    font-size: 0.7rem;
+    color: red;
+
+}
+
+.poduct-img{
+    width: 100%;
+    max-width: 350px;
+    max-height: 350px;
+}
+
 

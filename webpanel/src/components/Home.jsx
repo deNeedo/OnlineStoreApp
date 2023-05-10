@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 import homeCss from './css/Home.module.css';
-import ProductConatiner from "./ProductContainer";
 import Header from './Header';
 import Footer from "./Footer";
+
+import { Grid, Box,Typography} from '@mui/material';
 
 export const Home = () => {
 
@@ -57,22 +58,26 @@ export const Home = () => {
 
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
+                
+            <div className={homeCss['products']}>
+                    <Grid container>
+                    {data.map((item) => (
+                        <Grid item xs={3} key={item.id_item} spacing={2} className={homeCss['product-box']}>
+                            <Box
+                                className={homeCss["poduct-img"]}
+                                component='img' 
+                                src='../../img/potato.jpg'
+                              ></Box>
+                            <hr></hr>
+                            <Typography className={homeCss['product-name']}>{item.item_name}
+                            </Typography>
+                            <Typography className={homeCss['product-price']}>{item.type}
+                            </Typography>
+                        </Grid>
+                         ))}
+                    </Grid>
+            </div>
 
-                <table className={homeCss['temp-table']}>
-                    <tbody>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                        </tr>
-                            {data.map((item) => (
-                        <tr key={item.id_item}>
-                            <td> {item.item_name} </td>
-                            <td> {item.type} </td>
-                        </tr>
-                            ))}
-                    </tbody>
-                </table>
-                    <ProductConatiner/>
                 <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify("You have been logged out.", 'info')}}> Log out </button>
             </div>
             <Footer/>

@@ -4,10 +4,6 @@
 
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
-DROP table onlinestore.items;
-DROP table onlinestore.users;
-
-CREATE SCHEMA onlinestore;
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,6 +16,15 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: onlinestore; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA onlinestore;
+
+
+ALTER SCHEMA onlinestore OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -28,15 +33,14 @@ SET default_table_access_method = heap;
 -- Name: items; Type: TABLE; Schema: onlinestore; Owner: postgres
 --
 
-
-
 CREATE TABLE onlinestore.items (
     id_item integer NOT NULL,
     item_name character varying(25),
     type character varying(20),
     price numeric(10,2),
     quantity integer,
-    input_date date
+    input_date date,
+    photo text
 );
 
 
@@ -122,44 +126,44 @@ ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onl
 -- Data for Name: items; Type: TABLE DATA; Schema: onlinestore; Owner: postgres
 --
 
-COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date) FROM stdin;
-1	Chives	Vegetables	\N	\N	\N
-2	Yellow pepper	Vegetables	\N	\N	\N
-3	Cauliflower	Vegetables	\N	\N	\N
-4	Rasberry tomato	Vegetables	\N	\N	\N
-5	Potato	Vegetables	\N	\N	\N
-6	Cabbage	Vegetables	\N	\N	\N
-7	Kohlrabi 	Vegetables	\N	\N	\N
-8	Radish	Vegetables	\N	\N	\N
-9	Cherry tomato	Vegetables	\N	\N	\N
-10	Avocado	Vegetables	\N	\N	\N
-11	Iceberg lettuce	Vegetables	\N	\N	\N
-12	Carrot	Vegetables	\N	\N	\N
-13	Broccoli	Vegetables	\N	\N	\N
-14	Garlic	Vegetables	\N	\N	\N
-15	Zucchini 	Vegetables	\N	\N	\N
-16	Valerianella	Vegetables	\N	\N	\N
-17	Spinach	Vegetables	\N	\N	\N
-18	Rucola	Vegetables	\N	\N	\N
-19	Onion	Vegetables	\N	\N	\N
-20	Celery	Vegetables	\N	\N	\N
-21	Dill	Vegetables	\N	\N	\N
-22	Parsley	Vegetables	\N	\N	\N
-23	Red pepper	Vegetables	\N	\N	\N
-24	Cucomber	Vegetables	\N	\N	\N
-25	Tomato	Vegetables	\N	\N	\N
-26	Mushroom	Vegetables	\N	\N	\N
-27	Beetroot	Vegetables	\N	\N	\N
-28	Leek	Vegetables	\N	\N	\N
-29	Chili	Vegetables	\N	\N	\N
-30	Sweetcorn	Vegetables	\N	\N	\N
-31	Aubergine	Vegetables	\N	\N	\N
-32	Red cabbage	Vegetables	\N	\N	\N
-33	Soya	Vegetables	\N	\N	\N
-34	Asparagus	Vegetables	\N	\N	\N
-35	Kale	Vegetables	\N	\N	\N
-36	Turnip	Vegetables	\N	\N	\N
-37	Sweet potato	Vegetables	\N	\N	\N
+COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, photo) FROM stdin;
+1	Chives	Vegetables	\N	\N	\N	\N
+2	Yellow pepper	Vegetables	\N	\N	\N	\N
+3	Cauliflower	Vegetables	\N	\N	\N	\N
+4	Rasberry tomato	Vegetables	\N	\N	\N	\N
+6	Cabbage	Vegetables	\N	\N	\N	\N
+7	Kohlrabi 	Vegetables	\N	\N	\N	\N
+8	Radish	Vegetables	\N	\N	\N	\N
+9	Cherry tomato	Vegetables	\N	\N	\N	\N
+10	Avocado	Vegetables	\N	\N	\N	\N
+11	Iceberg lettuce	Vegetables	\N	\N	\N	\N
+12	Carrot	Vegetables	\N	\N	\N	\N
+13	Broccoli	Vegetables	\N	\N	\N	\N
+14	Garlic	Vegetables	\N	\N	\N	\N
+15	Zucchini 	Vegetables	\N	\N	\N	\N
+16	Valerianella	Vegetables	\N	\N	\N	\N
+17	Spinach	Vegetables	\N	\N	\N	\N
+18	Rucola	Vegetables	\N	\N	\N	\N
+19	Onion	Vegetables	\N	\N	\N	\N
+20	Celery	Vegetables	\N	\N	\N	\N
+21	Dill	Vegetables	\N	\N	\N	\N
+22	Parsley	Vegetables	\N	\N	\N	\N
+23	Red pepper	Vegetables	\N	\N	\N	\N
+24	Cucomber	Vegetables	\N	\N	\N	\N
+25	Tomato	Vegetables	\N	\N	\N	\N
+26	Mushroom	Vegetables	\N	\N	\N	\N
+27	Beetroot	Vegetables	\N	\N	\N	\N
+28	Leek	Vegetables	\N	\N	\N	\N
+29	Chili	Vegetables	\N	\N	\N	\N
+30	Sweetcorn	Vegetables	\N	\N	\N	\N
+31	Aubergine	Vegetables	\N	\N	\N	\N
+32	Red cabbage	Vegetables	\N	\N	\N	\N
+33	Soya	Vegetables	\N	\N	\N	\N
+34	Asparagus	Vegetables	\N	\N	\N	\N
+35	Kale	Vegetables	\N	\N	\N	\N
+36	Turnip	Vegetables	\N	\N	\N	\N
+37	Sweet potato	Vegetables	\N	\N	\N	\N
+5	Potato	Vegetables	\N	\N	\N	../../img/potato.jpg
 \.
 
 
@@ -205,3 +209,4 @@ ALTER TABLE ONLY onlinestore.users
 --
 -- PostgreSQL database dump complete
 --
+

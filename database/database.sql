@@ -1,4 +1,5 @@
---
+DROP table onlinestore.items;
+DROP table onlinestore.users;
 -- PostgreSQL database dump
 --
 

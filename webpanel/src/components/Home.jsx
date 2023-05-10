@@ -65,7 +65,8 @@ export const Home = () => {
                             <Box
                                 className={homeCss['product-img']}
                                 component='img'                                     
-                                src='{item.img}'
+                                src={item.photo}
+                                
                             ></Box>
                             <hr color='#e0e0e0'></hr>
                             <Typography className={homeCss['product-name']}>{item.item_name}
@@ -74,7 +75,9 @@ export const Home = () => {
                             </Typography>
                             <Typography className={homeCss['product-price']}>Quantity: {item.quantity}
                             </Typography>
+                            {console.log(item.photo)}
                         </Grid>
+
                         ))}
                     </Grid>
 

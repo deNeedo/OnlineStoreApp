@@ -49,6 +49,7 @@ public class App
             obj.put("price", rs.getDouble("price"));
             obj.put("quantity", rs.getInt("quantity"));
             obj.put("input_date", rs.getString("input_date"));
+            obj.put("photo", rs.getString("photo"));
             arr.add(obj);
         }
         JSONObject obj = new JSONObject(); obj.put("", arr);

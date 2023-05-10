@@ -50,35 +50,33 @@ export const Home = () => {
             
             <div className={homeCss['content-box']}>
                 <input 
-                        type="text" 
-                        placeholder="Search for Your favorite vegetables and fruits" 
-                        className={homeCss["search-input"]}
+                        type='text' 
+                        placeholder='Search for Your favorite vegetables and fruits...' 
+                        className={homeCss['search-input']}
                         onChange={onInputChange}
                     />
 
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
                 
-            <div className={homeCss['products']}>
-                    <Grid container>
+                    <Grid container  className={homeCss['products-container']} sx={{display: 'grid',gap: 3,gridTemplateColumns: 'repeat(3, 1fr)',}}>
                     {data.map((item) => (
-                        <Grid item xs={3} key={item.id_item} spacing={2} className={homeCss['product-box']}>
+                        <Grid item key={item.id_item} className={homeCss['product-box']}>
                             <Box
-                                className={homeCss["poduct-img"]}
-                                component='img' 
+                                className={homeCss['product-img']}
+                                component='img'                                     
                                 src='../../img/potato.jpg'
-                              ></Box>
-                            <hr></hr>
+                            ></Box>
+                            <hr color='#e0e0e0'></hr>
                             <Typography className={homeCss['product-name']}>{item.item_name}
                             </Typography>
                             <Typography className={homeCss['product-price']}>{item.type}
                             </Typography>
                         </Grid>
-                         ))}
+                        ))}
                     </Grid>
-            </div>
 
-                <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify("You have been logged out.", 'info')}}> Log out </button>
+                <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify('You have been logged out.', 'info')}}> Log out </button>
             </div>
             <Footer/>
         </div>

@@ -12,7 +12,7 @@ const Header = () => {
         <nav>
             <div className={headerCss['header']}>
                 <div className={headerCss['logo-and-title']}>
-                    <img className={headerCss['logo']} src={Logo} alt="Logo" />
+                    <img className={headerCss['logo']} src={Logo} alt='Logo' />
                     <span className={headerCss['title']}>Veggie store</span>
                 </div>
 

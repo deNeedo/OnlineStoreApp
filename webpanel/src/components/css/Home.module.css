@@ -33,14 +33,21 @@ input.search-input {
     border-color: #283618;
   }
 
-.products {
-    width: 80%;
+.products-container{
+   max-width: 1240px;
+
 }
 
 .product-box{
+    border: solid 1px #e0e0e0;
     padding: 10px;
-    border: solid #808080 1px;
     border-radius: 15px;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.15);
+}
+
+.product-box:hover {
+    cursor: pointer;
+    transform: scale(1.01);
 }
 
 .product-name{
@@ -57,10 +64,12 @@ input.search-input {
 
 }
 
-.poduct-img{
-    width: 100%;
-    max-width: 350px;
-    max-height: 350px;
+.product-img{
+    display: block;
+    width: 75%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 

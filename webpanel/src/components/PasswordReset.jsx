@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import passCss from './css/PasswordReset.module.css'
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from './Header';
+import Footer from './Footer';
 
 const PasswordReset = () => {
 

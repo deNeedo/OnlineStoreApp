@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../img/page-icon.ico';
 import headerCss from './css/Header.module.css';
-import {NavLink, Link} from 'react-router-dom';
 
 const Header = () => {
+
+    const navigate = useNavigate();
+    const loginRedirect = () => {navigate('/login');}
 
     return (
         <nav>
@@ -14,7 +17,7 @@ const Header = () => {
                 </div>
 
                 <div className={headerCss['components']}>
-                <NavLink to="/login" className={headerCss['link-btn']}>Login</NavLink>
+                <button onClick={loginRedirect} className={headerCss['link-btn']}>Log In</button>
 
                 </div>
             </div>

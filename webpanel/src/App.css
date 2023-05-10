@@ -1,5 +1,8 @@
 /* Global css classes */
+.root{
+    background-color: red;
 
+}
 input {
     font-size: 1rem;
     margin: 10% 0% 1% 0%;
@@ -68,7 +71,7 @@ button:hover {
     display: inline-block;
   }
   
-  @keyframes wave-animation {
+@keyframes wave-animation {
       0% { transform: rotate( 0.0deg) }
      10% { transform: rotate(14.0deg) }  
      20% { transform: rotate(-9.0deg) }

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import homeCss from './css/Home.module.css';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
+import homeCss from './css/Home.module.css';
 import Header from './Header';
+import Footer from "./Footer";
 
 export const Home = () => {
 
@@ -43,9 +44,9 @@ export const Home = () => {
     
     return ( 
         <div className={homeCss['wrapper']}>
-                <Header/>
+            <Header/>
+            
             <div className={homeCss['content-box']}>
-                
                 <input 
                         type="text" 
                         placeholder="Search for Your favorite vegetables and fruits" 
@@ -55,7 +56,6 @@ export const Home = () => {
 
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
-                <p className={homeCss["welcome-mess"]}>Welcome to the Home page</p>
 
                 <table>
                     <tbody>
@@ -71,9 +71,9 @@ export const Home = () => {
                             ))}
                     </tbody>
                 </table>
-
-                <button className={homeCss['logout-button']} onClick={function() {loginRedirect(); notify("You have been logged out.", 'info')}}> Log out </button>
+                <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify("You have been logged out.", 'info')}}> Log out </button>
             </div>
+            <Footer/>
         </div>
     );
 }

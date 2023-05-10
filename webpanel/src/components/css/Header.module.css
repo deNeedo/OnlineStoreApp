@@ -1,12 +1,10 @@
 nav {
     height: 60px;
-    border: 1px solid #dfdfdf;
-    border-radius: 15px;
+    border: none;
+    border-radius: 0 0 15px 15px;
     background-color: #283618;
-    position: fixed;
     width: 1440px;
     z-index: 1;
-    top: 0;
     display: flex;
 }
 

@@ -1,35 +1,29 @@
 .wrapper {
     max-width: 1440px;
-    width:100%;
     margin: 0px auto;
     font-family: 'Lato';
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
 .content-box {
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    background-color: #ffffff;
+    flex: 1;
 }
 
-.logout-button {
-    margin-top: 0%;
+.logout-btn {
+    margin-top: 3%;
     width: 20%;
     background-color: #283618;
 }
 
-.welcome-mess {
-    font-size: 24px;
-}
-
 input.search-input {
-
     width: 40%;
-    font-size: 1.5rem;
-    margin: 10% 0% 1% 0%;
+    font-size: 1.25rem;
+    margin: 3% 0% 3% 0%;
     outline: 0;
     border-width: 0 0 2px;
     border-color: #e5e5e5;

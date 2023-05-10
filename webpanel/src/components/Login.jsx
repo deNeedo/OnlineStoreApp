@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 import loginCss from './css/Login.module.css';
+import Header from './Header';
+import Footer from './Footer';
 
 export const Login = () => {
 
@@ -79,41 +81,43 @@ export const Login = () => {
 
 return (
     <div className={loginCss['wrapper']}>
-        <div className={loginCss["auth-form-container"]}>
+        <Header/>
+        <div className={loginCss['content-box']}>
+            <div className={loginCss["auth-form-container"]}>
 
-            {
-            /* // * Notification setup */}
-            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+                <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-            <div className={loginCss["welcome-mess-box"]}><span className={loginCss["welcome-mess"]}>Hello, </span><span className='wave'>👋</span><span className={loginCss["welcome-mess"]}> please log in</span></div>
-                
-            <form className={loginCss["login-form"]} onSubmit={handleSubmit}>
-                <input 
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="Email"
-                        onChange={onInputChange}
-                        onBlur={validateInput}></input>
-                    {error.email && <span className='err'>{error.email}</span>}
-
+                <div className={loginCss["welcome-mess-box"]}><span className={loginCss["welcome-mess"]}>Hello, </span><span className='wave'>👋</span><span className={loginCss["welcome-mess"]}> please log in</span></div>
+                    
+                <form className={loginCss["login-form"]} onSubmit={handleSubmit}>
                     <input 
-                        type="password"
-                        name="pass"
-                        id="pass"
-                        placeholder="Password" 
-                        value={input.pass} 
-                        onChange={onInputChange}
-                        onBlur={validateInput}></input>
-                    {error.pass && <span className='err'>{error.pass}</span>}
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="Email"
+                            onChange={onInputChange}
+                            onBlur={validateInput}></input>
+                        {error.email && <span className='err'>{error.email}</span>}
 
-                    <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
-            </form>
-                
-            <button className='link-btn' onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
-                
-            <button className='link-btn' onClick={registerRedirect}>Don't have an account? Register here!</button>
+                        <input 
+                            type="password"
+                            name="pass"
+                            id="pass"
+                            placeholder="Password" 
+                            value={input.pass} 
+                            onChange={onInputChange}
+                            onBlur={validateInput}></input>
+                        {error.pass && <span className='err'>{error.pass}</span>}
+
+                        <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Log In</button>
+                </form>
+                    
+                <button className='link-btn' onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
+                    
+                <button className='link-btn' onClick={registerRedirect}>Don't have an account? Register here!</button>
+            </div>
         </div>
+        <Footer/>
     </div>
 )}
 

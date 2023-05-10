@@ -1,0 +1,31 @@
+footer {
+    height: 60px;
+    width: 1440px;
+    border: none;
+    border-radius: 15px 15px 0 0;
+    background-color: #283618;
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+}
+
+
+.contact{
+    color: #ffffff;
+    font-weight: bold;
+}
+
+a{
+    margin-top: 0;
+    background: none;
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.contact-info{
+    position: relative;
+    left: 80%;
+    
+}

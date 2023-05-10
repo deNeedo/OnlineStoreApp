@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 import registerCss from './css/Register.module.css';
+import Header from "./Header";
+import Footer from "./Footer";
 
 export const Register = (props) => {
 
     const { notifications, dismissNotification, notify } = useNotifications();
 
     const navigate = useNavigate();
-    const registerRedirect = () => {navigate('/dashboard');}
     const loginRedirect = () => {navigate('/login');}
     const termsRedirect = () => {navigate('/terms');}
 
@@ -131,7 +132,7 @@ export const Register = (props) => {
             else
             {
                 notify("Registration successful!", 'success');
-                loginRedirect;
+                loginRedirect();
             }
             let message = "connection-close-try";
             socket.send(message, 0, message.length, 80, "localhost");
@@ -145,84 +146,88 @@ export const Register = (props) => {
     
 return (
     <div className={registerCss['wrapper']}>
-        <div className={registerCss["auth-form-container"]}>
+        <Header/>
+        <div className={registerCss['content-box']}>
+            <div className={registerCss["auth-form-container"]}>
 
-            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+                <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-            <div className={registerCss["welcome-mess-box"]}>
-                <span className={registerCss["welcome-mess"]}> Welcome! </span><span className='wave'>👋</span><span className={registerCss["welcome-mess"]}> Please register</span>
-            </div>
-                
-            <form className={registerCss["register-form"]} onSubmit={handleSubmit}>
-                <input 
-                    type="name"
-                    name="name"
-                    id="name"
-                    placeholder="Name"
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.name && <span className='err'>{error.name}</span>}
-                    
-                <input
-                    type="surname"
-                    name="surname"
-                    id="surname"
-                    placeholder="Surname"
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.surname && <span className='err'>{error.surname}</span>}
-
-                <input
-                    type="phone"
-                    name="phone"
-                    id="phone"
-                    placeholder="Phone"
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.phone && <span className='err'>{error.phone}</span>}
-
-                <input 
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email"
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.email && <span className='err'>{error.email}</span>}
-
-                <input 
-                    type="password"
-                    name="pass"
-                    id="pass"
-                    placeholder="Password" 
-                    value={input.pass} 
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.pass && <span className='err'>{error.pass}</span>}
-
-                <input 
-                    type="password" 
-                    name="confirmPass"
-                    id="confirmPass"
-                    placeholder="Retype Password"
-                    value={input.confirmPass}
-                    onChange={onInputChange}
-                    onBlur={validateInput}></input>
-                {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
-
-
-                <div className={registerCss["terms"]}>
-                    <input
-                        type="checkbox"
-                        name="agreement"
-                        onChange={handleChange}
-                        /> I agree to the <button className={registerCss["terms-btn"]} onClick={termsRedirect}>terms & conditions</button>
+                <div className={registerCss["welcome-mess-box"]}>
+                    <span className={registerCss["welcome-mess"]}> Welcome! </span><span className='wave'>👋</span><span className={registerCss["welcome-mess"]}> Please register</span>
                 </div>
+                    
+                <form className={registerCss["register-form"]} onSubmit={handleSubmit}>
+                    <input 
+                        type="name"
+                        name="name"
+                        id="name"
+                        placeholder="Name"
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.name && <span className='err'>{error.name}</span>}
+                        
+                    <input
+                        type="surname"
+                        name="surname"
+                        id="surname"
+                        placeholder="Surname"
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.surname && <span className='err'>{error.surname}</span>}
 
-                <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Register</button>
-            </form>
-            <button className="link-btn" onClick={loginRedirect}>Already have the account? Login here!</button>      
-        </div>   
+                    <input
+                        type="phone"
+                        name="phone"
+                        id="phone"
+                        placeholder="Phone"
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.phone && <span className='err'>{error.phone}</span>}
+
+                    <input 
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Email"
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.email && <span className='err'>{error.email}</span>}
+
+                    <input 
+                        type="password"
+                        name="pass"
+                        id="pass"
+                        placeholder="Password" 
+                        value={input.pass} 
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.pass && <span className='err'>{error.pass}</span>}
+
+                    <input 
+                        type="password" 
+                        name="confirmPass"
+                        id="confirmPass"
+                        placeholder="Retype Password"
+                        value={input.confirmPass}
+                        onChange={onInputChange}
+                        onBlur={validateInput}></input>
+                    {error.confirmPass && <span className='err'>{error.confirmPass}</span>}  
+
+
+                    <div className={registerCss["terms"]}>
+                        <input
+                            type="checkbox"
+                            name="agreement"
+                            onChange={handleChange}
+                            /> I agree to the <button className={registerCss["terms-btn"]} onClick={termsRedirect}>terms & conditions</button>
+                    </div>
+
+                    <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type="submit">Register</button>
+                </form>
+                <button className="link-btn" onClick={loginRedirect}>Already have the account? Login here!</button>      
+            </div>   
+        </div>
+        <Footer/>
     </div> 
 )}
 

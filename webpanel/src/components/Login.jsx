@@ -59,7 +59,7 @@ export const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let socket = new WebSocket('ws://localhost:80/app/onlinestore');
+        let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
             let message = 'client-login-try '.concat(input.email).concat(' ').concat(input.pass);

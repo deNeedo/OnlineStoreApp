@@ -6,13 +6,18 @@
     <groupId>app.onlinestore</groupId>
     <artifactId>server</artifactId>
     <packaging>jar</packaging>
-    <version>0.2</version>
+    <version>0.3</version>
 
     <properties>
         <maven.compiler.release>13</maven.compiler.release>
     </properties>
 
 	<dependencies>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>

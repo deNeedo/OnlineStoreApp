@@ -52,12 +52,11 @@ public class App
             obj.put("photo", rs.getString("photo"));
             arr.add(obj);
         }
-        JSONObject obj = new JSONObject(); obj.put("", arr);
         return arr;
     }
     public static void main(String[] args)
     {
-        Server server = new Server("localhost", 80, "/app", AppServerEndpoint.class);
+        Server server = new Server("localhost", 80, "", AppServerEndpoint.class);
         try {server.start(); while (true) {}} // for now to make the server run in infinite loop
         catch (Exception e) {e.printStackTrace();}
         finally {server.stop();}
@@ -85,7 +84,6 @@ public class App
         }
         else {stmt = conn.prepareStatement("select * from onlinestore.items");}
 		ResultSet rs = stmt.executeQuery(); String message = createJSON(rs, new JSONArray()).toJSONString();
-		// while (rs.next()) {message += "{\"id_item\"" + rs.getString(1) + "]";}// + " " + rs.getString("item_name") + " " + rs.getString("type") + "\n";}
         return message;
     }
     public static String client_login(String data) throws Exception

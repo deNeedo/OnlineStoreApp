@@ -7,7 +7,7 @@ import javax.websocket.Session;
 import javax.websocket.CloseReason.CloseCodes;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/onlinestore")
+@ServerEndpoint(value = "/veggiestore")
 public class AppServerEndpoint
 {
     private Logger logger = Logger.getLogger(this.getClass().getName());

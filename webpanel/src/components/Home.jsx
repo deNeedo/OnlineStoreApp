@@ -15,7 +15,7 @@ export const Home = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        let socket = new WebSocket("ws://localhost:80/app/onlinestore");
+        let socket = new WebSocket("ws://localhost:80/veggiestore");
         socket.onopen = function()
         {
             let message = "get-products ";
@@ -29,8 +29,8 @@ export const Home = () => {
         };
     }, [])
 
-    const onInputChange = e => {
-        let socket = new WebSocket("ws://localhost:80/app/onlinestore");
+    const onInputChange = (e) => {
+        let socket = new WebSocket("ws://localhost:80/veggiestore");
         socket.onopen = function()
         {
             let message = "get-products " + e.target.value;
@@ -59,7 +59,7 @@ export const Home = () => {
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
                 
-                    <Grid container  className={homeCss['products-container']} sx={{display: 'grid',gap: 3,gridTemplateColumns: 'repeat(3, 1fr)',}}>
+                    <Grid container  className={homeCss['products-container']} sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
                             <Box
@@ -75,7 +75,6 @@ export const Home = () => {
                             </Typography>
                             <Typography className={homeCss['product-price']}>Quantity: {item.quantity}
                             </Typography>
-                            {console.log(item.photo)}
                         </Grid>
 
                         ))}

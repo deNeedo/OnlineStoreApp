@@ -120,7 +120,7 @@ export const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let socket = new WebSocket('ws://localhost:80/app/onlinestore');
+        let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
             let message = 'client-register-try '.concat(input.email).concat(' ').concat(input.pass).concat(' ').concat(input.name).concat(' ').concat(input.surname).concat(' ').concat(input.phone);

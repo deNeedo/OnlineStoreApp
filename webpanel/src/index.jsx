@@ -26,7 +26,7 @@ root.render(
         <NotificationsProvider>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Navigate to="/login"/>}/>
+                    <Route path="/" element={<Navigate to="/home"/>}/>
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                     <Route path="password-reset" element={<PasswordReset/>} />

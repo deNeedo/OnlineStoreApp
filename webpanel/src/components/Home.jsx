@@ -13,6 +13,7 @@ export const Home = () => {
     const navigate = useNavigate();
     const loginRedirect = () => {navigate('/login');}
     const [data, setData] = useState([]);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         let socket = new WebSocket("ws://localhost:80/veggiestore");
@@ -38,6 +39,8 @@ export const Home = () => {
         };
         socket.onmessage = function(event)
         {
+            if (event.data.length == 2) {setError("Product not found.");}
+            else {setError("");}
             setData(JSON.parse(event.data));
             let message = "connection-close-try";
             socket.send(message, 0, message.length, 80, "localhost");
@@ -55,7 +58,7 @@ export const Home = () => {
                         className={homeCss['search-input']}
                         onChange={onInputChange}
                     />
-
+                <p> {error} </p>
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
                 

@@ -65,12 +65,14 @@ export const Home = () => {
                             <Box
                                 className={homeCss['product-img']}
                                 component='img'                                     
-                                src='../../img/potato.jpg'
+                                src='{item.img}'
                             ></Box>
                             <hr color='#e0e0e0'></hr>
                             <Typography className={homeCss['product-name']}>{item.item_name}
                             </Typography>
-                            <Typography className={homeCss['product-price']}>{item.type}
+                            <Typography className={homeCss['product-price']}>${item.price}
+                            </Typography>
+                            <Typography className={homeCss['product-price']}>Quantity: {item.quantity}
                             </Typography>
                         </Grid>
                         ))}

@@ -45,7 +45,7 @@ input.search-input {
     box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.15);
 }
 
-.product-box:hover {
+.product-box:hover{
     cursor: pointer;
     transform: scale(1.01);
 }
@@ -59,9 +59,7 @@ input.search-input {
 
 .product-price{
     font-family: 'Lato';
-    font-size: 0.7rem;
-    color: red;
-
+    color: #283618;
 }
 
 .product-img{

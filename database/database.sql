@@ -132,7 +132,7 @@ COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, p
 2	Yellow pepper	Vegetables	1.00	100	\N	\N ../../img/yellowPepper.jpeg
 3	Cauliflower	Vegetables	0.90	100	\N	\N ../../img/cauliflower.jpeg
 4	Rasberry tomato	Vegetables	0.2	100	\N	\N ../../img/rasberryTomato.jpeg
-6	Cabbage	Vegetables	0.75  70	\N	\N ../../img/cabbage.jpeg
+6	Cabbage	Vegetables	0.75    70	\N	\N ../../img/cabbage.jpeg
 7	Kohlrabi 	Vegetables	0.3	120	\N	\N ../../img/kohlrabi.jpeg
 8	Radish	Vegetables	0.10	150	\N	\N ../../img/radish.jpeg
 9	Cherry tomato	Vegetables	0.20	100	\N	\N ../../img/cherryTomato.jpeg

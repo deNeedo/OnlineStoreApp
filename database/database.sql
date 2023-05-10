@@ -128,7 +128,7 @@ ALTER TABLE ONLY onlinestore.users ALTER COLUMN user_id SET DEFAULT nextval('onl
 --
 
 COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, photo) FROM stdin;
-1	Chives	Vegetables	\N	\N	\N	\N
+1	Chives	Vegetables	1	\N	\N	\N
 2	Yellow pepper	Vegetables	\N	\N	\N	\N
 3	Cauliflower	Vegetables	\N	\N	\N	\N
 4	Rasberry tomato	Vegetables	\N	\N	\N	\N

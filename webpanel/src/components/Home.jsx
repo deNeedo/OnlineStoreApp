@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 import homeCss from './css/Home.module.css';
+import ProductConatiner from "./ProductContainer";
 import Header from './Header';
 import Footer from "./Footer";
 
@@ -57,7 +58,7 @@ export const Home = () => {
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 
 
-                <table>
+                <table className={homeCss['temp-table']}>
                     <tbody>
                         <tr>
                             <th>Name</th>
@@ -71,6 +72,7 @@ export const Home = () => {
                             ))}
                     </tbody>
                 </table>
+                    <ProductConatiner/>
                 <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify("You have been logged out.", 'info')}}> Log out </button>
             </div>
             <Footer/>

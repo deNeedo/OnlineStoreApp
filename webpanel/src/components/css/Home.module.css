@@ -15,9 +15,13 @@
 }
 
 .logout-btn {
-    margin-top: 3%;
+    margin: 3% 0 3% 0;
     width: 20%;
     background-color: #283618;
+}
+
+.temp-table{
+    margin-bottom: 10%;
 }
 
 input.search-input {

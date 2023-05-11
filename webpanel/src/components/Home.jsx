@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
 import homeCss from './css/Home.module.css';
 import Header from './Header';
 import Footer from "./Footer";
-
 import { Grid, Box,Typography} from '@mui/material';
 
-export const Home = () => {
-
-    const { notifications, dismissNotification, notify } = useNotifications();
-    const navigate = useNavigate();
-    const loginRedirect = () => {navigate('/login');}
+export default function Home(){
+    const {notifications, dismissNotification} = useNotifications();
+    const location = useLocation();
+    const [ButtonText, setButtonText] = useState("");
     const [data, setData] = useState([]);
     const [error, setError] = useState("");
 
     useEffect(() => {
+        if (location.state == null) {setButtonText("Log In")}
+        else {setButtonText(location.state.text)}
         let socket = new WebSocket("ws://localhost:80/veggiestore");
         socket.onopen = function()
         {
@@ -49,7 +49,7 @@ export const Home = () => {
     
     return ( 
         <div className={homeCss['wrapper']}>
-            <Header/>
+            <Header text={ButtonText}/>
             
             <div className={homeCss['content-box']}>
                 <input 
@@ -60,7 +60,7 @@ export const Home = () => {
                     />
                 <p> {error} </p>
             <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
-                
+
                 
                     <Grid container  className={homeCss['products-container']} sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
@@ -83,11 +83,8 @@ export const Home = () => {
                         ))}
                     </Grid>
 
-                <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify('You have been logged out.', 'info')}}> Log out </button>
             </div>
             <Footer/>
         </div>
     );
 }
-
-export default Home;

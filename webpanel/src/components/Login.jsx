@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import NotificationsSystem, { atalhoTheme, useNotifications } from 'reapop';
 import loginCss from './css/Login.module.css';
 import Header from './Header';
@@ -7,11 +7,10 @@ import Footer from './Footer';
 
 export const Login = () => {
 
-
     const { notifications, dismissNotification, notify } = useNotifications();
-
     const navigate = useNavigate();
-    const loginRedirect = () => {navigate('/home');}
+    const location = useLocation();
+    const [ButtonText, setButtonText] = useState("");
     const registerRedirect = () => {navigate('/register');}
     const forgotPassRedirect = () => {navigate('/password-reset')}
     
@@ -25,6 +24,11 @@ export const Login = () => {
         pass: ''
         })
         
+    useEffect(() => {
+        if (location.state == null) {setButtonText("Log in")}
+        else {setButtonText(location.state.text)}
+    }, [])
+
     const onInputChange = e => {
         const { name, value } = e.target;
         setInput(prev => ({
@@ -70,7 +74,7 @@ export const Login = () => {
             if (event.data == 'success')
             {
                 notify('Login correct!', 'success');
-                loginRedirect();
+                navigate('/home', {state: {text: "Log Out"}});
             }
             else {notify('Email or Password are invalid', 'error');}
             let message = 'connection-close-try';
@@ -81,7 +85,7 @@ export const Login = () => {
 
 return (
     <div className={loginCss['wrapper']}>
-        <Header/>
+        <Header text={ButtonText}/>
         <div className={loginCss['content-box']}>
             <div className={loginCss['auth-form-container']}>
 

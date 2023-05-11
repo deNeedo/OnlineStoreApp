@@ -65,6 +65,8 @@ export const Home = () => {
                     <Grid container  className={homeCss['products-container']} sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
+                            <Typography className={homeCss['product-name']} variant='h5'>{item.item_name}
+                            </Typography>
                             <Box
                                 className={homeCss['product-img']}
                                 component='img'                                     
@@ -72,11 +74,9 @@ export const Home = () => {
                                 
                             ></Box>
                             <hr color='#e0e0e0'></hr>
-                            <Typography className={homeCss['product-name']}>{item.item_name}
+                            <Typography className={homeCss['product-price']} variant='subtitle1'>Price: ${item.price}
                             </Typography>
-                            <Typography className={homeCss['product-price']}>${item.price}
-                            </Typography>
-                            <Typography className={homeCss['product-price']}>Quantity: {item.quantity}
+                            <Typography className={homeCss['product-quantity']} variant='subtitle1'>Quantity: {item.quantity}
                             </Typography>
                         </Grid>
 

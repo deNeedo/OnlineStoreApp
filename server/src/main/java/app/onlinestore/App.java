@@ -54,6 +54,20 @@ public class App
         }
         return arr;
     }
+    private static JSONArray makeUnique(JSONArray arr)
+    {
+        JSONArray arr_unique = new JSONArray();
+        for (int m = 0; m < arr.size(); m++)
+        {
+            boolean flag = true;
+            for (int n = 0; n < arr_unique.size(); n++)
+            {
+                if (arr.get(m).equals(arr_unique.get(n))) {flag = false; break;}
+            }
+            if (flag == true) {arr_unique.add(arr.get(m));}
+        }
+        return arr_unique;
+    }
     public static void main(String[] args)
     {
         Server server = new Server("localhost", 80, "", AppServerEndpoint.class);
@@ -73,19 +87,23 @@ public class App
     }
     public static String get_products(String data) throws Exception
     {
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass); PreparedStatement stmt;
-
-        if (data.split(" ").length > 1)
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.items");
+        String[] patterns = data.split(" ");
+        if (patterns.length > 1)
         {
-            StringBuilder pattern = new StringBuilder();
-            for (int m = 1; m < data.split(" ").length; m++) {pattern.append(data.split(" ")[m]); pattern.append(" ");}
-            pattern.deleteCharAt(pattern.length() - 1);
-            stmt = conn.prepareStatement("select * from onlinestore.items where upper(item_name) like upper('%" + pattern + "%')");
+            JSONArray results = new JSONArray();
+            for (int m = 1; m < patterns.length; m++)
+            {
+                stmt = conn.prepareStatement("select * from onlinestore.items where upper(item_name) like upper('%" + data.split(" ")[m] + "%')");
+                results = createJSON(stmt.executeQuery(), results);
+            }
+            results = makeUnique(results);
+            return results.toJSONString();
         }
-        else {stmt = conn.prepareStatement("select * from onlinestore.items");}
-		ResultSet rs = stmt.executeQuery(); String message = createJSON(rs, new JSONArray()).toJSONString();
-        return message;
+        else {return createJSON(stmt.executeQuery(), new JSONArray()).toJSONString();}
     }
+   
     public static String client_login(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);

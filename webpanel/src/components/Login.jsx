@@ -1,33 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import NotificationsSystem, { atalhoTheme, useNotifications } from 'reapop';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
+import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import {Grid, Box,Typography} from '@mui/material';
+
 import loginCss from './css/Login.module.css';
 import Header from './Header';
 import Footer from './Footer';
 
-export const Login = () => {
+export function Login() {
 
-    const { notifications, dismissNotification, notify } = useNotifications();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [ButtonText, setButtonText] = useState("");
-    const registerRedirect = () => {navigate('/register');}
-    const forgotPassRedirect = () => {navigate('/password-reset')}
-    
-    const [input, setInput] = useState({
-        email: '',
-        pass: ''
-        });
-        
-    const [error, setError] = useState({
-        email: '',
-        pass: ''
-        })
-        
+    const {notifications, dismissNotification, notify} = useNotifications();
+    const navigate = useNavigate(); const location = useLocation();
+
+    const [buttons, setButtons] = useState({login: '', register: ''});
+    const [input, setInput] = useState({email: '', pass: ''});  
+    const [error, setError] = useState({email: '', pass: ''});
+
+    const registerRedirect = () => {
+        navigate('/register', {state: {buttons: {login: 'Log In', register: 'Home'}}});
+    }
+    const forgotPassRedirect = () => {
+        navigate('/password-reset', {state: {buttons: {login: 'Log In', register: 'Home'}}});
+    }
+
+
     useEffect(() => {
-        if (location.state == null) {setButtonText("Log in")}
-        else {setButtonText(location.state.text)}
+        if (location.state == null) {setButtons({login: 'Home', register: 'Register'});}
+        else {setButtons(location.state.buttons)}
     }, [])
+
+
 
     const onInputChange = e => {
         const { name, value } = e.target;
@@ -74,7 +76,7 @@ export const Login = () => {
             if (event.data == 'success')
             {
                 notify('Login correct!', 'success');
-                navigate('/home', {state: {text: "Log Out"}});
+                navigate('/home', {state: {buttons: {login: 'Log Out', register: 'Register'}}});
             }
             else {notify('Email or Password are invalid', 'error');}
             let message = 'connection-close-try';
@@ -85,7 +87,7 @@ export const Login = () => {
 
 return (
     <div className={loginCss['wrapper']}>
-        <Header text={ButtonText}/>
+        <Header buttons={buttons}/>
         <div className={loginCss['content-box']}>
             <div className={loginCss['auth-form-container']}>
 

@@ -1,38 +1,34 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import NotificationsSystem, { atalhoTheme, useNotifications } from 'reapop';
-import Logo from '../../img/page-icon.ico';
-import headerCss from './css/Header.module.css';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
+import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import {Grid, Box,Typography} from '@mui/material';
 
-export default function Header({text}) {
-    const { notify } = useNotifications();
-    const navigate = useNavigate();
+import headerCss from './css/Header.module.css';
+import Logo from '../../img/page-icon.ico';
+
+export function Header({buttons}) {
+    const {notifications, dismissNotification, notify} = useNotifications();
+    const navigate = useNavigate(); const location = useLocation();
+
     const loginRedirect = () => {
-        if (text == "Log In")
-        {
-            // let socket = new WebSocket("ws://localhost:80/veggiestore");
-            // socket.onopen = function()
-            // {
-            //     let message = "set-session";
-            //     socket.send(message, 0, message.length, 80, "localhost");
-            // };
-            // socket.onmessage = function()
-            // {
-            //     let message = "connection-close-try";
-            //     socket.send(message, 0, message.length, 80, "localhost");
-            // };
-            navigate('/login', {state: {text: "Home"}});
+        if (buttons.login == 'Log In') {
+            navigate('/login', {state: {buttons: {login: 'Home', register: 'Register'}}});
         }
-        else if (text == "Home")
-        {
-            navigate('/home', {state: {text: "Log In"}});
+        else if (buttons.login == 'Home') {
+            navigate('/home', {state: {buttons: {login: 'Log In', register: 'Register'}}});
         }
-        else if (text == "Log Out")
-        {
-            notify("Logout correct!", "success")
-            navigate('/', {state: {text: "Log In"}});
+        else if (buttons.login == 'Log Out') {
+            notify('Logout correct!', 'success');
+            navigate('/', {state: {buttons: {login: 'Log In', register: 'Register'}}});
         }
-        
+    }
+    const registerRedirect = () => {
+        if (buttons.register == 'Register') {
+            navigate('/register', {state: {buttons: {login: 'Log In', register: 'Home'}}});
+        }
+        else if (buttons.register == 'Home') {
+            navigate('/home', {state: {buttons: {login: 'Log In', register: 'Register'}}});
+        }
     }
 
     return (
@@ -42,12 +38,13 @@ export default function Header({text}) {
                     <img className={headerCss['logo']} src={Logo} alt='Logo' />
                     <span className={headerCss['title']}>Veggie store</span>
                 </div>
-
                 <div className={headerCss['components']}>
-                <button onClick={loginRedirect} className={headerCss['link-btn']}>{text}</button>
-
+                    <button onClick={loginRedirect} className={headerCss['link-btn']}>{buttons.login}</button>
+                    <button onClick={registerRedirect} className={headerCss['link-btn']}>{buttons.register}</button>
                 </div>
             </div>
         </nav>
     )
 }
+
+export default Header;

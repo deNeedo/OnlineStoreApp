@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import NotificationsSystem, { atalhoTheme, useNotifications } from 'reapop';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
+import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import {Grid, Box,Typography} from '@mui/material';
+
 import registerCss from './css/Register.module.css';
 import Header from './Header';
 import Footer from './Footer';
 
-export const Register = (props) => {
-
-    const { notifications, dismissNotification, notify } = useNotifications();
-
-    const navigate = useNavigate();
+export function Register() {
+    const {notifications, dismissNotification, notify} = useNotifications();
+    const [buttons, setButtons] = useState({login: '', register: ''});
+    const navigate = useNavigate(); const location = useLocation();
     const loginRedirect = () => {navigate('/login');}
     const termsRedirect = () => {navigate('/terms');}
 
@@ -31,6 +32,11 @@ export const Register = (props) => {
         phone: ''
         })
             
+    useEffect(() => {
+        if (location.state == null) {setButtons({login: 'Log In', register: 'Home'});}
+        else {setButtons(location.state.buttons)}
+    }, [])
+
     const onInputChange = e => {
         const { name, value } = e.target;
         setInput(prev => ({
@@ -132,7 +138,7 @@ export const Register = (props) => {
             else
             {
                 notify('Registration successful!', 'success');
-                loginRedirect();
+                navigate('/login', {state: {buttons: {login: 'Home', register: 'Register'}}});
             }
             let message = 'connection-close-try';
             socket.send(message, 0, message.length, 80, 'localhost');
@@ -146,7 +152,7 @@ export const Register = (props) => {
     
 return (
     <div className={registerCss['wrapper']}>
-        <Header/>
+        <Header buttons={buttons}/>
         <div className={registerCss['content-box']}>
             <div className={registerCss['auth-form-container']}>
 

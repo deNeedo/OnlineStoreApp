@@ -1,22 +1,29 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
+import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import {Grid, Box,Typography} from '@mui/material';
+
 import passCss from './css/PasswordReset.module.css'
 import Header from './Header';
 import Footer from './Footer';
 
-const PasswordReset = () => {
+export function PasswordReset() {
 
-    const navigate = useNavigate();
-    const loginRedirect = () => {navigate('/login');}
+    const {notifications, dismissNotification, notify} = useNotifications();
+    const navigate = useNavigate(); const location = useLocation();
+
+    const [buttons, setButtons] = useState({login: '', register: ''});
+
+    useEffect(() => {
+        setButtons({login: 'Log In', register: 'Register'});
+    }, [])
     
     return ( 
         <div className={passCss['wrapper']}>
-            <Header/>
+            <Header buttons={buttons}/>
             
             <div className={passCss['content-box']}>
                 <p className={passCss['message']}>Reset password site</p>
-
-                <button className={passCss['gologin-button']} onClick = {loginRedirect} > Back to login page </button>
             </div>
 
             <Footer/>

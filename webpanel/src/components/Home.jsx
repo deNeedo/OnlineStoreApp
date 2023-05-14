@@ -16,8 +16,6 @@ export function Home() {
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
 
-
-
     useEffect(() => {
         if (location.state == null) {setButtons({login: 'Log In', register: 'Register'});}
         else {setButtons(location.state.buttons)}
@@ -78,6 +76,6 @@ export function Home() {
             <Footer/>
         </div>
     );
-}
+};
 
 export default Home;

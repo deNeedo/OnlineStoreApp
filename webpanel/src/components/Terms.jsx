@@ -16,7 +16,7 @@ export function Terms() {
     useEffect(() => {
         setButtons({login: 'Log In', register: 'Register'});
     }, [])
-    
+
     return ( 
         <div className={TermsCss['wrapper']}>
             <Header buttons={buttons}/>
@@ -42,7 +42,7 @@ export function Terms() {
             <Footer/>
             </div>
         </div>
-        );
+    )
 };
 
 export default Terms;

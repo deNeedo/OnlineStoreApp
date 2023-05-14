@@ -17,7 +17,7 @@ export function PasswordReset() {
     useEffect(() => {
         setButtons({login: 'Log In', register: 'Register'});
     }, [])
-    
+
     return ( 
         <div className={passCss['wrapper']}>
             <Header buttons={buttons}/>
@@ -28,7 +28,7 @@ export function PasswordReset() {
 
             <Footer/>
         </div>
-        );
+    );
 };
 
 export default PasswordReset;

@@ -61,17 +61,20 @@ export function Home() {
                     onChange={onInputChange}
                 />
                 <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
-                <Grid container className={homeCss['products-container']} sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
+                <Grid container className={error ? homeCss['hide-products-container'] : homeCss['products-container']}  sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
                             <Typography className={homeCss['product-name']} variant='h5'> {item.item_name} </Typography>
+                            <hr className={homeCss['hr']}></hr>
                             <Box className={homeCss['product-img']} component='img' src={item.photo}></Box>
+                            <hr className={homeCss['hr']}></hr>
                             <Typography className={homeCss['product-price']} variant='subtitle1'> Price: ${item.price} </Typography>
                             <Typography className={homeCss['product-quantity']} variant='subtitle1'> Quantity: {item.quantity} </Typography>
                         </Grid>
                     ))}
-                    <p> {error} </p>
                 </Grid>
+
+                <p className={homeCss['err']}> {error} </p>
             </div>
             <Footer/>
         </div>

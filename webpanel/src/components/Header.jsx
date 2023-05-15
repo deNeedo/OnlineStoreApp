@@ -5,6 +5,7 @@ import {Grid, Box,Typography} from '@mui/material';
 
 import headerCss from './css/Header.module.css';
 import Logo from '../../img/page-icon.ico';
+import CartPNG from '../../img/icons8-cart-96.png';
 
 export function Header({buttons}) {
     const {notifications, dismissNotification, notify} = useNotifications();
@@ -35,12 +36,13 @@ export function Header({buttons}) {
         <nav>
             <div className={headerCss['header']}>
                 <div className={headerCss['logo-and-title']}>
-                    <img className={headerCss['logo']} src={Logo} alt='Logo' />
-                    <span className={headerCss['title']}>Veggie store</span>
+                <a className={headerCss['a']} href="/home" ><img className={headerCss['logo']} src={Logo} alt='Logo' /></a>
+                <a className={headerCss['a']} href="/home"><span className={headerCss['title']}>Veggie store</span></a>
                 </div>
-                <div className={headerCss['components']}>
-                    <button onClick={loginRedirect} className={headerCss['link-btn']}>{buttons.login}</button>
-                    <button onClick={registerRedirect} className={headerCss['link-btn']}>{buttons.register}</button>
+                <div className={headerCss['nav']}>
+                        <button onClick={loginRedirect} className={headerCss['link-btn']}>{buttons.login}</button>
+                        <button onClick={registerRedirect} className={headerCss['link-btn']}>{buttons.register}</button>
+                        <a href="/"><img className={headerCss['cart']} src={CartPNG} /></a>
                 </div>
             </div>
         </nav>

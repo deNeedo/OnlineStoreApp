@@ -2,6 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
 import {Grid, Box,Typography} from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';
@@ -49,17 +54,42 @@ export function Home() {
             socket.send(message, 0, message.length, 80, 'localhost');
         };
     }
+
+    // const [age, setAge] = React.useState('');
+
+    // const handleChange = (event: SelectChangeEvent) => {
+    //     // setAge(event.target.value as string);
+    //   };
+
     
     return ( 
         <div className={homeCss['wrapper']}>
             <Header buttons={buttons} />
             <div className={homeCss['content-box']}>
-                <input 
-                    type='text' 
-                    placeholder='Search for Your favorite vegetables and fruits...' 
-                    className={homeCss['search-input']}
-                    onChange={onInputChange}
-                />
+                <div className={homeCss['search-box']}>
+                    <input 
+                        type='text' 
+                        placeholder='Search for Your favorite vegetables and fruits...' 
+                        className={homeCss['search-input']}
+                        onChange={onInputChange}
+                    />
+
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
+                    <InputLabel>Type</InputLabel>
+                    <Select
+                        defaultValue={'all'}
+                        // value={age}
+                        // onChange={handleChange}
+                        label="Age"
+                    >
+                        <MenuItem value={'all'}><em>All</em></MenuItem>
+                        <MenuItem value={'vegetable'}><em>Vegetables</em></MenuItem>
+                        <MenuItem value={'fruit'}><em>Fruits</em></MenuItem>
+                    </Select>
+                </FormControl>
+
+
+                </div>
                 <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
                 <Grid container className={error ? homeCss['hide-products-container'] : homeCss['products-container']}  sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (

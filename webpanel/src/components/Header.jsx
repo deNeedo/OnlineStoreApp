@@ -6,6 +6,7 @@ import {Grid, Box,Typography} from '@mui/material';
 import headerCss from './css/Header.module.css';
 import Logo from '../../img/page-icon.ico';
 import CartPNG from '../../img/icons8-cart-96.png';
+import WishPNG from '../../img/icons8-list-64.png';
 
 export function Header({buttons}) {
     const {notifications, dismissNotification, notify} = useNotifications();
@@ -42,7 +43,8 @@ export function Header({buttons}) {
                 <div className={headerCss['nav']}>
                         <button onClick={loginRedirect} className={headerCss['link-btn']}>{buttons.login}</button>
                         <button onClick={registerRedirect} className={headerCss['link-btn']}>{buttons.register}</button>
-                        <a href="/"><img className={headerCss['cart']} src={CartPNG} /></a>
+                        <a href="/"><img className={headerCss['icon']} src={CartPNG} /></a>
+                        <a href="/"><img className={headerCss['icon']} src={WishPNG} /></a>
                 </div>
             </div>
         </nav>

@@ -21,7 +21,10 @@
 }
 
 input.search-input {
-    width: 40%;
+    padding-top: 11px;
+    min-width: 300px;
+    max-width: 475px;
+    width: 100%;
     font-size: 1.25rem;
     margin: 3% 0% 3% 0%;
     outline: 0;
@@ -32,6 +35,14 @@ input.search-input {
 .search-input:focus {
     border-color: #283618;
   }
+
+  .search-box {
+    display: inline-flex;
+    justify-content: space-between;
+    min-width: 650px;
+    max-width: 1240px;
+    margin: 2% auto;
+}
 
 .products-container{
    max-width: 1240px;

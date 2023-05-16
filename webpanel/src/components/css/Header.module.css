@@ -69,16 +69,17 @@ nav {
     flex-direction: row;
 }
 
-.cart{
+.icon{
     cursor: pointer;
-    margin: 15px 20px;
-    height: 50px;
-    width: 50px;
+    margin: 15px 5px;
+    height: 45px;
+    width: 45px;
 }
 
-.cart:hover {
+.icon:hover {
     transform: scale(1.01);
 }
+
 
 
 

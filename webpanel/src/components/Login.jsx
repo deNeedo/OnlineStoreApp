@@ -62,22 +62,23 @@ export function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let socket = new WebSocket('ws://localhost:80/veggiestore');
+        let socket = new WebSocket('ws://localhost:80/veggiestore'); let message;
         socket.onopen = function()
         {
-            let message = 'client-login-try '.concat(input.email).concat(' ').concat(input.pass);
+            message = 'client-login-try '.concat(input.email).concat(' ').concat(input.pass);
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
         {
             if (event.data == 'success')
             {
+                message = 'session create '.concat(input.email);
+                socket.send(message, 0, message.length, 80, 'localhost');
                 notify('Login correct!', 'success');
                 navigate('/home', {state: {buttons: {login: 'Log Out', register: 'Register'}}});
             }
-            else {notify('Email or Password are invalid', 'error');}
-            let message = 'connection-close-try';
-            socket.send(message, 0, message.length, 80, 'localhost');
+            else if (event.data == 'error') {notify('Email or Password are invalid', 'error');}
+            socket.send('connection-close-try', 0, 'connection-close-try'.length, 80, 'localhost');
         };
     }
     const isEnabled = input.email.length > 0 & input.pass.length > 0;

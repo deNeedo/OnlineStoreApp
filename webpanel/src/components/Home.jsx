@@ -23,19 +23,14 @@ export function Home() {
 
     useEffect(() => {
         if (location.state == null) {setButtons({login: 'Log In', register: 'Register'});}
-        else {setButtons(location.state.buttons)}
+        else {setButtons(location.state.buttons);}
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
             let message = 'get-products ';
             socket.send(message, 0, message.length, 80, 'localhost');
         };
-        socket.onmessage = function(event)
-        {
-            setData(JSON.parse(event.data));
-            let message = 'connection-close-try';
-            socket.send(message, 0, message.length, 80, 'localhost');
-        };
+        socket.onmessage = function(event) {setData(JSON.parse(event.data)); socket.close();};
     }, [])
 
     const onInputChange = (e) => {
@@ -49,19 +44,10 @@ export function Home() {
         {
             if (event.data.length == 2) {setError('Sorry. Couldn\'t find what you\'re looking for.');}
             else {setError('');}
-            setData(JSON.parse(event.data));
-            let message = 'connection-close-try';
-            socket.send(message, 0, message.length, 80, 'localhost');
+            setData(JSON.parse(event.data)); socket.close();
         };
     }
 
-    // const [age, setAge] = React.useState('');
-
-    // const handleChange = (event: SelectChangeEvent) => {
-    //     // setAge(event.target.value as string);
-    //   };
-
-    
     return ( 
         <div className={homeCss['wrapper']}>
             <Header buttons={buttons} />

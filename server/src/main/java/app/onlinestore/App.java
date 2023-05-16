@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 
 import org.glassfish.tyrus.server.Server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.Date;
 import java.util.Properties;
 
 import java.io.FileInputStream;
@@ -103,7 +106,37 @@ public class App
         }
         else {return createJSON(stmt.executeQuery(), new JSONArray()).toJSONString();}
     }
-   
+    public static String manage_session(String data) throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.sessions");
+        ResultSet rs = stmt.executeQuery(); int status = 0; Date date = new Date(); String login = data.split(" ")[2];
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String date_string = formatter.format(date);
+        while (rs.next())
+        {
+            if (rs.getString("login").contains(login))
+            {
+                if (data.contains("create"))
+                {
+                    stmt = conn.prepareStatement("update onlinestore.sessions set time = ? where login like ?");
+                    stmt.setString(1, date_string); stmt.setString(2, login);
+                    stmt.executeQuery(); status = 1; break;
+                }
+                else if (data.contains("check")) {break;}
+            }
+        }
+        if (status == 0)
+        {
+            if (data.contains("create"))
+            {
+                stmt = conn.prepareStatement("insert into onlinestore.sessions values (?, ?)");
+                stmt.setString(1, login); stmt.setString(2, date_string);
+                stmt.executeQuery(); status = 1;
+            }
+            else if (data.contains("check")) {}
+        }
+        return null;
+    }
     public static String client_login(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);

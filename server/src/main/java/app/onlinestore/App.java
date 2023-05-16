@@ -82,7 +82,7 @@ public class App
     {
 		Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
         String hash = hash(data.split(" ")[1], data.split(" ")[2]);
-		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'administrator'" );
+		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'administrator'" );
 		ResultSet rs = stmt.executeQuery();
         String message = "error";
 		while (rs.next()) {message = "success";}
@@ -91,14 +91,14 @@ public class App
     public static String get_products(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.items");
+        PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.items");
         String[] patterns = data.split(" ");
         if (patterns.length > 1)
         {
             JSONArray results = new JSONArray();
             for (int m = 1; m < patterns.length; m++)
             {
-                stmt = conn.prepareStatement("select * from onlinestore.items where upper(item_name) like upper('%" + data.split(" ")[m] + "%')");
+                stmt = conn.prepareStatement("select * from veggiestore.items where upper(item_name) like upper('%" + data.split(" ")[m] + "%')");
                 results = createJSON(stmt.executeQuery(), results);
             }
             results = makeUnique(results);
@@ -109,7 +109,7 @@ public class App
     public static String manage_session(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.sessions");
+        PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.sessions");
         ResultSet rs = stmt.executeQuery(); int status = 0; Date date = new Date(); String login = data.split(" ")[2];
         Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String date_string = formatter.format(date);
         while (rs.next())
@@ -118,7 +118,7 @@ public class App
             {
                 if (data.contains("create"))
                 {
-                    stmt = conn.prepareStatement("update onlinestore.sessions set time = ? where login like ?");
+                    stmt = conn.prepareStatement("update veggiestore.sessions set expire_time = ? where login like ?");
                     stmt.setString(1, date_string); stmt.setString(2, login);
                     stmt.executeQuery(); status = 1; break;
                 }
@@ -129,7 +129,7 @@ public class App
         {
             if (data.contains("create"))
             {
-                stmt = conn.prepareStatement("insert into onlinestore.sessions values (?, ?)");
+                stmt = conn.prepareStatement("insert into veggiestore.sessions (login, expire_time) values (?, ?)");
                 stmt.setString(1, login); stmt.setString(2, date_string);
                 stmt.executeQuery(); status = 1;
             }
@@ -141,7 +141,7 @@ public class App
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
         String hash = hash(data.split(" ")[1], data.split(" ")[2]);
-		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'customer'" );
+		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'customer'" );
 		ResultSet rs = stmt.executeQuery();
         String message = "error";
 		while (rs.next()) {message = "success";}
@@ -150,14 +150,14 @@ public class App
     public static String client_register(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-		PreparedStatement stmt = conn.prepareStatement("select * from onlinestore.users where login like '"+ data.split(" ")[1] + "'");
+		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] + "'");
 		ResultSet rs = stmt.executeQuery();
         String message = "success";
 		while (rs.next()) {message = "error";}
         if (message.contains("success"))
         {
             String hash = hash(data.split(" ")[1], data.split(" ")[2]);
-            stmt = conn.prepareStatement("insert into onlinestore.users (type, login, password, first_name, last_name, phone_number) values (?, ?, ?, ?, ?, ?)");
+            stmt = conn.prepareStatement("insert into veggiestore.users (type, login, password, first_name, last_name, phone_number) values (?, ?, ?, ?, ?, ?)");
             stmt.setString(1, "customer"); stmt.setString(2, data.split(" ")[1]);
             stmt.setString(3, hash); stmt.setString(4, data.split(" ")[3]);
             stmt.setString(5, data.split(" ")[4]); stmt.setString(6, data.split(" ")[5]);

@@ -23,7 +23,7 @@ export function Home() {
     const [searchData, setSearchData] = useState({type: 'all', pattern: ''});
 
     useEffect(() => {
-        if (location.state == null) {setButtons({login: 'Login', register: 'Register'});}
+        if (location.state == null) {setButtons({login: 'Log In', register: 'Register'});}
         else {setButtons(location.state.buttons)}
     }, [])
 

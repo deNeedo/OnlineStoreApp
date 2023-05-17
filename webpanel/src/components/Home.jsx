@@ -65,31 +65,22 @@ export function Home() {
                     />
 
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
-                        <InputLabel className={homeCss['type-label']}>Type</InputLabel>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>Type</InputLabel>
                         <Select
                             sx={{
-                                color: "white",
-                                '.MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'rgba(228, 0, 0, 0.25)',
-                                },
-                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'rgba(228, 219, 233, 0.25)',
-                                },
-                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'rgba(228, 219, 233, 0.25)',
-                                },
-                                '.MuiSvgIcon-root ': {
-                                fill: "red !important",
-                                }
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+
                             }}
                             defaultValue={'all'}
                             //value={all}
                             // onChange={handleInputChange}
-                            label="Age"
                         >
-                        <MenuItem value={'all'}><em>All</em></MenuItem>
-                        <MenuItem value={'vegetable'}><em>Vegetables</em></MenuItem>
-                        <MenuItem value={'fruit'}><em>Fruits</em></MenuItem>
+                        <MenuItem value={'all'} sx={{color: '#808080'}}><em>All</em></MenuItem>
+                        <MenuItem value={'vegetable'} sx={{color: '#808080'}}><em>Vegetables</em></MenuItem>
+                        <MenuItem value={'fruit'} sx={{color: '#808080'}}><em>Fruits</em></MenuItem>
                          </Select>
                     </FormControl>
 

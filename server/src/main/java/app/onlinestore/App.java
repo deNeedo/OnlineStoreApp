@@ -91,14 +91,15 @@ public class App
     public static String get_products(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.items");
-        String[] patterns = data.split(" ");
-        if (patterns.length > 1)
-        {
+        String[] query = data.split(" "); PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.items");
+        System.out.println(query[1]);
+        if (!query[1].contains("all")) {stmt = conn.prepareStatement("select * from veggiestore.items where upper(type) like upper('"+ query[1] +"')");}
+        if (query.length > 2) {
             JSONArray results = new JSONArray();
-            for (int m = 1; m < patterns.length; m++)
+            for (int m = 2; m < query.length; m++)
             {
-                stmt = conn.prepareStatement("select * from veggiestore.items where upper(item_name) like upper('%" + data.split(" ")[m] + "%')");
+                if (query[1].contains("all")) {stmt = conn.prepareStatement("select * from veggiestore.items where upper(item_name) like upper('%" + query[m] + "%')");}
+                else {stmt = conn.prepareStatement("select * from veggiestore.items where upper(type) like upper('"+ query[1] +"') and upper(item_name) like upper('%" + query[m] + "%')");}
                 results = createJSON(stmt.executeQuery(), results);
             }
             results = makeUnique(results);

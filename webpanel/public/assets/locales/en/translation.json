@@ -30,7 +30,7 @@
     "price": "Price:",
     "price_end": "$",
     "quantity": "Quantity:",
-    "unavilable": "Unavilable",
+    "unavailable": "Unavailable",
 
     "email_pass_err_mess": "Email or Password are invalid!",
     "login_correct_mess": "Login correct!",

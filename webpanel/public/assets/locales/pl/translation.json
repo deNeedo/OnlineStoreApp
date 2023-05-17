@@ -30,7 +30,7 @@
     "price": "Cena:",
     "price_end": "zł",
     "quantity": "Ilość:",
-    "unavilable": "Niedostępne",
+    "unavailable": "Niedostępne",
 
     "email_pass_err_mess": "Email lub hasło nieprawidłowe!",
     "login_correct_mess": "Logowanie powiodło się!",

@@ -92,7 +92,6 @@ public class App
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
         String[] query = data.split(" "); PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.items");
-        System.out.println(query[1]);
         if (!query[1].contains("all")) {stmt = conn.prepareStatement("select * from veggiestore.items where upper(type) like upper('"+ query[1] +"')");}
         if (query.length > 2) {
             JSONArray results = new JSONArray();

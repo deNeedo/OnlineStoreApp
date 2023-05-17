@@ -22,6 +22,11 @@ export function Home() {
     const [error, setError] = useState('');
     const [searchData, setSearchData] = useState({type: 'all', pattern: ''});
 
+    useEffect(() => {
+        if (location.state == null) {setButtons({login: 'Login', register: 'Register'});}
+        else {setButtons(location.state.buttons)}
+    }, [])
+
     useEffect(() => {getProducts(searchData)}, [searchData])
 
     const handleInputChange = (e) => {

@@ -193,7 +193,7 @@ COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, p
 26	Mushroom	Vegetables	0.05	100	\N	N ../../img/mushroom.jpeg
 27	Beetroot	Vegetables	0.30	180	\N	N ../../img/betroot.jpeg
 28	Leek	Vegetables	0.68	100	\N	N ../../img/leek.jpeg
-29	Chili	Vegetables	0.50	100	\N	N ../../img/sweetPotato.jpeg
+29	Chili	Vegetables	0.50	100	\N	N ../../img/chili.jpeg
 30	Sweetcorn	Vegetables	1.30	100	\N	N ../../img/sweetcorn.jpeg
 31	Aubergine	Vegetables	2.00	40	\N	N ../../img/aubergine.jpeg
 32	Red cabbage	Vegetables	0.75	100	\N	N ../../img/redCabbage.jpeg

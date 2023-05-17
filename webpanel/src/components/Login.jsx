@@ -48,13 +48,13 @@ export function Login() {
         switch (name) {           
             case 'email':
                 if (!value) {
-                    stateObj[name] = 'Please enter email.';
+                    stateObj[name] = t("email_err");
                 }
                 break;
     
             case 'pass':
             if (!value) {
-                stateObj[name] = 'Please enter Password.';
+                stateObj[name] = t("pass_err");
             } 
             break;
         }

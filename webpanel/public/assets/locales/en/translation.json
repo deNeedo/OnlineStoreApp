@@ -42,6 +42,7 @@
     "surname_err": "Please enter surname.",
     "phone_err": "Please enter phone number.",
     "email_err": "Please enter email",
+    "pass_err" : "Please enter password",
     "pass_req": "Password should contain minimum 8 characters, one uppercase, lowercase, number and special character: @$!%*?&",
     "upper_case_err": "Must add one UPPERCASE letter",
     "lower_case_err": "Must add one lowercase letter",

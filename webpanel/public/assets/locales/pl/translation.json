@@ -42,6 +42,7 @@
     "surname_err": "Proszę podaj nazwisko.",
     "phone_err": "Prosze podaj nr telefonu.",
     "email_err": "Proszę podaj email",
+    "pass_err" : "Prosze podaj hasło",
     "pass_req": "Hasło musi zawierać minimum 8 znaków, jedną dużą literę i małą, cyfrę i znak specjalny: @$!%*?&",
     "upper_case_err": "Hasło nie posiada dużej litery",
     "lower_case_err": "Hasło nie posiada małej litery",

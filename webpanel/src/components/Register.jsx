@@ -89,19 +89,19 @@ export function Register() {
                     num = (input.pass.match(/[0-9]/g) || []).length;
                     specialSymbol = (input.pass.match(/\W/g) || []).length;
                     if (caps < 1) {
-                        stateObj[name] = 'Must add one UPPERCASE letter';
+                        stateObj[name] = t("upper_case_err");
                         break;
                     }
                     else if (small < 1) {
-                        stateObj[name] = 'Must add one lowercase letter';
+                        stateObj[name] = t("lower_case_err");
                         break;
                     }
                     else if (num < 1) {
-                        stateObj[name] = 'Must add one number';
+                        stateObj[name] = t("num_case_err");
                         break;
                     }
                     else if (specialSymbol < 1) {
-                        stateObj[name] = 'Must add one special symbol: @$! % * ? &';
+                        stateObj[name] = t("symbol_err");
                         break;
                     }
                 }
@@ -109,10 +109,10 @@ export function Register() {
 
             case 'confirmPass':
                 if (!value) {
-                    stateObj[name] = 'Please enter Confirm Password.';
+                    stateObj[name] = t("pass_conf_err");
                 }
                 else if (input.pass && value !== input.pass) {
-                    stateObj[name] = 'Passwords do not match!';
+                    stateObj[name] = t("no_same_err");
                 }
                 break;
 

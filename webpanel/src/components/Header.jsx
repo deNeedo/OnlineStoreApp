@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useNotifications } from 'reapop';
-import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import i18next from 'i18next';
 
 import headerCss from './css/Header.module.css';
 import Logo from '../../img/page-icon.ico';
@@ -15,8 +15,9 @@ import PLFlagPNG from '../../img/poland.png'
 import ProfilePNG from '../../img/profile.png'
 
 export function Header({buttons}) {
-    const {notifications, dismissNotification, notify} = useNotifications();
-    const navigate = useNavigate(); const location = useLocation();
+    const {notify} = useNotifications();
+    const navigate = useNavigate(); 
+    const location = useLocation();
 
     const loginRedirect = () => {
         if (buttons.login == 'Log In') {
@@ -66,8 +67,8 @@ export function Header({buttons}) {
                                 label="Age"
                                 inputProps={{ 'aria-label': 'Without label' }}
                             >
-                            <MenuItem value={'pl'}><img className={headerCss['flags']} src={PLFlagPNG} /></MenuItem>
-                            <MenuItem value={'en'}><img className={headerCss['flags']} src={USFlagPNG} /></MenuItem>
+                            <MenuItem value={'pl'}><img className={headerCss['flags']} src={PLFlagPNG}  onClick={() => i18next.changeLanguage('pl')}/></MenuItem>
+                            <MenuItem value={'en'}><img className={headerCss['flags']} src={USFlagPNG} onClick={() => i18next.changeLanguage('en')}/></MenuItem>
                             </Select>
                         </FormControl>
 

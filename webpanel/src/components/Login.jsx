@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
-import {Grid, Box,Typography} from '@mui/material';
+import { useTranslation } from 'react-i18next'
+import cookies from 'js-cookie'
 
 import loginCss from './css/Login.module.css';
 import Header from './Header';
 import Footer from './Footer';
 
 export function Login() {
+    const currentLanguageCode = cookies.get('i18next') || 'en'
 
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
@@ -83,6 +85,8 @@ export function Login() {
     }
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
 
+    const { t } = useTranslation();
+
     return (
         <div className={loginCss['wrapper']}>
             <Header buttons={buttons}/>
@@ -91,8 +95,7 @@ export function Login() {
 
                     <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-                    <div className={loginCss['welcome-mess-box']}><span className={loginCss['welcome-mess']}>Hello, </span><span className='wave'>👋</span><span className={loginCss['welcome-mess']}> please log in</span></div>
-                        
+                    <div className={loginCss['welcome-mess-box']}><span className={loginCss['welcome-mess']}> {t("login_welcome")} </span><span className='wave'>👋</span><span className={loginCss['welcome-mess']}> {t("login_welcome2")}</span></div>
                     <form className={loginCss['login-form']} onSubmit={handleSubmit}>
                         <input 
                                 type='email'
@@ -113,12 +116,12 @@ export function Login() {
                                 onBlur={validateInput}></input>
                             {error.pass && <span className='err'>{error.pass}</span>}
 
-                            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type='submit'>Log In</button>
+                            <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type='submit'>{t("login_btn")}</button>
                     </form>
                         
-                    <button className='link-btn' onClick={forgotPassRedirect}>Forgot password? Click here to reset!</button>
+                    <button className='link-btn' onClick={forgotPassRedirect}>{t("forgot_pass")}</button>
                         
-                    <button className='link-btn' onClick={registerRedirect}>Don't have an account? Register here!</button>
+                    <button className='link-btn' onClick={registerRedirect}>{t("no_acc")}</button>
                 </div>
             </div>
             <Footer/>

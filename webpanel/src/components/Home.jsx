@@ -20,7 +20,7 @@ export function Home() {
     const [buttons, setButtons] = useState({login: '', register: ''});
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
-    const [searchData, setSearchData] = useState({type: 'all', pattern: ''});
+    const [searchData, setSearchData] = useState({type: 'all', pattern: '', price: '0'});
 
     useEffect(() => {
         if (location.state == null) {setButtons({login: 'Log In', register: 'Register'});}
@@ -30,20 +30,22 @@ export function Home() {
     useEffect(() => {getProducts(searchData)}, [searchData])
 
     const handleInputChange = (e) => {
-        setSearchData({type: searchData.type, pattern: e.target.value})
-        // getProducts()
+        setSearchData({type: searchData.type, pattern: e.target.value, price: searchData.price})
     }
 
     const handleSelectChange = (e) => {
-        setSearchData({type: e.target.value, pattern: searchData.pattern})
-        // getProducts()
+        setSearchData({type: e.target.value, pattern: searchData.pattern, price: searchData.price})
+    }
+
+    const handleSelect2Change = (e) => {
+        setSearchData({type: searchData.type, pattern: searchData.pattern, price: e.target.value})
     }
 
     const getProducts = (e) => {
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
-            let message = 'get-products ' + e.type + ' ' + e.pattern;
+            let message = 'get-products ' + e.type + ' ' + e.price + ' ' + e.pattern;
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
@@ -93,10 +95,10 @@ export function Home() {
                                 ':before': { borderBottom: '2px solid #E5E5E5' },
                                 ':after': { borderBottom: '2px solid green' },
                             }}
-                            defaultValue={'all'}
-                            // onChange={handleSelectChange}
+                            defaultValue={'0'}
+                            onChange={handleSelect2Change}
                         >
-                        <MenuItem value={'all'} sx={{color: '#808080'}}><em>{t("price_one")}</em></MenuItem>
+                        <MenuItem value={'0'} sx={{color: '#808080'}}><em>{t("price_one")}</em></MenuItem>
                         <MenuItem value={'1'} sx={{color: '#808080'}}><em>{t("price_two")}</em></MenuItem>
                         <MenuItem value={'2'} sx={{color: '#808080'}}><em>{t("price_three")}</em></MenuItem>
                         </Select>

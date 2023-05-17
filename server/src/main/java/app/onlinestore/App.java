@@ -1,5 +1,6 @@
 package app.onlinestore;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import org.glassfish.tyrus.server.Server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 
@@ -91,14 +93,32 @@ public class App
     public static String get_products(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        String[] query = data.split(" "); PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.items");
-        if (!query[1].contains("all")) {stmt = conn.prepareStatement("select * from veggiestore.items where upper(type) like upper('"+ query[1] +"')");}
-        if (query.length > 2) {
+        String[] query = data.split(" "); String[] sql_query = new String[0]; PreparedStatement stmt;
+        if (!query[1].contains("all"))
+        {
+            sql_query = Arrays.copyOf(sql_query, sql_query.length + 1);
+            sql_query[sql_query.length - 1] = "upper(type) like upper('"+ query[1] +"') ";
+        }
+        if (!query[2].contains("0"))
+        {
+            sql_query = Arrays.copyOf(sql_query, sql_query.length + 1);
+            sql_query[sql_query.length - 1] = "price <= '"+ query[2] +"' ";
+        }
+        String string_sql_query = "select * from veggiestore.items ";
+        for (int m = 0; m < sql_query.length; m++)
+        {
+            if (m == 0) {string_sql_query += "where ";}
+            string_sql_query += sql_query[m];
+            if (m < sql_query.length - 1) {string_sql_query += "and ";}
+        }
+        stmt = conn.prepareStatement(string_sql_query);
+        if (query.length > 3)
+        {
             JSONArray results = new JSONArray();
-            for (int m = 2; m < query.length; m++)
+            for (int m = 3; m < query.length; m++)
             {
-                if (query[1].contains("all")) {stmt = conn.prepareStatement("select * from veggiestore.items where upper(item_name) like upper('%" + query[m] + "%')");}
-                else {stmt = conn.prepareStatement("select * from veggiestore.items where upper(type) like upper('"+ query[1] +"') and upper(item_name) like upper('%" + query[m] + "%')");}
+                if (!string_sql_query.contains("where")) {stmt = conn.prepareStatement(string_sql_query + " where upper(item_name) like upper('%" + query[m] + "%')");}
+                else {stmt = conn.prepareStatement(string_sql_query + "and upper(item_name) like upper('%" + query[m] + "%')");}
                 results = createJSON(stmt.executeQuery(), results);
             }
             results = makeUnique(results);

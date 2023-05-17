@@ -84,6 +84,24 @@ export function Home() {
                         </Select>
                     </FormControl>
 
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("price_filter")}</InputLabel>
+                        <Select id="price_select"
+                            sx={{
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+                            }}
+                            defaultValue={'all'}
+                            // onChange={handleSelectChange}
+                        >
+                        <MenuItem value={'all'} sx={{color: '#808080'}}><em>{t("price_one")}</em></MenuItem>
+                        <MenuItem value={'1'} sx={{color: '#808080'}}><em>{t("price_two")}</em></MenuItem>
+                        <MenuItem value={'2'} sx={{color: '#808080'}}><em>{t("price_three")}</em></MenuItem>
+                        </Select>
+                    </FormControl>
+
 
                 </div>
                 <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>

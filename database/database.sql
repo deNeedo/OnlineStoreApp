@@ -1,14 +1,5 @@
-DROP table veggiestore.items;
-DROP table veggiestore.users;
-DROP table veggiestore.sessions;
-DROP schema veggiestore CASCADE;
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 15.2
--- Dumped by pg_dump version 15.2
+DROP TABLE veggiestore.items;
+DROP TABLE veggiestore.users;
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,20 +20,6 @@ CREATE SCHEMA veggiestore;
 
 
 ALTER SCHEMA veggiestore OWNER TO postgres;
-
---
--- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
-
 
 SET default_tablespace = '';
 
@@ -100,9 +77,8 @@ CREATE TABLE veggiestore.sessions (
 
 ALTER TABLE veggiestore.sessions OWNER TO postgres;
 
-
 --
--- Name: items_id_item_seq; Type: SEQUENCE; Schema: veggiestore; Owner: postgres
+-- Name: sessions_id_session_seq; Type: SEQUENCE; Schema: veggiestore; Owner: postgres
 --
 
 CREATE SEQUENCE veggiestore.sessions_id_session_seq
@@ -117,7 +93,7 @@ CREATE SEQUENCE veggiestore.sessions_id_session_seq
 ALTER TABLE veggiestore.sessions_id_session_seq OWNER TO postgres;
 
 --
--- Name: sessions.id_session_seq; Type: SEQUENCE OWNED BY; Schema: veggiestore; Owner: postgres
+-- Name: sessions_id_session_seq; Type: SEQUENCE OWNED BY; Schema: veggiestore; Owner: postgres
 --
 
 ALTER SEQUENCE veggiestore.sessions_id_session_seq OWNED BY veggiestore.sessions.id_session;
@@ -171,7 +147,7 @@ ALTER TABLE ONLY veggiestore.items ALTER COLUMN id_item SET DEFAULT nextval('veg
 
 
 --
--- Name: items id_session; Type: DEFAULT; Schema: veggiestore; Owner: postgres
+-- Name: sessions id_session; Type: DEFAULT; Schema: veggiestore; Owner: postgres
 --
 
 ALTER TABLE ONLY veggiestore.sessions ALTER COLUMN id_session SET DEFAULT nextval('veggiestore.sessions_id_session_seq'::regclass);
@@ -180,7 +156,6 @@ ALTER TABLE ONLY veggiestore.sessions ALTER COLUMN id_session SET DEFAULT nextva
 --
 -- Name: users user_id; Type: DEFAULT; Schema: veggiestore; Owner: postgres
 --
-
 
 ALTER TABLE ONLY veggiestore.users ALTER COLUMN user_id SET DEFAULT nextval('veggiestore.users_user_id_seq'::regclass);
 
@@ -226,7 +201,24 @@ COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, p
 34	Asparagus	Vegetables	2.00	100	\N	N ../../img/aspargus.jpeg
 35	Kale	Vegetables	0.70	100	\N	N ../../img/kale.jpeg
 36	Turnip	Vegetables	0.80	100	\N	N ../../img/turnip.jpeg
-37	Sweet potato	Vegetables	1.50	100	\N	N ../../img/sweetPotato.jpeg
+37	Sweet potato	Vegetables	1.50	100	\N	N ../../img/sweetPotato.jpeg 
+38	Apple	Fruit	0.20	120	\N	../../img/apple.jpeg
+39	Banana	Fruit	0.20	130	\N	../../img/banana.jpeg
+40	Pear	Fruit	0.20	130	\N	../../img/pear.jpeg
+41	Rasberry	Fruit	2.30	0	\N	../../img/rasberry.jpeg
+42	Strawberry	Fruit	3.00	10	\N	../../img/strawberry.jpeg
+43	Kiwi	Fruit	0.50	30	\N	../../img/kiwi.jpeg
+44	Orange	Fruit	0.10	50	\N	../../img/orange.jpeg
+45	Grapefruit	Fruit	0.10	50	\N	../../img/grapefruit.jpeg
+46	Peach	Fruit	0.15	40	\N	../../img/peach.jpeg
+47	Cherry	Fruit	1.00	15	\N	../../img/cherry.jpeg
+48	Plum	Fruit	0.05	600	\N	../../img/plum.jpeg
+49	Coconut	Fruit	1.80	10	\N	../../img/coconut.jpeg
+50	Blackberry	Fruit	2.50	20	\N	../../img/blackberry.jpeg
+51	Mango	Fruit	1.20	40	\N	../../img/mango.jpeg
+52	Pineapple	Fruit	2.50	17	\N	../../img/pineapple.jpeg
+53	Watermelon	Fruit	3.00	15	\N	../../img/watermelon.jpeg
+54	Grape	Fruit	2.30	20	\N	../../img/grape.jpeg
 \.
 
 
@@ -251,7 +243,15 @@ COPY veggiestore.users (user_id, type, first_name, last_name, login, password, p
 -- Name: items_id_item_seq; Type: SEQUENCE SET; Schema: veggiestore; Owner: postgres
 --
 
-SELECT pg_catalog.setval('veggiestore.items_id_item_seq', 37, true);
+SELECT pg_catalog.setval('veggiestore.items_id_item_seq', 54, true);
+
+
+--
+-- Name: sessions_id_session_seq; Type: SEQUENCE SET; Schema: veggiestore; Owner: postgres
+--
+
+SELECT pg_catalog.setval('veggiestore.sessions_id_session_seq', 1, false);
+
 
 --
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: veggiestore; Owner: postgres

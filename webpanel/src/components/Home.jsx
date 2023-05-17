@@ -6,13 +6,14 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { useTranslation } from 'react-i18next'
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';
 import Footer from './Footer';
 
 export function Home() {
-
+    const { t } = useTranslation();
     const {notifications, dismissNotification} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
     
@@ -59,13 +60,13 @@ export function Home() {
                 <div className={homeCss['search-box']}>
                     <input 
                         type='text' 
-                        placeholder='Search for Your favorite vegetables and fruits...' 
+                        placeholder={t("search_input")} 
                         className={homeCss['search-input']}
                         onChange={onInputChange}
                     />
 
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
-                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>Type</InputLabel>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("type_filter")}</InputLabel>
                         <Select
                             sx={{
                                 color: '#808080',
@@ -78,9 +79,9 @@ export function Home() {
                             //value={all}
                             // onChange={handleInputChange}
                         >
-                        <MenuItem value={'all'} sx={{color: '#808080'}}><em>All</em></MenuItem>
-                        <MenuItem value={'vegetable'} sx={{color: '#808080'}}><em>Vegetables</em></MenuItem>
-                        <MenuItem value={'fruit'} sx={{color: '#808080'}}><em>Fruits</em></MenuItem>
+                        <MenuItem value={'all'} sx={{color: '#808080'}}><em>{t("all")}</em></MenuItem>
+                        <MenuItem value={'vegetable'} sx={{color: '#808080'}}><em>{t("vegetables")}</em></MenuItem>
+                        <MenuItem value={'fruit'} sx={{color: '#808080'}}><em>{t("fruits")}</em></MenuItem>
                          </Select>
                     </FormControl>
 
@@ -94,8 +95,8 @@ export function Home() {
                             <hr className={homeCss['hr']}></hr>
                             <Box className={homeCss['product-img']} component='img' src={item.photo}></Box>
                             <hr className={homeCss['hr']}></hr>
-                            <Typography className={homeCss['product-price']} variant='subtitle1'> Price: ${item.price} </Typography>
-                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> Quantity: {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>Unavailable</span>} </Typography>
+                            <Typography className={homeCss['product-price']} variant='subtitle1'> {t("price")} {item.price}{t("price_end")} </Typography>
+                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavilable")}</span>} </Typography>
                         </Grid>
                     ))}
                 </Grid>

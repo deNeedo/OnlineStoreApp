@@ -5,6 +5,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import i18next from 'i18next';
+import { useTranslation } from 'react-i18next'
 
 import headerCss from './css/Header.module.css';
 import Logo from '../../img/page-icon.ico';
@@ -15,6 +16,7 @@ import PLFlagPNG from '../../img/poland.png'
 import ProfilePNG from '../../img/profile.png'
 
 export function Header({buttons}) {
+    const { t } = useTranslation();
     const {notify} = useNotifications();
     const navigate = useNavigate(); 
     const location = useLocation();
@@ -27,7 +29,7 @@ export function Header({buttons}) {
             navigate('/home', {state: {buttons: {login: 'Log In', register: 'Register'}}});
         }
         else if (buttons.login == 'Log Out') {
-            notify('Logout correct!', 'success');
+            notify(t("log_out_mess"), 'success');
             navigate('/', {state: {buttons: {login: 'Log In', register: 'Register'}}});
         }
     }
@@ -45,7 +47,7 @@ export function Header({buttons}) {
             <div className={headerCss['header']}>
                 <div className={headerCss['logo-and-title']}>
                 <a className={headerCss['a']} href="/home" ><img className={headerCss['logo']} src={Logo} alt='Logo' /></a>
-                <a className={headerCss['a']} href="/home"><span className={headerCss['title']}>Veggie store</span></a>
+                <a className={headerCss['a']} href="/home"><span className={headerCss['title']}>{t("site_name")}</span></a>
                 </div>
                 <div className={headerCss['nav']}>
                         <button onClick={loginRedirect} className={headerCss['link-btn']}>{buttons.login}</button>

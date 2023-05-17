@@ -167,43 +167,43 @@ ALTER TABLE ONLY veggiestore.users ALTER COLUMN user_id SET DEFAULT nextval('veg
 --
 
 COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, photo) FROM stdin;
-1	Chives	Vegetables	0.80	0	\N	N ../../img/chives.jpeg
-2	Yellow pepper	Vegetables	1.00	100	\N	N ../../img/yellowPepper.jpeg
-3	Cauliflower	Vegetables	0.90	100	\N	N ../../img/cauliflower.jpeg
-4	Rasberry tomato	Vegetables	0.20	100	\N	N ../../img/rasberryTomato.jpeg
-5	Potato	Vegetables	0.15	100	\N	../../img/potato.jpeg
-6	Cabbage	Vegetables	0.75	70	\N	N ../../img/cabbage.jpeg
-7	Kohlrabi 	Vegetables	0.30	120	\N	N ../../img/kohlrabi.jpeg
-8	Radish	Vegetables	0.10	150	\N	N ../../img/radish.jpeg
-9	Cherry tomato	Vegetables	0.20	100	\N	N ../../img/cherryTomato.jpeg
-10	Avocado	Vegetables	3.00	20	\N	N ../../img/avocado.jpeg
-11	Lettuce	Vegetables	1.00	60	\N	N ../../img/lettuce.jpeg
-12	Carrot	Vegetables	0.30	200	\N	N ../../img/carrot.jpeg
-13	Broccoli	Vegetables	1.50	40	\N	N ../../img/broccoli.jpeg
-14	Garlic	Vegetables	0.25	100	\N	N ../../img/garlic.jpeg
-15	Zucchini 	Vegetables	0.20	170	\N	N ../../img/zucchini.jpeg
-16	Valerianella	Vegetables	2.50	100	\N	N ../../img/valerianella.jpeg
-17	Spinach	Vegetables	2.50	100	\N	N ../../img/spinach.jpeg
-18	Rucola	Vegetables	2.50	100	\N	N ../../img/rucola.jpeg
-19	Onion	Vegetables	0.40	100	\N	N ../../img/onion.jpeg
-20	Celery	Vegetables	0.10	100	\N	N ../../img/celery.jpeg
-21	Dill	Vegetables	0.15	120	\N	N ../../img/dill.jpeg
-22	Parsley	Vegetables	0.15	100	\N	N ../../img/parsley.jpeg
-23	Red pepper	Vegetables	1.00	100	\N	N ../../img/redPepper.jpeg
-24	Cucumber	Vegetables	0.50	100	\N	N ../../img/cucumber.jpeg
-25	Tomato	Vegetables	0.15	100	\N	N ../../img/tomato.jpeg
-26	Mushroom	Vegetables	0.05	100	\N	N ../../img/mushroom.jpeg
-27	Beetroot	Vegetables	0.30	180	\N	N ../../img/betroot.jpeg
-28	Leek	Vegetables	0.68	100	\N	N ../../img/leek.jpeg
-29	Chili	Vegetables	0.50	100	\N	N ../../img/chili.jpeg
-30	Sweetcorn	Vegetables	1.30	100	\N	N ../../img/sweetcorn.jpeg
-31	Aubergine	Vegetables	2.00	40	\N	N ../../img/aubergine.jpeg
-32	Red cabbage	Vegetables	0.75	100	\N	N ../../img/redCabbage.jpeg
-33	Soya	Vegetables	1.00	100	\N	N ../../img/soya.jpeg
-34	Asparagus	Vegetables	2.00	100	\N	N ../../img/aspargus.jpeg
-35	Kale	Vegetables	0.70	100	\N	N ../../img/kale.jpeg
-36	Turnip	Vegetables	0.80	100	\N	N ../../img/turnip.jpeg
-37	Sweet potato	Vegetables	1.50	100	\N	N ../../img/sweetPotato.jpeg 
+1	Chives	Vegetable	0.80	0	\N	N ../../img/chives.jpeg
+2	Yellow pepper	Vegetable	1.00	100	\N	N ../../img/yellowPepper.jpeg
+3	Cauliflower	Vegetable	0.90	100	\N	N ../../img/cauliflower.jpeg
+4	Rasberry tomato	Vegetable	0.20	100	\N	N ../../img/rasberryTomato.jpeg
+5	Potato	Vegetable	0.15	100	\N	../../img/potato.jpeg
+6	Cabbage	Vegetable	0.75	70	\N	N ../../img/cabbage.jpeg
+7	Kohlrabi 	Vegetable	0.30	120	\N	N ../../img/kohlrabi.jpeg
+8	Radish	Vegetable	0.10	150	\N	N ../../img/radish.jpeg
+9	Cherry tomato	Vegetable	0.20	100	\N	N ../../img/cherryTomato.jpeg
+10	Avocado	Vegetable	3.00	20	\N	N ../../img/avocado.jpeg
+11	Lettuce	Vegetable	1.00	60	\N	N ../../img/lettuce.jpeg
+12	Carrot	Vegetable	0.30	200	\N	N ../../img/carrot.jpeg
+13	Broccoli	Vegetable	1.50	40	\N	N ../../img/broccoli.jpeg
+14	Garlic	Vegetable	0.25	100	\N	N ../../img/garlic.jpeg
+15	Zucchini 	Vegetable	0.20	170	\N	N ../../img/zucchini.jpeg
+16	Valerianella	Vegetable	2.50	100	\N	N ../../img/valerianella.jpeg
+17	Spinach	Vegetable	2.50	100	\N	N ../../img/spinach.jpeg
+18	Rucola	Vegetable	2.50	100	\N	N ../../img/rucola.jpeg
+19	Onion	Vegetable	0.40	100	\N	N ../../img/onion.jpeg
+20	Celery	Vegetable	0.10	100	\N	N ../../img/celery.jpeg
+21	Dill	Vegetable	0.15	120	\N	N ../../img/dill.jpeg
+22	Parsley	Vegetable	0.15	100	\N	N ../../img/parsley.jpeg
+23	Red pepper	Vegetable	1.00	100	\N	N ../../img/redPepper.jpeg
+24	Cucumber	Vegetable	0.50	100	\N	N ../../img/cucumber.jpeg
+25	Tomato	Vegetable	0.15	100	\N	N ../../img/tomato.jpeg
+26	Mushroom	Vegetable	0.05	100	\N	N ../../img/mushroom.jpeg
+27	Beetroot	Vegetable	0.30	180	\N	N ../../img/betroot.jpeg
+28	Leek	Vegetable	0.68	100	\N	N ../../img/leek.jpeg
+29	Chili	Vegetable	0.50	100	\N	N ../../img/chili.jpeg
+30	Sweetcorn	Vegetable	1.30	100	\N	N ../../img/sweetcorn.jpeg
+31	Aubergine	Vegetable	2.00	40	\N	N ../../img/aubergine.jpeg
+32	Red cabbage	Vegetable	0.75	100	\N	N ../../img/redCabbage.jpeg
+33	Soya	Vegetable	1.00	100	\N	N ../../img/soya.jpeg
+34	Asparagus	Vegetable	2.00	100	\N	N ../../img/aspargus.jpeg
+35	Kale	Vegetable	0.70	100	\N	N ../../img/kale.jpeg
+36	Turnip	Vegetable	0.80	100	\N	N ../../img/turnip.jpeg
+37	Sweet potato	Vegetable	1.50	100	\N	N ../../img/sweetPotato.jpeg 
 38	Apple	Fruit	0.20	120	\N	../../img/apple.jpeg
 39	Banana	Fruit	0.20	130	\N	../../img/banana.jpeg
 40	Pear	Fruit	0.20	130	\N	../../img/pear.jpeg

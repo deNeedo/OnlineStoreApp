@@ -80,6 +80,26 @@ nav {
     transform: scale(1.01);
 }
 
+.flags {
+    height: 30px;
+    width: 30px;
+}
+
+.form-control {
+    justify-content: center;
+    width: 80px;
+    color: #ffffff;
+    border-color: red;
+}
+
+.select {
+    padding: 0px;
+    color: white;
+    border-color: red;
+}
+
+
+
 
 
 

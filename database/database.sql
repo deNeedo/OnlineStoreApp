@@ -190,7 +190,7 @@ ALTER TABLE ONLY veggiestore.users ALTER COLUMN user_id SET DEFAULT nextval('veg
 --
 
 COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, photo) FROM stdin;
-1	Chives	Vegetables	0.80	100	\N	N ../../img/chives.jpeg
+1	Chives	Vegetables	0.80	0	\N	N ../../img/chives.jpeg
 2	Yellow pepper	Vegetables	1.00	100	\N	N ../../img/yellowPepper.jpeg
 3	Cauliflower	Vegetables	0.90	100	\N	N ../../img/cauliflower.jpeg
 4	Rasberry tomato	Vegetables	0.20	100	\N	N ../../img/rasberryTomato.jpeg

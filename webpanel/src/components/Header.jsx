@@ -1,12 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useLocation} from 'react-router-dom';
-import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
-import {Grid, Box,Typography} from '@mui/material';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useNotifications } from 'reapop';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
 import headerCss from './css/Header.module.css';
 import Logo from '../../img/page-icon.ico';
 import CartPNG from '../../img/icons8-cart-96.png';
 import WishPNG from '../../img/icons8-list-64.png';
+import USFlagPNG from '../../img/united-states.png';
+import PLFlagPNG from '../../img/poland.png'
+import ProfilePNG from '../../img/profile.png'
 
 export function Header({buttons}) {
     const {notifications, dismissNotification, notify} = useNotifications();
@@ -45,6 +51,27 @@ export function Header({buttons}) {
                         <button onClick={registerRedirect} className={headerCss['link-btn']}>{buttons.register}</button>
                         <a href="/"><img className={headerCss['icon']} src={CartPNG} /></a>
                         <a href="/"><img className={headerCss['icon']} src={WishPNG} /></a>
+                        <a href="/"><img className={headerCss['icon']} src={ProfilePNG} /></a>
+
+                        <FormControl className={headerCss['form-control']}>
+                            <Select className={headerCss['select']} 
+                                sx={{ boxShadow: "none", ".MuiOutlinedInput-notchedOutline": { border: 0 }, 
+                                "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0, }, 
+                                "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0, },
+                                ".MuiSvgIcon-root": { fill: "white !important",}
+                                }}
+                                defaultValue={'en'}
+                                // value={age}
+                                // onChange={handleChange}
+                                label="Age"
+                                inputProps={{ 'aria-label': 'Without label' }}
+                            >
+                            <MenuItem value={'pl'}><img className={headerCss['flags']} src={PLFlagPNG} /></MenuItem>
+                            <MenuItem value={'en'}><img className={headerCss['flags']} src={USFlagPNG} /></MenuItem>
+                            </Select>
+                        </FormControl>
+
+
                 </div>
             </div>
         </nav>

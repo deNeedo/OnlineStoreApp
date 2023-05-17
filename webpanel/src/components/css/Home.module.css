@@ -107,4 +107,11 @@ input.search-input {
     border: 1px solid #f4f3f3;
 }
 
+.unavailable{
+    color: red;
+    font-family: 'Lato';
+    font-weight: bold;
+}
+
+
 

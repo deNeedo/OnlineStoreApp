@@ -6,7 +6,6 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';
@@ -48,6 +47,11 @@ export function Home() {
         };
     }
 
+    const handleInputChange = () => {
+
+
+    }
+
     return ( 
         <div className={homeCss['wrapper']}>
             <Header buttons={buttons} />
@@ -61,18 +65,33 @@ export function Home() {
                     />
 
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
-                    <InputLabel>Type</InputLabel>
-                    <Select
-                        defaultValue={'all'}
-                        // value={age}
-                        // onChange={handleChange}
-                        label="Age"
-                    >
+                        <InputLabel className={homeCss['type-label']}>Type</InputLabel>
+                        <Select
+                            sx={{
+                                color: "white",
+                                '.MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'rgba(228, 0, 0, 0.25)',
+                                },
+                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'rgba(228, 219, 233, 0.25)',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'rgba(228, 219, 233, 0.25)',
+                                },
+                                '.MuiSvgIcon-root ': {
+                                fill: "red !important",
+                                }
+                            }}
+                            defaultValue={'all'}
+                            //value={all}
+                            // onChange={handleInputChange}
+                            label="Age"
+                        >
                         <MenuItem value={'all'}><em>All</em></MenuItem>
                         <MenuItem value={'vegetable'}><em>Vegetables</em></MenuItem>
                         <MenuItem value={'fruit'}><em>Fruits</em></MenuItem>
-                    </Select>
-                </FormControl>
+                         </Select>
+                    </FormControl>
 
 
                 </div>
@@ -85,7 +104,7 @@ export function Home() {
                             <Box className={homeCss['product-img']} component='img' src={item.photo}></Box>
                             <hr className={homeCss['hr']}></hr>
                             <Typography className={homeCss['product-price']} variant='subtitle1'> Price: ${item.price} </Typography>
-                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> Quantity: {item.quantity} </Typography>
+                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> Quantity: {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>Unavailable</span>} </Typography>
                         </Grid>
                     ))}
                 </Grid>

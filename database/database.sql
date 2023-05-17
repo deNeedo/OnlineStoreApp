@@ -173,7 +173,7 @@ COPY onlinestore.items (id_item, item_name, type, price, quantity, input_date, p
 --
 
 COPY onlinestore.users (user_id, type, first_name, last_name, login, password, phone_number, address) FROM stdin;
-1	administrator	\N	\N	admin@onlinestore.app	fb01b886c430381fbc115a79ae9623a98d21750246b5a4b745c783a8a744896e	\N	\N
+1	administrator	\N	\N	admin@veggiestore.app	080fa5958e45a4533ba4abe205af7bc83f23efb400f639e668c103624f3cc59d	\N	\N
 \.
 
 

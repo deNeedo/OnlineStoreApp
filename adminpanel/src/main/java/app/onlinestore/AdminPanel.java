@@ -26,7 +26,7 @@ public class AdminPanel extends Application
     public Session getSession() {return this.session;}
     public String connect()
     {
-        try {ClientManager.createClient().connectToServer(this, new URI("ws://localhost:80/app/onlinestore")); return "success";}
+        try {ClientManager.createClient().connectToServer(this, new URI("ws://localhost:80/veggiestore")); return "success";}
         catch (Exception e) {return "error";}
     }
     @OnOpen

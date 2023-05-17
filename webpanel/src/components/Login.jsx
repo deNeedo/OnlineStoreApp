@@ -9,7 +9,8 @@ import Header from './Header';
 import Footer from './Footer';
 
 export function Login() {
-    const currentLanguageCode = cookies.get('i18next') || 'en'
+    const currentLanguageCode = cookies.get('i18next') || 'en';
+    const { t } = useTranslation();
 
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
@@ -47,13 +48,13 @@ export function Login() {
         switch (name) {           
             case 'email':
                 if (!value) {
-                    stateObj[name] = 'Please enter email.';
+                    stateObj[name] = t("email_err");
                 }
                 break;
     
             case 'pass':
             if (!value) {
-                stateObj[name] = 'Please enter Password.';
+                stateObj[name] = t("pass_err");
             } 
             break;
         }
@@ -76,16 +77,14 @@ export function Login() {
             {
                 message = 'session create '.concat(input.email);
                 socket.send(message, 0, message.length, 80, 'localhost');
-                notify('Login correct!', 'success');
+                notify(t("login_correct_mess"), 'success');
                 navigate('/home', {state: {buttons: {login: 'Log Out', register: 'Register'}}});
             }
-            else if (event.data == 'error') {notify('Email or Password are invalid', 'error');}
+            else if (event.data == 'error') {notify(t("email_pass_err_mess"), 'error');}
             socket.send('connection-close-try', 0, 'connection-close-try'.length, 80, 'localhost');
         };
     }
     const isEnabled = input.email.length > 0 & input.pass.length > 0;
-
-    const { t } = useTranslation();
 
     return (
         <div className={loginCss['wrapper']}>
@@ -95,7 +94,7 @@ export function Login() {
 
                     <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
-                    <div className={loginCss['welcome-mess-box']}><span className={loginCss['welcome-mess']}> {t("login_welcome")} </span><span className='wave'>👋</span><span className={loginCss['welcome-mess']}> {t("login_welcome2")}</span></div>
+                    <div className={loginCss['welcome-mess-box']}><span className={loginCss['welcome-mess']}> {t("login_hello")} </span><span className='wave'>👋</span><span className={loginCss['welcome-mess']}> {t("login_hello2")}</span></div>
                     <form className={loginCss['login-form']} onSubmit={handleSubmit}>
                         <input 
                                 type='email'
@@ -110,7 +109,7 @@ export function Login() {
                                 type='password'
                                 name='pass'
                                 id='pass'
-                                placeholder='Password' 
+                                placeholder={t("pass_placeholder")} 
                                 value={input.pass} 
                                 onChange={onInputChange}
                                 onBlur={validateInput}></input>

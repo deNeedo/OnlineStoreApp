@@ -1,7 +1,62 @@
 {
-    "login_welcome": "Hello,",
-    "login_welcome2": "please log in!",
+    "site_name": "Veggie store",
+    "login": "Log in",
+    "register": "Register",
+    "home": "Home",
+
+    "login_hello": "Hello,",
+    "login_hello2": "Please log in!",
     "login_btn": "Log In",
     "forgot_pass": "Forgot password? Click here to reset!",
-    "no_acc": "Don't have an account? Register here!"
+    "no_acc": "Don't have an account? Register here!",
+    "pass_placeholder": "Password",
+
+    "register_welcome": "Welcome,",
+    "register_welcome2": "Please register!",
+    "name_placeholder": "Name",
+    "surname_placeholder": "Surname",
+    "phone_placeholder": "Phone",
+    "re_type_pass_placeholder": "Retype password",
+    "terms1": "I agree to the",
+    "terms2": "terms & conditions",
+    "already_acc": "Already have the account? Login here!",
+
+    "search_input": "Search for Your favorite vegetables and fruits...",
+    "type_filter": "Type",
+    "all": "All",
+    "vegetables": "Vegetables",
+    "fruits": "Fruits",
+
+    "price": "Price:",
+    "price_end": "$",
+    "quantity": "Quantity:",
+    "unavilable": "Unavilable",
+
+    "email_pass_err_mess": "Email or Password are invalid!",
+    "login_correct_mess": "Login correct!",
+    "register_success_mess" : "Registration successful!",
+    "email_in_use_mess": "Email already in use. Please Login!",
+    "log_out_mess": "Logout successful!",
+
+    "name_err":  "Please enter name.",
+    "surname_err": "Please enter surname.",
+    "phone_err": "Please enter phone number.",
+    "email_err": "Please enter email",
+    "pass_err" : "Please enter password",
+    "pass_req": "Password should contain minimum 8 characters, one uppercase, lowercase, number and special character: @$!%*?&",
+    "upper_case_err": "Must add one UPPERCASE letter",
+    "lower_case_err": "Must add one lowercase letter",
+    "num_err": "Must add one number",
+    "symbol_err" : "Must add one special symbol: @$! % * ? &",
+    "pass_conf_err": "Please enter Confirm Password",
+    "no_same_err": "Passwords do not match!",
+
+    "contact_info": "Contact: "
+
+
+
+
+
+
+
 }

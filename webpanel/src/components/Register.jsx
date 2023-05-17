@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
-import {Grid, Box,Typography} from '@mui/material';
+import { useTranslation } from 'react-i18next'
 
 import registerCss from './css/Register.module.css';
 import Header from './Header';
 import Footer from './Footer';
 
 export function Register() {
+    const { t } = useTranslation();
     const {notifications, dismissNotification, notify} = useNotifications();
     const [buttons, setButtons] = useState({login: '', register: ''});
     const navigate = useNavigate(); const location = useLocation();
@@ -56,31 +57,31 @@ export function Register() {
         switch (name) {
             case 'name':
                 if (!value) {
-                    stateObj[name] = 'Please enter name.';
+                    stateObj[name] = t("name_err");
                 }
                 break;
 
             case 'surname':
                 if (!value) {
-                    stateObj[name] = 'Please enter surname.';   
+                    stateObj[name] = t("surname_err");   
                 }
                 break;
 
             case 'phone':
                 if (!value) {
-                    stateObj[name] = 'Please enter phone number.';
+                    stateObj[name] = t("phone_err");
                 }
                 break;
 
             case 'email':
                 if (!value) {
-                    stateObj[name] = 'Please enter email.';
+                    stateObj[name] = t("email_err");
                 }
                 break;
 
             case 'pass':
                 if (input.pass.length < 8) {
-                    stateObj[name] = 'Password should contain minimum 8 characters, one uppercase, lowercase, number and special character: @$!%*?&';
+                    stateObj[name] = t("pass_req");
                 }
                 else {
                     caps = (input.pass.match(/[A-Z]/g) || []).length;
@@ -88,19 +89,19 @@ export function Register() {
                     num = (input.pass.match(/[0-9]/g) || []).length;
                     specialSymbol = (input.pass.match(/\W/g) || []).length;
                     if (caps < 1) {
-                        stateObj[name] = 'Must add one UPPERCASE letter';
+                        stateObj[name] = t("upper_case_err");
                         break;
                     }
                     else if (small < 1) {
-                        stateObj[name] = 'Must add one lowercase letter';
+                        stateObj[name] = t("lower_case_err");
                         break;
                     }
                     else if (num < 1) {
-                        stateObj[name] = 'Must add one number';
+                        stateObj[name] = t("num_case_err");
                         break;
                     }
                     else if (specialSymbol < 1) {
-                        stateObj[name] = 'Must add one special symbol: @$! % * ? &';
+                        stateObj[name] = t("symbol_err");
                         break;
                     }
                 }
@@ -108,10 +109,10 @@ export function Register() {
 
             case 'confirmPass':
                 if (!value) {
-                    stateObj[name] = 'Please enter Confirm Password.';
+                    stateObj[name] = t("pass_conf_err");
                 }
                 else if (input.pass && value !== input.pass) {
-                    stateObj[name] = 'Passwords do not match!';
+                    stateObj[name] = t("no_same_err");
                 }
                 break;
 
@@ -139,10 +140,10 @@ export function Register() {
         };
         socket.onmessage = function(event)
         {
-            if (event.data == 'error') {notify('Email already in use. Please Login!', 'error');}
+            if (event.data == 'error') {notify(t("email_in_use_mess"), 'error');}
             else
             {
-                notify('Registration successful!', 'success');
+                notify(t("register_success_mess"), 'success');
                 navigate('/login', {state: {buttons: {login: 'Home', register: 'Register'}}});
             }
             let message = 'connection-close-try';
@@ -161,7 +162,7 @@ export function Register() {
                     <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
                     <div className={registerCss['welcome-mess-box']}>
-                        <span className={registerCss['welcome-mess']}> Welcome! </span><span className='wave'>👋</span><span className={registerCss['welcome-mess']}> Please register</span>
+                        <span className={registerCss['welcome-mess']}> {t("register_welcome")} </span><span className='wave'>👋</span><span className={registerCss['welcome-mess']}> {t("register_welcome2")}</span>
                     </div>
                         
                     <form className={registerCss['register-form']} onSubmit={handleSubmit}>
@@ -169,7 +170,7 @@ export function Register() {
                             type='name'
                             name='name'
                             id='name'
-                            placeholder='Name'
+                            placeholder= {t("name_placeholder")}
                             onChange={onInputChange}
                             onBlur={validateInput}></input>
                         {error.name && <span className='err'>{error.name}</span>}
@@ -178,7 +179,7 @@ export function Register() {
                             type='surname'
                             name='surname'
                             id='surname'
-                            placeholder='Surname'
+                            placeholder={t("surname_placeholder")}
                             onChange={onInputChange}
                             onBlur={validateInput}></input>
                         {error.surname && <span className='err'>{error.surname}</span>}
@@ -187,7 +188,7 @@ export function Register() {
                             type='phone'
                             name='phone'
                             id='phone'
-                            placeholder='Phone'
+                            placeholder={t("phone_placeholder")}
                             onChange={onInputChange}
                             onBlur={validateInput}></input>
                         {error.phone && <span className='err'>{error.phone}</span>}
@@ -205,7 +206,7 @@ export function Register() {
                             type='password'
                             name='pass'
                             id='pass'
-                            placeholder='Password' 
+                            placeholder={t("pass_placeholder")}
                             value={input.pass} 
                             onChange={onInputChange}
                             onBlur={validateInput}></input>
@@ -215,7 +216,7 @@ export function Register() {
                             type='password' 
                             name='confirmPass'
                             id='confirmPass'
-                            placeholder='Retype Password'
+                            placeholder={t("re_type_pass_placeholder")}
                             value={input.confirmPass}
                             onChange={onInputChange}
                             onBlur={validateInput}></input>
@@ -226,11 +227,11 @@ export function Register() {
                                 type='checkbox'
                                 name='agreement'
                                 onChange={handleChange}
-                                /> I agree to the <button className={registerCss['terms-btn']} onClick={termsRedirect}>terms & conditions</button>
+                                /> {t("terms1")} <button className={registerCss['terms-btn']} onClick={termsRedirect}> {t("terms2")} </button>
                         </div>
-                        <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type='submit'>Register</button>
+                        <button className={isEnabled == true ? 'active-btn' : 'inactive-btn'}  disabled={!isEnabled} type='submit'> {t("register")} </button>
                     </form>
-                    <button className='link-btn' onClick={loginRedirect}>Already have the account? Login here!</button>      
+                    <button className='link-btn' onClick={loginRedirect}> {t("already_acc")} </button>      
                 </div>   
             </div>
             <Footer/>

@@ -1,5 +1,7 @@
 DROP TABLE veggiestore.items;
+DROP TABLE veggiestore.sessions;
 DROP TABLE veggiestore.users;
+DROP SCHEMA veggiestore;
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;

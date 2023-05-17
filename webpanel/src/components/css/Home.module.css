@@ -91,6 +91,7 @@ input.search-input {
 }
 
 .product-img{
+    min-height: 302px;
     display: block;
     width: 85%;
     height: auto;

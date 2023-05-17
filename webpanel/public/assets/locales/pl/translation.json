@@ -49,6 +49,8 @@
     "num_err": "Hasło nie posiada cyfry",
     "symbol_err" : "Hasło nie posiada symbolu: @$! % * ? &",
     "pass_conf_err": "Potwierdź hasło podane wyżej",
-    "no_same_err": "Hasła do siebie nie pasują!"
+    "no_same_err": "Hasła do siebie nie pasują!",
+
+    "contact_info": "Kontant: "
 
 }

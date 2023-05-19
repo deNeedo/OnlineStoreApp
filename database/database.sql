@@ -1,7 +1,6 @@
 DROP TABLE veggiestore.items;
-DROP TABLE veggiestore.sessions;
 DROP TABLE veggiestore.users;
-DROP SCHEMA veggiestore;
+DROP TABLE veggiestore.sessions;
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,10 +13,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: veggiestore; Type: SCHEMA; Schema: -; Owner: postgres
---
-
 CREATE SCHEMA veggiestore;
 
 
@@ -27,9 +22,7 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
---
--- Name: items; Type: TABLE; Schema: veggiestore; Owner: postgres
---
+
 
 CREATE TABLE veggiestore.items (
     id_item integer NOT NULL,
@@ -38,15 +31,14 @@ CREATE TABLE veggiestore.items (
     price numeric(10,2),
     quantity integer,
     input_date date,
-    photo text
+    photo text,
+    polish_name character varying(40)
 );
 
 
 ALTER TABLE veggiestore.items OWNER TO postgres;
 
---
--- Name: items_id_item_seq; Type: SEQUENCE; Schema: veggiestore; Owner: postgres
---
+
 
 CREATE SEQUENCE veggiestore.items_id_item_seq
     AS integer
@@ -59,16 +51,11 @@ CREATE SEQUENCE veggiestore.items_id_item_seq
 
 ALTER TABLE veggiestore.items_id_item_seq OWNER TO postgres;
 
---
--- Name: items_id_item_seq; Type: SEQUENCE OWNED BY; Schema: veggiestore; Owner: postgres
---
+
 
 ALTER SEQUENCE veggiestore.items_id_item_seq OWNED BY veggiestore.items.id_item;
 
 
---
--- Name: sessions; Type: TABLE; Schema: veggiestore; Owner: postgres
---
 
 CREATE TABLE veggiestore.sessions (
     id_session integer NOT NULL,
@@ -79,9 +66,7 @@ CREATE TABLE veggiestore.sessions (
 
 ALTER TABLE veggiestore.sessions OWNER TO postgres;
 
---
--- Name: sessions_id_session_seq; Type: SEQUENCE; Schema: veggiestore; Owner: postgres
---
+
 
 CREATE SEQUENCE veggiestore.sessions_id_session_seq
     AS integer
@@ -94,16 +79,11 @@ CREATE SEQUENCE veggiestore.sessions_id_session_seq
 
 ALTER TABLE veggiestore.sessions_id_session_seq OWNER TO postgres;
 
---
--- Name: sessions_id_session_seq; Type: SEQUENCE OWNED BY; Schema: veggiestore; Owner: postgres
---
+
 
 ALTER SEQUENCE veggiestore.sessions_id_session_seq OWNED BY veggiestore.sessions.id_session;
 
 
---
--- Name: users; Type: TABLE; Schema: veggiestore; Owner: postgres
---
 
 CREATE TABLE veggiestore.users (
     user_id integer NOT NULL,
@@ -166,61 +146,61 @@ ALTER TABLE ONLY veggiestore.users ALTER COLUMN user_id SET DEFAULT nextval('veg
 -- Data for Name: items; Type: TABLE DATA; Schema: veggiestore; Owner: postgres
 --
 
-COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, photo) FROM stdin;
-1	Chives	Vegetables	0.80	0	\N	N ../../img/chives.jpeg
-2	Yellow pepper	Vegetables	1.00	100	\N	N ../../img/yellowPepper.jpeg
-3	Cauliflower	Vegetables	0.90	100	\N	N ../../img/cauliflower.jpeg
-4	Rasberry tomato	Vegetables	0.20	100	\N	N ../../img/rasberryTomato.jpeg
-5	Potato	Vegetables	0.15	100	\N	../../img/potato.jpeg
-6	Cabbage	Vegetables	0.75	70	\N	N ../../img/cabbage.jpeg
-7	Kohlrabi 	Vegetables	0.30	120	\N	N ../../img/kohlrabi.jpeg
-8	Radish	Vegetables	0.10	150	\N	N ../../img/radish.jpeg
-9	Cherry tomato	Vegetables	0.20	100	\N	N ../../img/cherryTomato.jpeg
-10	Avocado	Vegetables	3.00	20	\N	N ../../img/avocado.jpeg
-11	Lettuce	Vegetables	1.00	60	\N	N ../../img/lettuce.jpeg
-12	Carrot	Vegetables	0.30	200	\N	N ../../img/carrot.jpeg
-13	Broccoli	Vegetables	1.50	40	\N	N ../../img/broccoli.jpeg
-14	Garlic	Vegetables	0.25	100	\N	N ../../img/garlic.jpeg
-15	Zucchini 	Vegetables	0.20	170	\N	N ../../img/zucchini.jpeg
-16	Valerianella	Vegetables	2.50	100	\N	N ../../img/valerianella.jpeg
-17	Spinach	Vegetables	2.50	100	\N	N ../../img/spinach.jpeg
-18	Rucola	Vegetables	2.50	100	\N	N ../../img/rucola.jpeg
-19	Onion	Vegetables	0.40	100	\N	N ../../img/onion.jpeg
-20	Celery	Vegetables	0.10	100	\N	N ../../img/celery.jpeg
-21	Dill	Vegetables	0.15	120	\N	N ../../img/dill.jpeg
-22	Parsley	Vegetables	0.15	100	\N	N ../../img/parsley.jpeg
-23	Red pepper	Vegetables	1.00	100	\N	N ../../img/redPepper.jpeg
-24	Cucumber	Vegetables	0.50	100	\N	N ../../img/cucumber.jpeg
-25	Tomato	Vegetables	0.15	100	\N	N ../../img/tomato.jpeg
-26	Mushroom	Vegetables	0.05	100	\N	N ../../img/mushroom.jpeg
-27	Beetroot	Vegetables	0.30	180	\N	N ../../img/betroot.jpeg
-28	Leek	Vegetables	0.68	100	\N	N ../../img/leek.jpeg
-29	Chili	Vegetables	0.50	100	\N	N ../../img/chili.jpeg
-30	Sweetcorn	Vegetables	1.30	100	\N	N ../../img/sweetcorn.jpeg
-31	Aubergine	Vegetables	2.00	40	\N	N ../../img/aubergine.jpeg
-32	Red cabbage	Vegetables	0.75	100	\N	N ../../img/redCabbage.jpeg
-33	Soya	Vegetables	1.00	100	\N	N ../../img/soya.jpeg
-34	Asparagus	Vegetables	2.00	100	\N	N ../../img/aspargus.jpeg
-35	Kale	Vegetables	0.70	100	\N	N ../../img/kale.jpeg
-36	Turnip	Vegetables	0.80	100	\N	N ../../img/turnip.jpeg
-37	Sweet potato	Vegetables	1.50	100	\N	N ../../img/sweetPotato.jpeg 
-38	Apple	Fruit	0.20	120	\N	../../img/apple.jpeg
-39	Banana	Fruit	0.20	130	\N	../../img/banana.jpeg
-40	Pear	Fruit	0.20	130	\N	../../img/pear.jpeg
-41	Rasberry	Fruit	2.30	0	\N	../../img/rasberry.jpeg
-42	Strawberry	Fruit	3.00	10	\N	../../img/strawberry.jpeg
-43	Kiwi	Fruit	0.50	30	\N	../../img/kiwi.jpeg
-44	Orange	Fruit	0.10	50	\N	../../img/orange.jpeg
-45	Grapefruit	Fruit	0.10	50	\N	../../img/grapefruit.jpeg
-46	Peach	Fruit	0.15	40	\N	../../img/peach.jpeg
-47	Cherry	Fruit	1.00	15	\N	../../img/cherry.jpeg
-48	Plum	Fruit	0.05	600	\N	../../img/plum.jpeg
-49	Coconut	Fruit	1.80	10	\N	../../img/coconut.jpeg
-50	Blackberry	Fruit	2.50	20	\N	../../img/blackberry.jpeg
-51	Mango	Fruit	1.20	40	\N	../../img/mango.jpeg
-52	Pineapple	Fruit	2.50	17	\N	../../img/pineapple.jpeg
-53	Watermelon	Fruit	3.00	15	\N	../../img/watermelon.jpeg
-54	Grape	Fruit	2.30	20	\N	../../img/grape.jpeg
+COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, photo, polish_name) FROM stdin;
+1	Chives	Vegetables	0.80	0	\N	N ../../img/chives.jpeg	Szczypiorek
+2	Yellow pepper	Vegetables	1.00	100	\N	N ../../img/yellowPepper.jpeg	Papryka z¢lta
+3	Cauliflower	Vegetables	0.90	100	\N	N ../../img/cauliflower.jpeg	Kalafior
+4	Rasberry tomato	Vegetables	0.20	100	\N	N ../../img/rasberryTomato.jpeg	Pomidor malinowy
+5	Potato	Vegetables	0.15	100	\N	../../img/potato.jpeg	Ziemniak
+6	Cabbage	Vegetables	0.75	70	\N	N ../../img/cabbage.jpeg	Kapusta
+7	Kohlrabi 	Vegetables	0.30	120	\N	N ../../img/kohlrabi.jpeg	Kalarepa
+8	Radish	Vegetables	0.10	150	\N	N ../../img/radish.jpeg	Rzodkiewka
+10	Avocado	Vegetables	3.00	20	\N	N ../../img/avocado.jpeg	Awokado
+9	Cherry tomato	Vegetables	0.20	100	\N	N ../../img/cherryTomato.jpeg	Pomidorki koktajlowe
+11	Lettuce	Vegetables	1.00	60	\N	N ../../img/lettuce.jpeg	Salata
+12	Carrot	Vegetables	0.30	200	\N	N ../../img/carrot.jpeg	Marchewka
+13	Broccoli	Vegetables	1.50	40	\N	N ../../img/broccoli.jpeg	Brokul
+14	Garlic	Vegetables	0.25	100	\N	N ../../img/garlic.jpeg	Czosnek
+15	Zucchini 	Vegetables	0.20	170	\N	N ../../img/zucchini.jpeg	Cukinia
+16	Valerianella	Vegetables	2.50	100	\N	N ../../img/valerianella.jpeg	Rukola
+17	Spinach	Vegetables	2.50	100	\N	N ../../img/spinach.jpeg	Szpinka
+18	Rucola	Vegetables	2.50	100	\N	N ../../img/rucola.jpeg	Rukola
+19	Onion	Vegetables	0.40	100	\N	N ../../img/onion.jpeg	Cebula
+20	Celery	Vegetables	0.10	100	\N	N ../../img/celery.jpeg	Seler
+21	Dill	Vegetables	0.15	120	\N	N ../../img/dill.jpeg	Koperek
+22	Parsley	Vegetables	0.15	100	\N	N ../../img/parsley.jpeg	Pietruszka
+23	Red pepper	Vegetables	1.00	100	\N	N ../../img/redPepper.jpeg	Czerwona Papryka
+24	Cucumber	Vegetables	0.50	100	\N	N ../../img/cucumber.jpeg	Og¢rek zielony
+25	Tomato	Vegetables	0.15	100	\N	N ../../img/tomato.jpeg	Pomidor
+26	Mushroom	Vegetables	0.05	100	\N	N ../../img/mushroom.jpeg	Pieczarka
+27	Beetroot	Vegetables	0.30	180	\N	N ../../img/betroot.jpeg	Burak
+28	Leek	Vegetables	0.68	100	\N	N ../../img/leek.jpeg	Por
+29	Chili	Vegetables	0.50	100	\N	N ../../img/chili.jpeg	Chili
+30	Sweetcorn	Vegetables	1.30	100	\N	N ../../img/sweetcorn.jpeg	Kukurydza
+31	Aubergine	Vegetables	2.00	40	\N	N ../../img/aubergine.jpeg	Baklazan
+32	Red cabbage	Vegetables	0.75	100	\N	N ../../img/redCabbage.jpeg	Czerwona Kapusta
+33	Soya	Vegetables	1.00	100	\N	N ../../img/soya.jpeg	Soja
+34	Asparagus	Vegetables	2.00	100	\N	N ../../img/aspargus.jpeg	Szparagi
+35	Kale	Vegetables	0.70	100	\N	N ../../img/kale.jpeg	Jarmuz
+36	Turnip	Vegetables	0.80	100	\N	N ../../img/turnip.jpeg	Kalarepa
+40	Pear	Fruit	0.20	130	\N	../../img/pear.jpeg	Gruszka
+37	Sweet potato	Vegetables	1.50	100	\N	N ../../img/sweetPotato.jpeg 	Batat
+38	Apple	Fruit	0.20	120	\N	../../img/apple.jpeg	Jablko
+39	Banana	Fruit	0.20	130	\N	../../img/banana.jpeg	Banan
+41	Rasberry	Fruit	2.30	0	\N	../../img/rasberry.jpeg	Malina
+42	Strawberry	Fruit	3.00	10	\N	../../img/strawberry.jpeg	Polska truskawka
+43	Kiwi	Fruit	0.50	30	\N	../../img/kiwi.jpeg	Kiwi
+44	Orange	Fruit	0.10	50	\N	../../img/orange.jpeg	Pomarancz
+45	Grapefruit	Fruit	0.10	50	\N	../../img/grapefruit.jpeg	Grejpfrut
+46	Peach	Fruit	0.15	40	\N	../../img/peach.jpeg	Brzoskwinia
+47	Cherry	Fruit	1.00	15	\N	../../img/cherry.jpeg	Wisnia
+48	Plum	Fruit	0.05	600	\N	../../img/plum.jpeg	Sliwka
+49	Coconut	Fruit	1.80	10	\N	../../img/coconut.jpeg	Kokos
+50	Blackberry	Fruit	2.50	20	\N	../../img/blackberry.jpeg	Czarna porzeczka
+51	Mango	Fruit	1.20	40	\N	../../img/mango.jpeg	Mango
+52	Pineapple	Fruit	2.50	17	\N	../../img/pineapple.jpeg	Ananas
+53	Watermelon	Fruit	3.00	15	\N	../../img/watermelon.jpeg	Arbuz
+54	Grape	Fruit	2.30	20	\N	../../img/grape.jpeg	Winogrono
 \.
 
 

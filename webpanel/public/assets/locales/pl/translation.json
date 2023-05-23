@@ -23,6 +23,10 @@
 
     "search_input": "Wyszukaj swoje ulubione warzywa i owoce...",
     "type_filter": "Typ",
+    "price_filter": "Cena",
+    "price_one": "Bez ograniczeń",
+    "price_two": "Do 1 zł",
+    "price_three": "Do 2 zł",
     "all": "Wszystkie",
     "vegetables": "Warzywa",
     "fruits": "Owoce",

@@ -23,6 +23,10 @@
 
     "search_input": "Search for Your favorite vegetables and fruits...",
     "type_filter": "Type",
+    "price_filter": "Price",
+    "price_one": "No limit",
+    "price_two": "Up to 1$",
+    "price_three": "Up to 2$",
     "all": "All",
     "vegetables": "Vegetables",
     "fruits": "Fruits",

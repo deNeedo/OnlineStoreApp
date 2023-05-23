@@ -22,8 +22,8 @@
 
 input.search-input {
     padding-top: 11px;
-    min-width: 300px;
-    max-width: 475px;
+    min-width: 440px;
+    max-width: 600px;
     width: 100%;
     font-size: 1.25rem;
     margin: 3% 0% 3% 0%;

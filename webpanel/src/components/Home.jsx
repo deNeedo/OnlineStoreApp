@@ -16,28 +16,36 @@ export function Home() {
     const { t } = useTranslation();
     const {notifications, dismissNotification} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-    
+
     const [buttons, setButtons] = useState({login: '', register: ''});
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
+    const [searchData, setSearchData] = useState({type: 'all', pattern: '', price: '0'});
 
     useEffect(() => {
         if (location.state == null) {setButtons({login: 'Log In', register: 'Register'});}
-        else {setButtons(location.state.buttons);}
-        let socket = new WebSocket('ws://localhost:80/veggiestore');
-        socket.onopen = function()
-        {
-            let message = 'get-products ';
-            socket.send(message, 0, message.length, 80, 'localhost');
-        };
-        socket.onmessage = function(event) {setData(JSON.parse(event.data)); socket.close();};
+        else {setButtons(location.state.buttons)}
     }, [])
 
-    const onInputChange = (e) => {
+    useEffect(() => {getProducts(searchData)}, [searchData])
+
+    const handleInputChange = (e) => {
+        setSearchData({type: searchData.type, pattern: e.target.value, price: searchData.price})
+    }
+
+    const handleSelectChange = (e) => {
+        setSearchData({type: e.target.value, pattern: searchData.pattern, price: searchData.price})
+    }
+
+    const handleSelect2Change = (e) => {
+        setSearchData({type: searchData.type, pattern: searchData.pattern, price: e.target.value})
+    }
+
+    const getProducts = (e) => {
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
-            let message = 'get-products ' + e.target.value;
+            let message = 'get-products ' + e.type + ' ' + e.price + ' ' + e.pattern;
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
@@ -46,11 +54,6 @@ export function Home() {
             else {setError('');}
             setData(JSON.parse(event.data)); socket.close();
         };
-    }
-
-    const handleInputChange = () => {
-
-
     }
 
     return ( 
@@ -62,27 +65,43 @@ export function Home() {
                         type='text' 
                         placeholder={t("search_input")} 
                         className={homeCss['search-input']}
-                        onChange={onInputChange}
+                        onChange={handleInputChange}
                     />
 
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
                         <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("type_filter")}</InputLabel>
-                        <Select
+                        <Select id="type_select"
                             sx={{
                                 color: '#808080',
                                 '.MuiSvgIcon-root ': { fill: '#808080' },
                                 ':before': { borderBottom: '2px solid #E5E5E5' },
                                 ':after': { borderBottom: '2px solid green' },
-
                             }}
                             defaultValue={'all'}
-                            //value={all}
-                            // onChange={handleInputChange}
+                            onChange={handleSelectChange}
                         >
                         <MenuItem value={'all'} sx={{color: '#808080'}}><em>{t("all")}</em></MenuItem>
                         <MenuItem value={'vegetable'} sx={{color: '#808080'}}><em>{t("vegetables")}</em></MenuItem>
                         <MenuItem value={'fruit'} sx={{color: '#808080'}}><em>{t("fruits")}</em></MenuItem>
-                         </Select>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("price_filter")}</InputLabel>
+                        <Select id="price_select"
+                            sx={{
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+                            }}
+                            defaultValue={'0'}
+                            onChange={handleSelect2Change}
+                        >
+                        <MenuItem value={'0'} sx={{color: '#808080'}}><em>{t("price_one")}</em></MenuItem>
+                        <MenuItem value={'1'} sx={{color: '#808080'}}><em>{t("price_two")}</em></MenuItem>
+                        <MenuItem value={'2'} sx={{color: '#808080'}}><em>{t("price_three")}</em></MenuItem>
+                        </Select>
                     </FormControl>
 
 
@@ -96,7 +115,7 @@ export function Home() {
                             <Box className={homeCss['product-img']} component='img' src={item.photo}></Box>
                             <hr className={homeCss['hr']}></hr>
                             <Typography className={homeCss['product-price']} variant='subtitle1'> {t("price")} {item.price}{t("price_end")} </Typography>
-                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavilable")}</span>} </Typography>
+                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
                         </Grid>
                     ))}
                 </Grid>

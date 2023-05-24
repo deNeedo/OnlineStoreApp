@@ -13,39 +13,43 @@ import Header from './Header';
 import Footer from './Footer';
 
 export function Home() {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const {notifications, dismissNotification} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
 
-    const [buttons, setButtons] = useState({login: '', register: ''});
+    const [authenticated, setAuthenticated] = useState(false);
     const [data, setData] = useState([]);
     const [error, setError] = useState('');
-    const [searchData, setSearchData] = useState({type: 'all', pattern: '', price: '0'});
+    const [searchData, setSearchData] = useState({type: 'all', pattern: '', price: '0', order: 'alpha'});
 
     useEffect(() => {
-        if (location.state == null) {setButtons({login: 'Log In', register: 'Register'});}
-        else {setButtons(location.state.buttons)}
+        if (location.state == null) {setAuthenticated(false)}
+        else {setAuthenticated(location.state.authenticated)}
     }, [])
 
     useEffect(() => {getProducts(searchData)}, [searchData])
 
     const handleInputChange = (e) => {
-        setSearchData({type: searchData.type, pattern: e.target.value, price: searchData.price})
+        setSearchData({type: searchData.type, pattern: e.target.value, price: searchData.price, order: searchData.order})
     }
 
     const handleSelectChange = (e) => {
-        setSearchData({type: e.target.value, pattern: searchData.pattern, price: searchData.price})
+        setSearchData({type: e.target.value, pattern: searchData.pattern, price: searchData.price, order: searchData.order})
     }
 
     const handleSelect2Change = (e) => {
-        setSearchData({type: searchData.type, pattern: searchData.pattern, price: e.target.value})
+        setSearchData({type: searchData.type, pattern: searchData.pattern, price: e.target.value, order: searchData.order})
+    }
+
+    const handleSelect3Change = (e) => {
+        setSearchData({type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: e.target.value})
     }
 
     const getProducts = (e) => {
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
-            let message = 'get-products ' + e.type + ' ' + e.price + ' ' + e.pattern;
+            let message = 'get-products ' + e.type + ' ' + e.price + ' ' + e.order + ' ' + e.pattern;
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
@@ -58,7 +62,7 @@ export function Home() {
 
     return ( 
         <div className={homeCss['wrapper']}>
-            <Header buttons={buttons} />
+            <Header/>
             <div className={homeCss['content-box']}>
                 <div className={homeCss['search-box']}>
                     <input 
@@ -70,7 +74,7 @@ export function Home() {
 
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
                         <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("type_filter")}</InputLabel>
-                        <Select id="type_select"
+                        <Select
                             sx={{
                                 color: '#808080',
                                 '.MuiSvgIcon-root ': { fill: '#808080' },
@@ -88,7 +92,7 @@ export function Home() {
 
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
                         <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("price_filter")}</InputLabel>
-                        <Select id="price_select"
+                        <Select
                             sx={{
                                 color: '#808080',
                                 '.MuiSvgIcon-root ': { fill: '#808080' },
@@ -101,6 +105,23 @@ export function Home() {
                         <MenuItem value={'0'} sx={{color: '#808080'}}><em>{t("price_one")}</em></MenuItem>
                         <MenuItem value={'1'} sx={{color: '#808080'}}><em>{t("price_two")}</em></MenuItem>
                         <MenuItem value={'2'} sx={{color: '#808080'}}><em>{t("price_three")}</em></MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("order_filter")}</InputLabel>
+                        <Select
+                            sx={{
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+                            }}
+                            defaultValue={'alpha'}
+                            onChange={handleSelect3Change}
+                        >
+                        <MenuItem value={'alpha'} sx={{color: '#808080'}}><em>{t("order_one")}</em></MenuItem>
+                        <MenuItem value={'price'} sx={{color: '#808080'}}><em>{t("order_two")}</em></MenuItem>
                         </Select>
                     </FormControl>
 

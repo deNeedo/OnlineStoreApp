@@ -121,11 +121,19 @@ public class App
         stmt = conn.prepareStatement(string_sql_query);
         if (query.length > 4)
         {
+            string_sql_query = "select * from veggiestore.items ";
+            for (int m = 0; m < sql_query.length - 1; m++)
+            {
+                if (m == 0) {string_sql_query += "where ";}
+                string_sql_query += sql_query[m];
+                if (m < sql_query.length - 2) {string_sql_query += "and ";}
+            }
+            stmt = conn.prepareStatement(string_sql_query);
             JSONArray results = new JSONArray();
             for (int m = 4; m < query.length; m++)
             {
-                if (!string_sql_query.contains("where")) {stmt = conn.prepareStatement(string_sql_query + " where upper(item_name) like upper('%" + query[m] + "%')");}
-                else {stmt = conn.prepareStatement(string_sql_query + "and upper(item_name) like upper('%" + query[m] + "%')");}
+                if (!string_sql_query.contains("where")) {stmt = conn.prepareStatement(string_sql_query + " where upper(item_name) like upper('%" + query[m] + "%') " + sql_query[sql_query.length - 1]);}
+                else {stmt = conn.prepareStatement(string_sql_query + "and upper(item_name) like upper('%" + query[m] + "%') " + sql_query[sql_query.length - 1]);}
                 results = createJSON(stmt.executeQuery(), results);
             }
             results = makeUnique(results);

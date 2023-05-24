@@ -17,14 +17,15 @@ export function Home() {
     const {notifications, dismissNotification} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
 
-    const [authenticated, setAuthenticated] = useState(false);
+    // const [authenticated, setAuthenticated] = useState(false);
     const [data, setData] = useState([]);
+    const [lang, setLang] = useState('');
     const [error, setError] = useState('');
     const [searchData, setSearchData] = useState({type: 'all', pattern: '', price: '0', order: 'alpha'});
 
     useEffect(() => {
-        if (location.state == null) {setAuthenticated(false)}
-        else {setAuthenticated(location.state.authenticated)}
+        if (location.state == null) {setLang('en')}
+        else {setLang(location.state.lang)}
     }, [])
 
     useEffect(() => {getProducts(searchData)}, [searchData])
@@ -62,7 +63,7 @@ export function Home() {
 
     return ( 
         <div className={homeCss['wrapper']}>
-            <Header/>
+            <Header props={lang}/>
             <div className={homeCss['content-box']}>
                 <div className={homeCss['search-box']}>
                     <input 

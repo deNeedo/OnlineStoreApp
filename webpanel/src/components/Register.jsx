@@ -10,10 +10,10 @@ import Footer from './Footer';
 export function Register() {
     const { t } = useTranslation();
     const {notifications, dismissNotification, notify} = useNotifications();
-    const [buttons, setButtons] = useState({login: '', register: ''});
     const navigate = useNavigate(); const location = useLocation();
     const loginRedirect = () => {navigate('/login');}
     const termsRedirect = () => {navigate('/terms');}
+    const [lang, setLang] = useState('');
 
     const [input, setInput] = useState({
         email: '',
@@ -32,11 +32,6 @@ export function Register() {
         surname: '',
         phone: ''
         })
-
-    useEffect(() => {
-        if (location.state == null) {setButtons({login: 'Log In', register: 'Home'});}
-        else {setButtons(location.state.buttons)}
-    }, [])
 
     const onInputChange = e => {
         const { name, value } = e.target;
@@ -144,7 +139,7 @@ export function Register() {
             else
             {
                 notify(t("register_success_mess"), 'success');
-                navigate('/login', {state: {buttons: {login: 'Home', register: 'Register'}}});
+                navigate('/login')
             }
             let message = 'connection-close-try';
             socket.send(message, 0, message.length, 80, 'localhost');
@@ -155,7 +150,7 @@ export function Register() {
     
     return (
         <div className={registerCss['wrapper']}>
-            <Header buttons={buttons}/>
+            <Header/>
             <div className={registerCss['content-box']}>
                 <div className={registerCss['auth-form-container']}>
 

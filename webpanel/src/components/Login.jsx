@@ -10,26 +10,17 @@ import Footer from './Footer';
 
 export function Login() {
     const currentLanguageCode = cookies.get('i18next') || 'en';
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
+    const [lang, setLang] = useState('');
 
-    const [buttons, setButtons] = useState({login: '', register: ''});
     const [input, setInput] = useState({email: '', pass: ''});  
     const [error, setError] = useState({email: '', pass: ''});
 
-    const registerRedirect = () => {
-        navigate('/register', {state: {buttons: {login: 'Log In', register: 'Home'}}});
-    }
-    const forgotPassRedirect = () => {
-        navigate('/password-reset', {state: {buttons: {login: 'Log In', register: 'Home'}}});
-    }
-
-    useEffect(() => {
-        if (location.state == null) {setButtons({login: 'Home', register: 'Register'});}
-        else {setButtons(location.state.buttons)}
-    }, [])
+    const registerRedirect = () => {navigate('/register')}
+    const forgotPassRedirect = () => {navigate('/password-reset')}
 
     const onInputChange = e => {
         const { name, value } = e.target;
@@ -44,22 +35,20 @@ export function Login() {
         let { name, value } = e.target;
         setError(prev => {
         const stateObj = { ...prev, [name]: '' };
-    
-        switch (name) {           
-            case 'email':
+            switch (name) {           
+                case 'email':
+                    if (!value) {
+                        stateObj[name] = t("email_err");
+                    }
+                    break;
+        
+                case 'pass':
                 if (!value) {
-                    stateObj[name] = t("email_err");
-                }
+                    stateObj[name] = t("pass_err");
+                } 
                 break;
-    
-            case 'pass':
-            if (!value) {
-                stateObj[name] = t("pass_err");
-            } 
-            break;
-        }
-    
-        return stateObj;
+            }
+            return stateObj;
         });
     }
 
@@ -78,7 +67,7 @@ export function Login() {
                 message = 'session create '.concat(input.email);
                 socket.send(message, 0, message.length, 80, 'localhost');
                 notify(t("login_correct_mess"), 'success');
-                navigate('/home', {state: {buttons: {login: 'Log Out', register: 'Register'}}});
+                navigate('/home')
             }
             else if (event.data == 'error') {notify(t("email_pass_err_mess"), 'error');}
             socket.send('connection-close-try', 0, 'connection-close-try'.length, 80, 'localhost');
@@ -88,7 +77,7 @@ export function Login() {
 
     return (
         <div className={loginCss['wrapper']}>
-            <Header buttons={buttons}/>
+            <Header/>
             <div className={loginCss['content-box']}>
                 <div className={loginCss['auth-form-container']}>
 

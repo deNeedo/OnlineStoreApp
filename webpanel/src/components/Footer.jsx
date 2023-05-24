@@ -9,11 +9,12 @@ import footerCss from './css/Footer.module.css';
 export function Footer() {
 
     const { t } = useTranslation();
+    const [lang, setLang] = useState('');
 
     return (
         <footer>
             <div className={footerCss['contact-info']}>
-                <span className={footerCss['contact']}>{t("contact_info")} <a href='mailto:admin@veggie-store.com'> admin@veggie-store.com </a> </span> 
+                <span className={footerCss['contact']}> {t("contact_info")} <a href='mailto:admin@veggie-store.com'> admin@veggie-store.com </a></span> 
             </div>
         </footer>
     )

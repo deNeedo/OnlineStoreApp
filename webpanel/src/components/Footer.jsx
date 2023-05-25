@@ -8,8 +8,7 @@ import footerCss from './css/Footer.module.css';
 
 export function Footer() {
 
-    const { t } = useTranslation();
-    const [lang, setLang] = useState('');
+    const {t} = useTranslation();
 
     return (
         <footer>

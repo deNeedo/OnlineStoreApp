@@ -16,41 +16,40 @@ export function Home() {
     const {t} = useTranslation();
     const {notifications, dismissNotification} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-
     // const [authenticated, setAuthenticated] = useState(false);
     const [data, setData] = useState([]);
     const [lang, setLang] = useState('');
     const [error, setError] = useState('');
-    const [searchData, setSearchData] = useState({type: 'all', pattern: '', price: '0', order: 'alpha'});
+    const [searchData, setSearchData] = useState({lang: lang, type: 'all', pattern: '', price: '0', order: 'alpha'});
 
     useEffect(() => {
-        if (location.state == null) {setLang('en')}
-        else {setLang(location.state.lang)}
+        if (location.state != null) {setLang(location.state.lang)}
+        else {setLang('en')}
     }, [])
-
+    useEffect(() => {setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: searchData.order})}, [lang])
     useEffect(() => {getProducts(searchData)}, [searchData])
 
     const handleInputChange = (e) => {
-        setSearchData({type: searchData.type, pattern: e.target.value, price: searchData.price, order: searchData.order})
+        setSearchData({lang: lang, type: searchData.type, pattern: e.target.value, price: searchData.price, order: searchData.order})
     }
 
     const handleSelectChange = (e) => {
-        setSearchData({type: e.target.value, pattern: searchData.pattern, price: searchData.price, order: searchData.order})
+        setSearchData({lang: lang, type: e.target.value, pattern: searchData.pattern, price: searchData.price, order: searchData.order})
     }
 
     const handleSelect2Change = (e) => {
-        setSearchData({type: searchData.type, pattern: searchData.pattern, price: e.target.value, order: searchData.order})
+        setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: e.target.value, order: searchData.order})
     }
 
     const handleSelect3Change = (e) => {
-        setSearchData({type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: e.target.value})
+        setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: e.target.value})
     }
 
     const getProducts = (e) => {
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
-            let message = 'get-products ' + e.type + ' ' + e.price + ' ' + e.order + ' ' + e.pattern;
+            let message = 'get-products ' + e.lang + ' ' +  e.type + ' ' + e.price + ' ' + e.order + ' ' + e.pattern;
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
@@ -60,10 +59,9 @@ export function Home() {
             setData(JSON.parse(event.data)); socket.close();
         };
     }
-
-    return ( 
+    return (
         <div className={homeCss['wrapper']}>
-            <Header props={lang}/>
+            <Header props={{setLang, lang}} />
             <div className={homeCss['content-box']}>
                 <div className={homeCss['search-box']}>
                     <input 
@@ -132,7 +130,7 @@ export function Home() {
                 <Grid container className={error ? homeCss['hide-products-container'] : homeCss['products-container']}  sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
-                            <Typography className={homeCss['product-name']} variant='h5'> {item.item_name} </Typography>
+                            <Typography className={homeCss['product-name']} variant='h5'> {lang == "en" ? item.item_name : item.polish_name} </Typography>
                             <hr className={homeCss['hr']}></hr>
                             <Box className={homeCss['product-img']} component='img' src={item.photo}></Box>
                             <hr className={homeCss['hr']}></hr>

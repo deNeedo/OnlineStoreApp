@@ -15,23 +15,16 @@ import USFlagPNG from '../../img/united-states.png';
 import PLFlagPNG from '../../img/poland.png'
 import ProfilePNG from '../../img/profile.png'
 
-export function Header() {
+export function Header({props}) {
     const {t} = useTranslation();
     const {notify} = useNotifications();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const location = useLocation();
-    const [lang, setLang] = useState('');
 
-    const loginRedirect = () => {navigate('/login', {state: {lang: lang}})}
-    const registerRedirect = () => {navigate('/register', {state: {lang: lang}})}
-    const homeRedirect = () => {navigate('/home', {state: {lang: lang}})}
-
-    const handleChange = (e) => {
-        setLang(e.target.value);
-    }
-
-    // useEffect(() => {setLang(props.lang)}, [])
-
+    const loginRedirect = () => {navigate('/login', {state: {lang: props.lang}})}
+    const registerRedirect = () => {navigate('/register', {state: {lang: props.lang}})}
+    const homeRedirect = () => {navigate('/home', {state: {lang: props.lang}})}
+    const handleChange = (e) => {props.setLang(e.target.value);}
     return (
         <nav>
             <div className={headerCss['header']}>
@@ -40,30 +33,28 @@ export function Header() {
                 <span onClick={homeRedirect} className={headerCss['title']}>{t("site_name")}</span>
                 </div>
                 <div className={headerCss['nav']}>
-                        <button onClick={loginRedirect} className={headerCss['link-btn']}>{t("login_button")}</button>
-                        <button onClick={registerRedirect} className={headerCss['link-btn']}>{t("register_button")}</button>
-                        <img onClick={homeRedirect} className={headerCss['icon']} src={CartPNG}/>
-                        <img onClick={homeRedirect} className={headerCss['icon']} src={WishPNG}/>
-                        <img onClick={homeRedirect} className={headerCss['icon']} src={ProfilePNG}/>
+                    <button onClick={loginRedirect} className={headerCss['link-btn']}>{t("login_button")}</button>
+                    <button onClick={registerRedirect} className={headerCss['link-btn']}>{t("register_button")}</button>
+                    <img onClick={homeRedirect} className={headerCss['icon']} src={CartPNG}/>
+                    <img onClick={homeRedirect} className={headerCss['icon']} src={WishPNG}/>
+                    <img onClick={homeRedirect} className={headerCss['icon']} src={ProfilePNG}/>
 
-                        <FormControl className={headerCss['form-control']}>
-                            <Select className={headerCss['select']} 
-                                sx={{ boxShadow: "none", ".MuiOutlinedInput-notchedOutline": { border: 0 }, 
-                                "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0, }, 
-                                "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0, },
-                                ".MuiSvgIcon-root": { fill: "white !important",}
-                                }}
-                                defaultValue={'en'}
-                                onChange={handleChange}
-                                label="Age"
-                                inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                            <MenuItem value={'pl'}><img className={headerCss['flags']} src={PLFlagPNG} onClick={() => i18next.changeLanguage('pl')}/></MenuItem>
-                            <MenuItem value={'en'}><img className={headerCss['flags']} src={USFlagPNG} onClick={() => i18next.changeLanguage('en')}/></MenuItem>
-                            </Select>
-                        </FormControl>
-
-
+                    <FormControl className={headerCss['form-control']}>
+                        <Select className={headerCss['select']} 
+                            sx={{ boxShadow: "none", ".MuiOutlinedInput-notchedOutline": { border: 0 }, 
+                            "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { border: 0, }, 
+                            "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { border: 0, },
+                            ".MuiSvgIcon-root": {fill: "white !important",}
+                        }}
+                        value={props.lang}
+                        onChange={handleChange}
+                        // label="Age"
+                        // inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                        <MenuItem value={'pl'}><img className={headerCss['flags']} src={PLFlagPNG} onClick={() => i18next.changeLanguage('pl')}/></MenuItem>
+                        <MenuItem value={'en'}><img className={headerCss['flags']} src={USFlagPNG} onClick={() => i18next.changeLanguage('en')}/></MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
             </div>
         </nav>

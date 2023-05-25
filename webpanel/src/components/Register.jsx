@@ -11,9 +11,9 @@ export function Register() {
     const { t } = useTranslation();
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-    const loginRedirect = () => {navigate('/login');}
-    const termsRedirect = () => {navigate('/terms');}
-    const [lang, setLang] = useState('');
+    const loginRedirect = () => {navigate('/login', {state: {lang: lang}})}
+    const termsRedirect = () => {navigate('/terms', {state: {lang: lang}})}
+    const [lang, setLang] = useState(location.state.lang);
 
     const [input, setInput] = useState({
         email: '',
@@ -139,7 +139,7 @@ export function Register() {
             else
             {
                 notify(t("register_success_mess"), 'success');
-                navigate('/login')
+                navigate('/login', {state: {lang: lang}})
             }
             let message = 'connection-close-try';
             socket.send(message, 0, message.length, 80, 'localhost');
@@ -150,7 +150,7 @@ export function Register() {
     
     return (
         <div className={registerCss['wrapper']}>
-            <Header/>
+            <Header props={{setLang, lang}} />
             <div className={registerCss['content-box']}>
                 <div className={registerCss['auth-form-container']}>
 

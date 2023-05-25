@@ -42,13 +42,14 @@ public class App
         }
         return sb.toString();
     }
-    private static JSONArray createJSON(ResultSet rs, JSONArray arr) throws Exception
+    private static JSONArray createJSON(ResultSet rs, JSONArray arr, String lang) throws Exception
     {
         while (rs.next())
         {
             JSONObject obj = new JSONObject();
             obj.put("id_item", rs.getInt("id_item"));
-            obj.put("item_name", rs.getString("item_name"));
+            if (lang.contains("en")) {obj.put("item_name", rs.getString("item_name"));}
+            else if (lang.contains("pl")) {obj.put("polish_name", rs.getString("polish_name"));}
             obj.put("type", rs.getString("type"));
             obj.put("price", rs.getDouble("price"));
             obj.put("quantity", rs.getInt("quantity"));
@@ -92,25 +93,23 @@ public class App
     public static String get_products(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        String[] query = data.split(" "); String[] sql_query = new String[1]; PreparedStatement stmt;
-        if (!query[1].contains("all"))
+        String[] query = data.split(" "); String[] sql_query = new String[1]; PreparedStatement stmt; String language = query[1];
+        if (!query[2].contains("all"))
         {
             sql_query = Arrays.copyOf(sql_query, sql_query.length + 1);
-            sql_query[sql_query.length - 2] = "upper(type) like upper('"+ query[1] +"') ";
+            sql_query[sql_query.length - 2] = "upper(type) like upper('"+ query[2] +"') ";
         }
-        if (!query[2].contains("0"))
+        if (!query[3].contains("0"))
         {
             sql_query = Arrays.copyOf(sql_query, sql_query.length + 1);
-            sql_query[sql_query.length - 2] = "price <= '"+ query[2] +"' ";
+            sql_query[sql_query.length - 2] = "price <= '"+ query[3] +"' ";
         }
-        if (query[3].contains("alpha"))
+        if (query[4].contains("alpha"))
         {
-            sql_query[sql_query.length - 1] = "order by item_name";
+            if (query[1].contains("en")) {sql_query[sql_query.length - 1] = "order by item_name";}
+            if (query[1].contains("pl")) {sql_query[sql_query.length - 1] = "order by polish_name";}
         }
-        if (query[3].contains("price"))
-        {
-            sql_query[sql_query.length - 1] = "order by price";
-        }
+        if (query[4].contains("price")) {sql_query[sql_query.length - 1] = "order by price";}
         String string_sql_query = "select * from veggiestore.items ";
         for (int m = 0; m < sql_query.length; m++)
         {
@@ -119,7 +118,7 @@ public class App
             if (m < sql_query.length - 2) {string_sql_query += "and ";}
         }
         stmt = conn.prepareStatement(string_sql_query);
-        if (query.length > 4)
+        if (query.length > 5)
         {
             string_sql_query = "select * from veggiestore.items ";
             for (int m = 0; m < sql_query.length - 1; m++)
@@ -130,16 +129,17 @@ public class App
             }
             stmt = conn.prepareStatement(string_sql_query);
             JSONArray results = new JSONArray();
-            for (int m = 4; m < query.length; m++)
+            for (int m = 5; m < query.length; m++)
             {
                 if (!string_sql_query.contains("where")) {stmt = conn.prepareStatement(string_sql_query + " where upper(item_name) like upper('%" + query[m] + "%') " + sql_query[sql_query.length - 1]);}
                 else {stmt = conn.prepareStatement(string_sql_query + "and upper(item_name) like upper('%" + query[m] + "%') " + sql_query[sql_query.length - 1]);}
-                results = createJSON(stmt.executeQuery(), results);
+                results = createJSON(stmt.executeQuery(), results, language);
             }
             results = makeUnique(results);
             return results.toJSONString();
         }
-        else {return createJSON(stmt.executeQuery(), new JSONArray()).toJSONString();}
+        
+        else {return createJSON(stmt.executeQuery(), new JSONArray(), language).toJSONString();}
     }
     public static String manage_session(String data) throws Exception
     {

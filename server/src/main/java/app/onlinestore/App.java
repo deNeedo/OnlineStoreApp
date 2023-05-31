@@ -94,11 +94,22 @@ public class App
     public static String admin_query(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        String query = data.split(":")[1]; PreparedStatement stmt = conn.prepareStatement(query); System.out.println(stmt.toString());
-        ResultSet rs = stmt.executeQuery(); ResultSetMetaData rsmd = rs.getMetaData(); String results = "";
-        return rsmd.getColumnCount() + "";
-        // while (rs.next()) {results += rs.get;}
-        // return results;
+        String query = data.split(":")[1]; PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery(); ResultSetMetaData rsmd = rs.getMetaData(); String results = ""; 
+        if (rsmd.getColumnCount() != 0)
+        {
+            while (rs.next())
+            {
+                String row = "";
+                for (int m = 0; m < rsmd.getColumnCount(); m++)
+                {
+                    row += (rs.getString(m + 1) + "\t");
+                }
+                results += (row + "\n");
+            }
+            return results;
+        }
+        else {return "No results!";}
     }
     public static String get_products(String data) throws Exception
     {

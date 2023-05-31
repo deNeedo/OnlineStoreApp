@@ -37,12 +37,8 @@ public class Terminal
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         this.stage.setResizable(false);
         this.stage.setScene(this.previous.previous.scene); this.stage.show();
-        this.result_field.setText("");
+        this.result_field.setText(""); this.query_field.setText("");
     }
-
-    // public void psql(ActionEvent event) throws Exception {
-    //     // writing a query
-    // }
 
     public void execute(ActionEvent event) throws Exception {
         this.result_field.setText("");

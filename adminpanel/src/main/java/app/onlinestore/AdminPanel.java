@@ -32,7 +32,11 @@ public class AdminPanel extends Application
     @OnOpen
     public void onOpen(Session session) {this.session = session;}
     @OnMessage
-    public void onMessage(Session session, String message) {this.next.next.message = message;}
+    public void onMessage(Session session, String message)
+    {
+        if (message.contains("correct")) {this.next.next.message = message;}
+        else {this.next.next.next.next.message = message;}
+    }
     @OnClose
     public void onClose(Session session) {}
     @Override

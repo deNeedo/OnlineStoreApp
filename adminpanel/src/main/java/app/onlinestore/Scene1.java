@@ -52,7 +52,7 @@ public class Scene1
             {
                 this.session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
                 while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-                if (this.message.contains("success"))
+                if (this.message.contains("correct"))
                 {
                     this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     this.stage.setResizable(false); errMess.setText(""); txtButton.setText(""); passButton.setText("");

@@ -6,7 +6,7 @@ DROP SCHEMA veggiestore;
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'WIN1252';
+SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
@@ -169,7 +169,7 @@ ALTER TABLE ONLY veggiestore.users ALTER COLUMN user_id SET DEFAULT nextval('veg
 
 COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, photo, polish_name) FROM stdin;
 1	Chives	Vegetable	0.80	0	\N	N ../../img/chives.jpeg	Szczypiorek
-2	Yellow pepper	Vegetable	1.00	100	\N	N ../../img/yellowPepper.jpeg	Papryka ?�?ta
+2	Yellow pepper	Vegetable	1.00	100	\N	N ../../img/yellowPepper.jpeg	Papryka żółta
 3	Cauliflower	Vegetable	0.90	100	\N	N ../../img/cauliflower.jpeg	Kalafior
 4	Rasberry tomato	Vegetable	0.20	100	\N	N ../../img/rasberryTomato.jpeg	Pomidor malinowy
 5	Potato	Vegetable	0.15	100	\N	../../img/potato.jpeg	Ziemniak
@@ -178,9 +178,9 @@ COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, p
 8	Radish	Vegetable	0.10	150	\N	N ../../img/radish.jpeg	Rzodkiewka
 10	Avocado	Vegetable	3.00	20	\N	N ../../img/avocado.jpeg	Awokado
 9	Cherry tomato	Vegetable	0.20	100	\N	N ../../img/cherryTomato.jpeg	Pomidorki koktajlowe
-11	Lettuce	Vegetable	1.00	60	\N	N ../../img/lettuce.jpeg	Sa?ata
+11	Lettuce	Vegetable	1.00	60	\N	N ../../img/lettuce.jpeg	Sałata
 12	Carrot	Vegetable	0.30	200	\N	N ../../img/carrot.jpeg	Marchewka
-13	Broccoli	Vegetable	1.50	40	\N	N ../../img/broccoli.jpeg	Broku?
+13	Broccoli	Vegetable	1.50	40	\N	N ../../img/broccoli.jpeg	Brokuł
 14	Garlic	Vegetable	0.25	100	\N	N ../../img/garlic.jpeg	Czosnek
 15	Zucchini 	Vegetable	0.20	170	\N	N ../../img/zucchini.jpeg	Cukinia
 16	Valerianella	Vegetable	2.50	100	\N	N ../../img/valerianella.jpeg	Rukola
@@ -191,31 +191,31 @@ COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, p
 21	Dill	Vegetable	0.15	120	\N	N ../../img/dill.jpeg	Koperek
 22	Parsley	Vegetable	0.15	100	\N	N ../../img/parsley.jpeg	Pietruszka
 23	Red pepper	Vegetable	1.00	100	\N	N ../../img/redPepper.jpeg	Czerwona papryka
-24	Cucumber	Vegetable	0.50	100	\N	N ../../img/cucumber.jpeg	Og�rek zielony
+24	Cucumber	Vegetable	0.50	100	\N	N ../../img/cucumber.jpeg	Ogórek zielony
 25	Tomato	Vegetable	0.15	100	\N	N ../../img/tomato.jpeg	Pomidor
 26	Mushroom	Vegetable	0.05	100	\N	N ../../img/mushroom.jpeg	Pieczarka
 27	Beetroot	Vegetable	0.30	180	\N	N ../../img/betroot.jpeg	Burak
 28	Leek	Vegetable	0.68	100	\N	N ../../img/leek.jpeg	Por
 29	Chili	Vegetable	0.50	100	\N	N ../../img/chili.jpeg	Chili
 30	Sweetcorn	Vegetable	1.30	100	\N	N ../../img/sweetcorn.jpeg	Kukurydza
-31	Aubergine	Vegetable	2.00	40	\N	N ../../img/aubergine.jpeg	Bak?a?an
+31	Aubergine	Vegetable	2.00	40	\N	N ../../img/aubergine.jpeg	Bakłażan
 32	Red cabbage	Vegetable	0.75	100	\N	N ../../img/redCabbage.jpeg	Czerwona Kapusta
 33	Soya	Vegetable	1.00	100	\N	N ../../img/soya.jpeg	Soja
 34	Asparagus	Vegetable	2.00	100	\N	N ../../img/aspargus.jpeg	Szparagi
-35	Kale	Vegetable	0.70	100	\N	N ../../img/kale.jpeg	Jarmu?
+35	Kale	Vegetable	0.70	100	\N	N ../../img/kale.jpeg	Jarmuż
 36	Turnip	Vegetable	0.80	100	\N	N ../../img/turnip.jpeg	Kalarepa
 40	Pear	Fruit	0.20	130	\N	../../img/pear.jpeg	Gruszka
 37	Sweet potato	Vegetable	1.50	100	\N	N ../../img/sweetPotato.jpeg 	Batat
-38	Apple	Fruit	0.20	120	\N	../../img/apple.jpeg	Jab?ko
+38	Apple	Fruit	0.20	120	\N	../../img/apple.jpeg	Jabłko
 39	Banana	Fruit	0.20	130	\N	../../img/banana.jpeg	Banan
 41	Rasberry	Fruit	2.30	0	\N	../../img/rasberry.jpeg	Malina
 42	Strawberry	Fruit	3.00	10	\N	../../img/strawberry.jpeg	Truskawka
 43	Kiwi	Fruit	0.50	30	\N	../../img/kiwi.jpeg	Kiwi
-44	Orange	Fruit	0.10	50	\N	../../img/orange.jpeg	Pomara?cza
+44	Orange	Fruit	0.10	50	\N	../../img/orange.jpeg	Pomarańcza
 45	Grapefruit	Fruit	0.10	50	\N	../../img/grapefruit.jpeg	Grejpfrut
 46	Peach	Fruit	0.15	40	\N	../../img/peach.jpeg	Brzoskwinia
-47	Cherry	Fruit	1.00	15	\N	../../img/cherry.jpeg	Wi?nia
-48	Plum	Fruit	0.05	600	\N	../../img/plum.jpeg	?liwka
+47	Cherry	Fruit	1.00	15	\N	../../img/cherry.jpeg	Wiśnia
+48	Plum	Fruit	0.05	600	\N	../../img/plum.jpeg	Śliwka
 49	Coconut	Fruit	1.80	10	\N	../../img/coconut.jpeg	Kokos
 50	Blackberry	Fruit	2.50	20	\N	../../img/blackberry.jpeg	Czarna porzeczka
 51	Mango	Fruit	1.20	40	\N	../../img/mango.jpeg	Mango

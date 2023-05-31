@@ -58,6 +58,9 @@
     "pass_conf_err": "Potwierdź hasło podane wyżej",
     "no_same_err": "Hasła do siebie nie pasują!",
 
-    "contact_info": "Kontant: "
+    "contact_info": "Kontant: ",
 
+    "login_button": "Zaloguj",
+    "register_button": "Zarejestruj"
+    
 }

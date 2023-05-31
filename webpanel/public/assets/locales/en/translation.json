@@ -58,12 +58,9 @@
     "pass_conf_err": "Please enter Confirm Password",
     "no_same_err": "Passwords do not match!",
 
-    "contact_info": "Contact: "
+    "contact_info": "Contact: ",
 
-
-
-
-
-
+    "login_button": "Log In",
+    "register_button": "Register"
 
 }

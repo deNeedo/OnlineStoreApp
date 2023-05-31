@@ -10,16 +10,11 @@ import Footer from './Footer';
 export function Terms() {
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-
-    const [buttons, setButtons] = useState({login: '', register: ''});
-
-    useEffect(() => {
-        setButtons({login: 'Log In', register: 'Register'});
-    }, [])
+    const [lang, setLang] = useState(location.state.lang);
 
     return ( 
         <div className={TermsCss['wrapper']}>
-            <Header buttons={buttons}/>
+            <Header props={{setLang, lang}} />
                 <div className={TermsCss['content-box']}>
                     <p className={TermsCss['welcome-mess']}>Our Terms & Conditions</p>
                 <div className={TermsCss['content']}>

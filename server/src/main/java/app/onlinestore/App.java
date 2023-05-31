@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
@@ -86,9 +87,18 @@ public class App
         String hash = hash(data.split(" ")[1], data.split(" ")[2]);
 		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'administrator'" );
 		ResultSet rs = stmt.executeQuery();
-        String message = "error";
-		while (rs.next()) {message = "success";}
+        String message = "incorrect";
+		while (rs.next()) {message = "correct";}
         return message;
+    }
+    public static String admin_query(String data) throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        String query = data.split(":")[1]; PreparedStatement stmt = conn.prepareStatement(query); System.out.println(stmt.toString());
+        ResultSet rs = stmt.executeQuery(); ResultSetMetaData rsmd = rs.getMetaData(); String results = "";
+        return rsmd.getColumnCount() + "";
+        // while (rs.next()) {results += rs.get;}
+        // return results;
     }
     public static String get_products(String data) throws Exception
     {

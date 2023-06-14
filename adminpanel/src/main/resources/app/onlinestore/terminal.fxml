@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.onlinestore.Terminal">
    <children>
-      <TextField fx:id="query_field" accessibleRoleDescription="t" layoutX="30.0" layoutY="292.0" prefHeight="32.0" prefWidth="358.0" />
-      <Button fx:id="execute_button" layoutX="461.0" layoutY="292.0" mnemonicParsing="false" onAction="#execute" prefHeight="32.0" prefWidth="109.0" text="Execute" />
-      <Button fx:id="leave_button" layoutX="272.0" layoutY="361.0" mnemonicParsing="false" onAction="#leave" prefHeight="25.0" prefWidth="57.0" text="Leave" />
-      <TextArea fx:id="result_field" layoutX="30.0" layoutY="26.0" prefHeight="241.0" prefWidth="540.0" />
+      <Button fx:id="leave_button" layoutX="271.0" layoutY="358.0" mnemonicParsing="false" onAction="#leave" prefHeight="28.0" prefWidth="59.0" text="Leave" />
+      <ComboBox fx:id="targetSelect" layoutX="53.0" layoutY="100.0" onAction="#get_info" prefHeight="25.0" prefWidth="185.0" visibleRowCount="5" />
+      <TextArea fx:id="message_box" layoutX="353.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
+      <Text layoutX="420.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Element Info" />
+      <Button fx:id="modifyButton" layoutX="274.0" layoutY="186.0" mnemonicParsing="false" text="Modify" />
+      <Button fx:id="addButton" layoutX="283.0" layoutY="222.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="deleteButton" layoutX="276.0" layoutY="150.0" mnemonicParsing="false" text="Delete" />
+      <Text layoutX="107.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Element" />
+      <Button fx:id="selectButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#refresh_elements" text="Get Items" />
+      <Text fx:id="error_message" fill="RED" layoutX="200.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="200.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

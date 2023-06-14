@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import java.io.FileInputStream;
 import java.security.MessageDigest;
+import java.security.DrbgParameters.Reseed;
 
 public class App
 {
@@ -86,30 +87,56 @@ public class App
 		Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
         String hash = hash(data.split(" ")[1], data.split(" ")[2]);
 		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'administrator'" );
-		ResultSet rs = stmt.executeQuery();
-        String message = "incorrect";
-		while (rs.next()) {message = "correct";}
-        return message;
+		ResultSet rs = stmt.executeQuery(); String result = "scene1 incorrect";
+		while (rs.next()) {result = "scene1 correct";} return result;
     }
     public static String admin_query(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        String query = data.split(":")[1]; PreparedStatement stmt = conn.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery(); ResultSetMetaData rsmd = rs.getMetaData(); String results = ""; 
-        if (rsmd.getColumnCount() != 0)
-        {
-            while (rs.next())
-            {
-                String row = "";
-                for (int m = 0; m < rsmd.getColumnCount(); m++)
-                {
-                    row += (rs.getString(m + 1) + "\t");
-                }
-                results += (row + "\n");
-            }
-            return results;
+        String[] data_arr = data.split(" "); String result = ""; String row = ""; String temp = ""; 
+        PreparedStatement stmt = null; ResultSet rs = null; if (data_arr[2].equals("terminal")) result = "terminal "; else result = "stats ";
+        
+        if (data_arr[1].equals("get-elements")) {
+            if (data_arr[3].equals("users")) stmt = conn.prepareStatement("select login from veggiestore.users");
+            else stmt = conn.prepareStatement("select item_name from veggiestore.items");
+            boolean flag = true; rs = stmt.executeQuery();
+            while (rs.next()) {
+                row = rs.getString(1);
+                if (flag) {result += row; flag = false;}
+                else {result += ("\n" + row);} row = "";
+            } rs.close();
         }
-        else {return "No results!";}
+        else if (data_arr[1].equals("get-info")) {
+            if (data_arr.length > 4) {
+                for (int m = 4; m < data_arr.length; m++) {
+                    if (m == data_arr.length - 1) {temp += (data_arr[m]);}
+                    else {temp += (data_arr[m] + " ");}
+                } data_arr[4] = temp;
+            }
+            if (data_arr[3].equals("user")) stmt = conn.prepareStatement("select * from veggiestore.users where login = '" + data_arr[4] + "'");
+            else stmt = conn.prepareStatement("select * from veggiestore.items where item_name = '" + data_arr[4] + "'");
+            boolean flag = true; rs = stmt.executeQuery(); rs.next(); ResultSetMetaData rsmd = rs.getMetaData(); 
+            for (int m = 1; m <= rsmd.getColumnCount(); m++) {
+                row = (rsmd.getColumnName(m) + ":" + rs.getString(m));
+                if (flag) {result += row; flag = false;}
+                else {result += ("\n" + row);}
+            }
+        }
+        // else if (data_arr[1].equals("delete")) {
+        //     if (data_arr.length > 3) {
+        //         for (int m = 3; m < data_arr.length; m++) {
+        //             if (m == data_arr.length - 1) {temp += (data_arr[m]);}
+        //             else {temp += (data_arr[m] + " ");}
+        //         } data_arr[3] = temp;
+        //     }
+        // //     if (data_arr[2].equals("user"))
+        // //     {
+        // //         stmt = conn.prepareStatement("delete from veggiestore.users where login = '" + data_arr[3] + "'");
+        // //     }
+        // //     else {stmt = conn.prepareStatement("delete from veggiestore.items where item_name = '" + data_arr[3] + "'");}
+        // //     result = "terminal " + stmt.executeUpdate();
+        // }
+        return result;
     }
     public static String get_products(String data) throws Exception
     {

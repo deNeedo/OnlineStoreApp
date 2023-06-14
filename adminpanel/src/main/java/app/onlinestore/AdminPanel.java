@@ -32,10 +32,13 @@ public class AdminPanel extends Application
     @OnOpen
     public void onOpen(Session session) {this.session = session;}
     @OnMessage
-    public void onMessage(Session session, String message)
+    public void onMessage(Session session, String data)
     {
-        if (message.contains("correct")) {this.next.next.message = message;}
-        else {this.next.next.next.next.message = message;}
+        String[] message = data.split(" "); String temp = "";
+        if (message.length > 2) {for (int m = 1; m < message.length; m++) {temp += message[m] + " ";} message[1] = temp;}
+        if (message[0].equals("scene1")) {this.next.next.message = message[1];}
+        else if (message[0].equals("stats")) {this.next.next.next.next2.message = message[1];}
+        else if (message[0].equals("terminal")) {this.next.next.next.next.message = message[1];}
     }
     @OnClose
     public void onClose(Session session) {}

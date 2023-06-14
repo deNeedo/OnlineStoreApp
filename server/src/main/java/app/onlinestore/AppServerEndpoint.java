@@ -15,8 +15,8 @@ public class AppServerEndpoint
     public String onMessage(Session session, String message) throws Exception
     {
         // logger.info(message);
-        if (message.contains("admin-login-try")) {return App.admin_login(message);}
-        else if (message.contains("admin-query:")) {return App.admin_query(message);}
+        if (message.contains("admin-login")) {return App.admin_login(message);}
+        else if (message.contains("admin-query")) {return App.admin_query(message);}
         else if (message.contains("client-login-try")) {return App.client_login(message);}
         else if (message.contains("client-register-try")) {return App.client_register(message);}
         else if (message.contains("get-products")) {return App.get_products(message);}

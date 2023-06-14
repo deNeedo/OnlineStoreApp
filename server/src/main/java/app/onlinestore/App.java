@@ -18,7 +18,6 @@ import java.util.Properties;
 
 import java.io.FileInputStream;
 import java.security.MessageDigest;
-import java.security.DrbgParameters.Reseed;
 
 public class App
 {
@@ -93,18 +92,17 @@ public class App
     public static String admin_query(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        String[] data_arr = data.split(" "); String result = ""; String row = ""; String temp = ""; 
-        PreparedStatement stmt = null; ResultSet rs = null; if (data_arr[2].equals("terminal")) result = "terminal "; else result = "stats ";
-        
+        String[] data_arr = data.split(" "); String result = ""; String row = ""; String temp = ""; ResultSetMetaData rsmd = null; boolean flag = true; int[] data_types = null;
+        PreparedStatement stmt = null; ResultSet rs = null; if (data_arr[2].equals("terminal")) {result = "terminal ";} else {result = "stats ";}
         if (data_arr[1].equals("get-elements")) {
-            if (data_arr[3].equals("users")) stmt = conn.prepareStatement("select login from veggiestore.users");
-            else stmt = conn.prepareStatement("select item_name from veggiestore.items");
-            boolean flag = true; rs = stmt.executeQuery();
+            if (data_arr[3].equals("users")) stmt = conn.prepareStatement("select user_id, login from veggiestore.users order by user_id");
+            else stmt = conn.prepareStatement("select id_item, item_name from veggiestore.items order by id_item");
+            rs = stmt.executeQuery();
             while (rs.next()) {
-                row = rs.getString(1);
+                row = rs.getString(2);
                 if (flag) {result += row; flag = false;}
                 else {result += ("\n" + row);} row = "";
-            } rs.close();
+            }
         }
         else if (data_arr[1].equals("get-info")) {
             if (data_arr.length > 4) {
@@ -115,7 +113,7 @@ public class App
             }
             if (data_arr[3].equals("user")) stmt = conn.prepareStatement("select * from veggiestore.users where login = '" + data_arr[4] + "'");
             else stmt = conn.prepareStatement("select * from veggiestore.items where item_name = '" + data_arr[4] + "'");
-            boolean flag = true; rs = stmt.executeQuery(); rs.next(); ResultSetMetaData rsmd = rs.getMetaData(); 
+            rs = stmt.executeQuery(); rs.next(); rsmd = rs.getMetaData();
             for (int m = 1; m <= rsmd.getColumnCount(); m++) {
                 row = (rsmd.getColumnName(m) + ":" + rs.getString(m));
                 if (flag) {result += row; flag = false;}
@@ -123,8 +121,7 @@ public class App
             }
         }
         else if (data_arr[1].equals("delete")) {
-            result = "terminal 0";
-            if (data_arr.length > 3) {
+            if (data_arr.length > 4) {
                 for (int m = 3; m < data_arr.length; m++) {
                     if (m == data_arr.length - 1) {temp += (data_arr[m]);}
                     else {temp += (data_arr[m] + " ");}
@@ -134,6 +131,55 @@ public class App
             } else {
                 stmt = conn.prepareStatement("delete from veggiestore.items where item_name = '" + data_arr[3] + "'");
             } result = "terminal " + stmt.executeUpdate();
+        }
+        else if (data_arr[1].equals("modify")) {
+            if (data_arr.length > 5) {
+                for (int m = 3; m < data_arr.length - 2; m++) {
+                    if (m == data_arr.length - 3) {temp += (data_arr[m]);}
+                    else {temp += (data_arr[m] + " ");}
+                } data_arr[3] = temp;
+                for (int m = 5; m < data_arr.length; m++) {
+                    if (m == data_arr.length - 1) {temp += (data_arr[m]);}
+                    else {temp += (data_arr[m] + " ");}
+                } data_arr[4] = temp;
+            } if (data_arr[2].equals("user")) {
+                stmt = conn.prepareStatement("select * from veggiestore.users where login = '" + data_arr[4] + "'");
+                rs = stmt.executeQuery(); rsmd = rs.getMetaData(); data_types = new int[rsmd.getColumnCount()];
+                for (int m = 1; m <= data_types.length; m++) {
+                    data_types[m - 1] = rsmd.getColumnType(m);
+                }
+                stmt = conn.prepareStatement("update veggiestore.users set type = (?), first_name = (?), last_name = (?), login = (?), password = (?), phone_number = (?), address = (?) where login = (?)");
+            } else {
+                stmt = conn.prepareStatement("select * from veggiestore.items where item_name = '" + data_arr[4] + "'");
+                rs = stmt.executeQuery(); rsmd = rs.getMetaData(); data_types = new int[rsmd.getColumnCount()];
+                for (int m = 1; m <= data_types.length; m++) {
+                    data_types[m - 1] = rsmd.getColumnType(m);
+                }
+                stmt = conn.prepareStatement("update veggiestore.items set item_name = (?), type = (?), price = (?), quantity = (?), input_date = (?), photo = (?), polish_name = (?) where item_name = (?)");
+            } stmt.setString(rsmd.getColumnCount(), data_arr[3]);
+            String[] update_data = data_arr[4].split("\n");
+            for (int m = 1; m < update_data.length; m++) {
+                temp = update_data[m].split(":")[1];
+                if (data_types[m] == 2) {
+                    try {stmt.setDouble(m, Double.parseDouble(temp));}
+                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                }
+                else if (data_types[m] == 4) {
+                    try {stmt.setInt(m, Integer.parseInt(temp));}
+                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                }
+                else if (data_types[m] == 12) {
+                    try {stmt.setString(m, temp);}
+                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                }
+                else if (data_types[m] == 91) {
+                    try {stmt.setDate(m, java.sql.Date.valueOf(temp));}
+                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                }
+            }
+            if (flag) {
+                result = "terminal " + stmt.executeUpdate();
+            }
         }
         return result;
     }

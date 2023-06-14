@@ -13,7 +13,7 @@
       <ComboBox fx:id="targetSelect" layoutX="53.0" layoutY="100.0" onAction="#get_info" prefHeight="25.0" prefWidth="185.0" visibleRowCount="5" />
       <TextArea fx:id="message_box" layoutX="353.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="420.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Element Info" />
-      <Button fx:id="modifyButton" layoutX="274.0" layoutY="186.0" mnemonicParsing="false" text="Modify" />
+      <Button fx:id="modifyButton" layoutX="274.0" layoutY="186.0" mnemonicParsing="false" onAction="#modify_record" text="Modify" />
       <Button fx:id="addButton" layoutX="283.0" layoutY="222.0" mnemonicParsing="false" text="Add" />
       <Button fx:id="deleteButton" layoutX="276.0" layoutY="150.0" mnemonicParsing="false" onAction="#delete_record" text="Delete" />
       <Text layoutX="107.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Element" />

@@ -84,47 +84,49 @@ public class Terminal
     }
     public void modify_record(ActionEvent event) throws Exception
     {
-        // this.session = this.previous.getSession();
-        // this.error_message.setText(null); this.message = null;
-        // if (this.targetSelect.getValue() != null) {
-        //     if (this.content.equals("users")) {
-        //         this.session.getBasicRemote().sendText("admin-query modify user " + this.targetSelect.getValue());
-        //     } else {
-        //         this.session.getBasicRemote().sendText("admin-query modify item " + this.targetSelect.getValue());
-        //     } while (this.message == null) {
-        //         TimeUnit.MILLISECONDS.sleep(1);
-        //     } if (!this.message.equals("0")) {
-        //         this.error_message.setText("Deleted an element"); this.get_elements(this.content);
-        //     } else {
-        //         this.error_message.setText("Unknown error while deleting!");
-        //     }
-        // } else {
-        //     this.error_message.setText("Select something!");
-        // }     
+        this.session = this.previous.getSession();
+        this.error_message.setText(null); this.message = null;
+        if (this.targetSelect.getValue() != null) {
+            if (this.targetSelect.getValue().equals("admin@veggiestore.app")) {
+                this.error_message.setText("Cannot modify administrator!");
+            } else {
+                if (this.content.equals("users")) {
+                    this.session.getBasicRemote().sendText("admin-query modify user " + this.targetSelect.getValue() + " " + this.message_box.getText());
+                } else {
+                    this.session.getBasicRemote().sendText("admin-query modify item " + this.targetSelect.getValue() + " " + this.message_box.getText());
+                } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
+                if (!this.message.equals("0")) {
+                    this.error_message.setText("Modified an element"); this.get_elements(this.content);
+                } else {
+                    this.error_message.setText("Wrong data types!");
+                }
+            }
+        } else {
+            this.error_message.setText("Select something!");
+        }     
     }
     public void delete_record(ActionEvent event) throws Exception
     {
         this.session = this.previous.getSession();
         this.error_message.setText(null); this.message = null;
         if (this.targetSelect.getValue() != null) {
-            if (this.content.equals("users")) {
-                if (this.targetSelect.getValue().equals("admin@veggiestore.app")) {
-                    this.error_message.setText("Cannot delete administrator!");
-                } else {
+            if (this.targetSelect.getValue().equals("admin@veggiestore.app")) {
+                this.error_message.setText("Cannot delete administrator!");
+            } else {
+                if (this.content.equals("users")) {
                     this.session.getBasicRemote().sendText("admin-query delete user " + this.targetSelect.getValue());
+                } else {
+                    this.session.getBasicRemote().sendText("admin-query delete item " + this.targetSelect.getValue());
+                } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
+                if (!this.message.equals("0")) {
+                    this.error_message.setText("Deleted an element"); this.get_elements(this.content);
+                } else {
+                    this.error_message.setText("Unknown error while deleting!");
                 }
-            } else {
-                this.session.getBasicRemote().sendText("admin-query delete item " + this.targetSelect.getValue());
-            } while (this.message == null) {
-                TimeUnit.MILLISECONDS.sleep(1);
-            } if (!this.message.equals("0")) {
-                this.error_message.setText("Deleted an element"); this.get_elements(this.content);
-            } else {
-                this.error_message.setText("Unknown error while deleting!");
             }
         } else {
             this.error_message.setText("Select something!");
-        }      
+        }
     }
     public void add_record(ActionEvent event) throws Exception
     {

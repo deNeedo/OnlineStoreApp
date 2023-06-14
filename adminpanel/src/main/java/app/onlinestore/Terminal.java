@@ -60,10 +60,9 @@ public class Terminal
         ObservableList<String> options = FXCollections.observableArrayList();
         if (type.equals("users")) {
             this.content = "users"; this.session.getBasicRemote().sendText("admin-query get-elements terminal users");
-        } else if (type.equals("items")) {
+        } else {
             this.content = "items"; this.session.getBasicRemote().sendText("admin-query get-elements terminal items");
-        }
-        while (this.message == null) {
+        } while (this.message == null) {
             TimeUnit.MILLISECONDS.sleep(1);
         } String[] data = this.message.split("\n");
         for (int m = 0; m < data.length; m++) {
@@ -75,44 +74,57 @@ public class Terminal
         if (this.targetSelect.getValue() != null) {
             this.session = this.previous.getSession(); this.message = null; this.error_message.setText(null);
             if (this.content.equals("users")) {
-                this.session.getBasicRemote().sendText("admin-query get-info terminal user " + targetSelect.getValue());
+                this.session.getBasicRemote().sendText("admin-query get-info terminal user " + this.targetSelect.getValue());
             } else {
-                this.session.getBasicRemote().sendText("admin-query get-info terminal item " + targetSelect.getValue());
-            }
-            while (this.message == null) {
+                this.session.getBasicRemote().sendText("admin-query get-info terminal item " + this.targetSelect.getValue());
+            } while (this.message == null) {
                 TimeUnit.MILLISECONDS.sleep(1);
             } this.message_box.setText(this.message);
         }
     }
     public void modify_record(ActionEvent event) throws Exception
     {
-        // this.session = this.previous.getSession(); this.error_message.setText(null);
-        // todo
+        // this.session = this.previous.getSession();
+        // this.error_message.setText(null); this.message = null;
+        // if (this.targetSelect.getValue() != null) {
+        //     if (this.content.equals("users")) {
+        //         this.session.getBasicRemote().sendText("admin-query modify user " + this.targetSelect.getValue());
+        //     } else {
+        //         this.session.getBasicRemote().sendText("admin-query modify item " + this.targetSelect.getValue());
+        //     } while (this.message == null) {
+        //         TimeUnit.MILLISECONDS.sleep(1);
+        //     } if (!this.message.equals("0")) {
+        //         this.error_message.setText("Deleted an element"); this.get_elements(this.content);
+        //     } else {
+        //         this.error_message.setText("Unknown error while deleting!");
+        //     }
+        // } else {
+        //     this.error_message.setText("Select something!");
+        // }     
     }
     public void delete_record(ActionEvent event) throws Exception
     {
-        // this.session = this.previous.getSession(); this.error_message.setText(null); this.message = null;
-        // if (this.targetSelect.getValue() != null)
-        // {
-        //     if (this.targetSelect.getValue().equals("admin@veggiestore.app")) {this.error_message.setText("Cannot remove administrator!");}
-        //     else
-        //     {
-        //         if (this.selectButton.getText().equals("Get Items"))
-        //         {
-        //             this.session.getBasicRemote().sendText("admin-query delete user " + this.targetSelect.getValue());
-        //         }
-        //         else if (this.selectButton.getText().equals("Get Users"))
-        //         {
-        //             this.session.getBasicRemote().sendText("admin-query delete item " + this.targetSelect.getValue());
-        //         }
-        //         while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-        //         if (this.message != "0")
-        //         {
-        //             this.error_message.setText("Deleted an element"); this.targetSelect.setValue(null); this.get_elements(this.content);
-        //         } 
-        //     }
-        // }
-        // else {this.error_message.setText("Select something!");}      
+        this.session = this.previous.getSession();
+        this.error_message.setText(null); this.message = null;
+        if (this.targetSelect.getValue() != null) {
+            if (this.content.equals("users")) {
+                if (this.targetSelect.getValue().equals("admin@veggiestore.app")) {
+                    this.error_message.setText("Cannot delete administrator!");
+                } else {
+                    this.session.getBasicRemote().sendText("admin-query delete user " + this.targetSelect.getValue());
+                }
+            } else {
+                this.session.getBasicRemote().sendText("admin-query delete item " + this.targetSelect.getValue());
+            } while (this.message == null) {
+                TimeUnit.MILLISECONDS.sleep(1);
+            } if (!this.message.equals("0")) {
+                this.error_message.setText("Deleted an element"); this.get_elements(this.content);
+            } else {
+                this.error_message.setText("Unknown error while deleting!");
+            }
+        } else {
+            this.error_message.setText("Select something!");
+        }      
     }
     public void add_record(ActionEvent event) throws Exception
     {

@@ -122,20 +122,19 @@ public class App
                 else {result += ("\n" + row);}
             }
         }
-        // else if (data_arr[1].equals("delete")) {
-        //     if (data_arr.length > 3) {
-        //         for (int m = 3; m < data_arr.length; m++) {
-        //             if (m == data_arr.length - 1) {temp += (data_arr[m]);}
-        //             else {temp += (data_arr[m] + " ");}
-        //         } data_arr[3] = temp;
-        //     }
-        // //     if (data_arr[2].equals("user"))
-        // //     {
-        // //         stmt = conn.prepareStatement("delete from veggiestore.users where login = '" + data_arr[3] + "'");
-        // //     }
-        // //     else {stmt = conn.prepareStatement("delete from veggiestore.items where item_name = '" + data_arr[3] + "'");}
-        // //     result = "terminal " + stmt.executeUpdate();
-        // }
+        else if (data_arr[1].equals("delete")) {
+            result = "terminal 0";
+            if (data_arr.length > 3) {
+                for (int m = 3; m < data_arr.length; m++) {
+                    if (m == data_arr.length - 1) {temp += (data_arr[m]);}
+                    else {temp += (data_arr[m] + " ");}
+                } data_arr[3] = temp;
+            } if (data_arr[2].equals("user")) {
+                stmt = conn.prepareStatement("delete from veggiestore.users where login = '" + data_arr[3] + "'");
+            } else {
+                stmt = conn.prepareStatement("delete from veggiestore.items where item_name = '" + data_arr[3] + "'");
+            } result = "terminal " + stmt.executeUpdate();
+        }
         return result;
     }
     public static String get_products(String data) throws Exception

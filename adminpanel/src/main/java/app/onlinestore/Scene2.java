@@ -48,6 +48,7 @@ public class Scene2
         if (this.scene == null) {this.scene = new Scene(this.base);}
         this.stage.setScene(this.scene); this.stage.show();
         this.next.selectButton.setText("Get Items"); this.next.get_elements("users"); this.next.content = "users";
+        this.next.add_user_radio.selectedProperty().setValue(true); this.next.add_item_radio.selectedProperty().setValue(false);
     }
     public void stats(ActionEvent event) throws Exception
     {

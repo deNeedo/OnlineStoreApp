@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,6 +27,8 @@ public class Terminal
     @FXML Button addButton;
     @FXML Button deleteButton;
     @FXML Button modifyButton;
+    @FXML RadioButton add_user_radio;
+    @FXML RadioButton add_item_radio;
 
     public String content;
     public Scene2 previous;
@@ -43,6 +46,16 @@ public class Terminal
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         this.stage.setResizable(false);
         this.stage.setScene(this.previous.previous.scene); this.stage.show();
+    }
+    public void select_add_option(ActionEvent event) throws Exception
+    {
+        if ((event.getTarget().toString()).contains("User")) {
+            this.add_user_radio.selectedProperty().setValue(true);
+            this.add_item_radio.selectedProperty().setValue(false);
+        } else {
+            this.add_item_radio.selectedProperty().setValue(true);
+            this.add_user_radio.selectedProperty().setValue(false);
+        }
     }
     public void refresh_elements(ActionEvent event) throws Exception
     {
@@ -130,7 +143,17 @@ public class Terminal
     }
     public void add_record(ActionEvent event) throws Exception
     {
-        // this.session = this.previous.getSession(); this.error_message.setText(null);
-        // todo
+        // this.session = this.previous.getSession();
+        // this.error_message.setText(null); this.message = null;
+        // if (this.content.equals("users")) {
+        //     this.session.getBasicRemote().sendText("admin-query add user " + this.message_box.getText());
+        // } else {
+        //     this.session.getBasicRemote().sendText("admin-query add item " + this.message_box.getText());
+        // } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
+        // if (!this.message.equals("0")) {
+        //     this.error_message.setText("Added an element"); this.get_elements(this.content);
+        // } else {
+        //     this.error_message.setText("Unknown error while adding!");
+        // }
     }
 }

@@ -1,93 +1,150 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import NotificationsSystem, { atalhoTheme, useNotifications } from "reapop";
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
+import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import {Grid, Box,Typography} from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { useTranslation } from 'react-i18next'
+
 import homeCss from './css/Home.module.css';
 import Header from './Header';
-import Footer from "./Footer";
+import Footer from './Footer';
 
-import { Grid, Box,Typography} from '@mui/material';
-
-export const Home = () => {
-
-    const { notifications, dismissNotification, notify } = useNotifications();
-    const navigate = useNavigate();
-    const loginRedirect = () => {navigate('/login');}
+export function Home() {
+    const {t} = useTranslation();
+    const {notifications, dismissNotification} = useNotifications();
+    const navigate = useNavigate(); const location = useLocation();
+    // const [authenticated, setAuthenticated] = useState(false);
     const [data, setData] = useState([]);
-    const [error, setError] = useState("");
+    const [lang, setLang] = useState('');
+    const [error, setError] = useState('');
+    const [searchData, setSearchData] = useState({lang: lang, type: 'all', pattern: '', price: '0', order: 'alpha'});
 
     useEffect(() => {
-        let socket = new WebSocket("ws://localhost:80/veggiestore");
-        socket.onopen = function()
-        {
-            let message = "get-products ";
-            socket.send(message, 0, message.length, 80, "localhost");
-        };
-        socket.onmessage = function(event)
-        {
-            setData(JSON.parse(event.data));
-            let message = "connection-close-try";
-            socket.send(message, 0, message.length, 80, "localhost");
-        };
+        if (location.state != null) {setLang(location.state.lang)}
+        else {setLang('en')}
     }, [])
+    useEffect(() => {setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: searchData.order})}, [lang])
+    useEffect(() => {getProducts(searchData)}, [searchData])
 
-    const onInputChange = (e) => {
-        let socket = new WebSocket("ws://localhost:80/veggiestore");
+    const handleInputChange = (e) => {
+        setSearchData({lang: lang, type: searchData.type, pattern: e.target.value, price: searchData.price, order: searchData.order})
+    }
+
+    const handleSelectChange = (e) => {
+        setSearchData({lang: lang, type: e.target.value, pattern: searchData.pattern, price: searchData.price, order: searchData.order})
+    }
+
+    const handleSelect2Change = (e) => {
+        setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: e.target.value, order: searchData.order})
+    }
+
+    const handleSelect3Change = (e) => {
+        setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: e.target.value})
+    }
+
+    const getProducts = (e) => {
+        let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
         {
-            let message = "get-products " + e.target.value;
-            socket.send(message, 0, message.length, 80, "localhost");
+            let message = 'get-products ' + e.lang + ' ' +  e.type + ' ' + e.price + ' ' + e.order + ' ' + e.pattern;
+            socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
         {
-            if (event.data.length == 2) {setError("Product not found.");}
-            else {setError("");}
-            setData(JSON.parse(event.data));
-            let message = "connection-close-try";
-            socket.send(message, 0, message.length, 80, "localhost");
+            if (event.data.length == 2) {setError('Sorry. Couldn\'t find what you\'re looking for.');}
+            else {setError('');}
+            setData(JSON.parse(event.data)); socket.close();
         };
     }
-    
-    return ( 
+    return (
         <div className={homeCss['wrapper']}>
-            <Header/>
-            
+            <Header props={{setLang, lang}} />
             <div className={homeCss['content-box']}>
-                <input 
+                <div className={homeCss['search-box']}>
+                    <input 
                         type='text' 
-                        placeholder='Search for Your favorite vegetables and fruits...' 
+                        placeholder={t("search_input")} 
                         className={homeCss['search-input']}
-                        onChange={onInputChange}
+                        onChange={handleInputChange}
                     />
-                <p> {error} </p>
-            <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
-                
-                
-                    <Grid container  className={homeCss['products-container']} sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
+
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 115 }}>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("type_filter")}</InputLabel>
+                        <Select
+                            sx={{
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+                            }}
+                            defaultValue={'all'}
+                            onChange={handleSelectChange}
+                        >
+                        <MenuItem value={'all'} sx={{color: '#808080'}}><em>{t("all")}</em></MenuItem>
+                        <MenuItem value={'vegetable'} sx={{color: '#808080'}}><em>{t("vegetables")}</em></MenuItem>
+                        <MenuItem value={'fruit'} sx={{color: '#808080'}}><em>{t("fruits")}</em></MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("price_filter")}</InputLabel>
+                        <Select
+                            sx={{
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+                            }}
+                            defaultValue={'0'}
+                            onChange={handleSelect2Change}
+                        >
+                        <MenuItem value={'0'} sx={{color: '#808080'}}><em>{t("price_one")}</em></MenuItem>
+                        <MenuItem value={'1'} sx={{color: '#808080'}}><em>{t("price_two")}</em></MenuItem>
+                        <MenuItem value={'2'} sx={{color: '#808080'}}><em>{t("price_three")}</em></MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
+                        <InputLabel className={homeCss['type-label']} sx={{ color: '#808080 !important'}}>{t("order_filter")}</InputLabel>
+                        <Select
+                            sx={{
+                                color: '#808080',
+                                '.MuiSvgIcon-root ': { fill: '#808080' },
+                                ':before': { borderBottom: '2px solid #E5E5E5' },
+                                ':after': { borderBottom: '2px solid green' },
+                            }}
+                            defaultValue={'alpha'}
+                            onChange={handleSelect3Change}
+                        >
+                        <MenuItem value={'alpha'} sx={{color: '#808080'}}><em>{t("order_one")}</em></MenuItem>
+                        <MenuItem value={'price'} sx={{color: '#808080'}}><em>{t("order_two")}</em></MenuItem>
+                        </Select>
+                    </FormControl>
+
+
+                </div>
+                <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+                <Grid container className={error ? homeCss['hide-products-container'] : homeCss['products-container']}  sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
-                            <Box
-                                className={homeCss['product-img']}
-                                component='img'                                     
-                                src={item.photo}
-                                
-                            ></Box>
-                            <hr color='#e0e0e0'></hr>
-                            <Typography className={homeCss['product-name']}>{item.item_name}
-                            </Typography>
-                            <Typography className={homeCss['product-price']}>${item.price}
-                            </Typography>
-                            <Typography className={homeCss['product-price']}>Quantity: {item.quantity}
-                            </Typography>
+                            <Typography className={homeCss['product-name']} variant='h5'> {lang == "en" ? item.item_name : item.polish_name} </Typography>
+                            <hr className={homeCss['hr']}></hr>
+                            <Box className={homeCss['product-img']} component='img' src={item.photo}></Box>
+                            <hr className={homeCss['hr']}></hr>
+                            <Typography className={homeCss['product-price']} variant='subtitle1'> {t("price")} {item.price}{t("price_end")} </Typography>
+                            <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
                         </Grid>
+                    ))}
+                </Grid>
 
-                        ))}
-                    </Grid>
-
-                <button className={homeCss['logout-btn']} onClick={function() {loginRedirect(); notify('You have been logged out.', 'info')}}> Log out </button>
+                <p className={homeCss['err']}> {error} </p>
             </div>
             <Footer/>
         </div>
     );
-}
+};
 
 export default Home;

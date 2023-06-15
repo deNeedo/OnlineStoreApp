@@ -40,20 +40,23 @@ nav {
     font-family: 'Lato';
     overflow: hidden;
     font-weight: bold;
+}
 
+.a {
+    text-decoration: none
 }
 
 .link-btn {
     cursor: pointer;
     color: #283618;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.10rem;
     font-family: 'Lato';
-    margin: 0 20px;
     background-color: #ffffff;
     border-radius: 15px;
     text-decoration: none;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 25px 5px 25px;
+    margin: auto 10px;
     font-weight: bold;
 }
 
@@ -61,8 +64,43 @@ nav {
     transform: scale(1.01);
 }
 
-.components {
+.nav {
     display: flex;
     flex-direction: row;
 }
+
+.icon{
+    cursor: pointer;
+    margin: 15px 5px;
+    height: 45px;
+    width: 45px;
+}
+
+.icon:hover {
+    transform: scale(1.01);
+}
+
+.flags {
+    height: 30px;
+    width: 30px;
+}
+
+.form-control {
+    justify-content: center;
+    width: 80px;
+    color: #ffffff;
+    border-color: red;
+}
+
+.select {
+    padding: 0px;
+    color: white;
+    border-color: red;
+}
+
+
+
+
+
+
 

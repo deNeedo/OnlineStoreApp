@@ -1,7 +1,13 @@
 /* Global css classes */
-.root{
+.root {
     background-color: red;
-
+}
+*::-webkit-scrollbar {
+    display: none;
+}
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 input {
     font-size: 1rem;

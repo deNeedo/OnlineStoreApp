@@ -1,0 +1,66 @@
+{
+    "site_name": "Warzywniak",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "home": "Strona główna",
+
+    "login_hello": "Witaj,",
+    "login_hello2": "Zaloguj się!",
+    "login_btn": "Zaloguj się",
+    "forgot_pass": "Zapomniałeś hasła? Kliknij tu aby zresetować!",
+    "no_acc": "Nie masz konta? Zarejestruj się tu!",
+    "pass_placeholder": "Hasło",
+
+    "register_welcome" : "Witaj,",
+    "register_welcome2" : "Zarejestruj się!",
+    "name_placeholder": "Imię",
+    "surname_placeholder": "Nazwisko",
+    "phone_placeholder": "Nr telefonu",
+    "re_type_pass_placeholder" : "Powtórz hasło",
+    "terms1": "Akceptuję",
+    "terms2": "zasady korzystania z storny",
+    "already_acc" : "Masz już konto? Zaloguj się!",
+
+    "search_input": "Wyszukaj swoje ulubione warzywa i owoce...",
+    "type_filter": "Typ",
+    "all": "Wszystkie",
+    "vegetables": "Warzywa",
+    "fruits": "Owoce",
+    "price_filter": "Cena",
+    "price_one": "Bez ograniczeń",
+    "price_two": "Do 1 zł",
+    "price_three": "Do 2 zł",
+    "order_filter": "Sortowanie",
+    "order_one": "Alfabetycznie",
+    "order_two": "Najniższa cena",
+
+    "price": "Cena:",
+    "price_end": "zł",
+    "quantity": "Ilość:",
+    "unavilable": "Niedostępne",
+
+    "email_pass_err_mess": "Email lub hasło nieprawidłowe!",
+    "login_correct_mess": "Logowanie powiodło się!",
+    "register_success_mess" : "Rejestracja powiodła się!",
+    "email_in_use_mess": "Email już zarejestrowany. Zaloguj się!",
+    "log_out_mess": "Zostałeś wylogowany!",
+
+    "name_err":  "Proszę podaj imię.",
+    "surname_err": "Proszę podaj nazwisko.",
+    "phone_err": "Prosze podaj nr telefonu.",
+    "email_err": "Proszę podaj email",
+    "pass_err" : "Prosze podaj hasło",
+    "pass_req": "Hasło musi zawierać minimum 8 znaków, jedną dużą literę i małą, cyfrę i znak specjalny: @$!%*?&",
+    "upper_case_err": "Hasło nie posiada dużej litery",
+    "lower_case_err": "Hasło nie posiada małej litery",
+    "num_err": "Hasło nie posiada cyfry",
+    "symbol_err" : "Hasło nie posiada symbolu: @$! % * ? &",
+    "pass_conf_err": "Potwierdź hasło podane wyżej",
+    "no_same_err": "Hasła do siebie nie pasują!",
+
+    "contact_info": "Kontant: ",
+
+    "login_button": "Zaloguj",
+    "register_button": "Zarejestruj"
+    
+}

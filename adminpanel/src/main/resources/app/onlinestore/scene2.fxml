@@ -4,18 +4,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.onlinestore.Scene2">
    <children>
-      <Label fx:id="nameLabel" layoutX="121.0" layoutY="14.0" prefHeight="45.0" prefWidth="360.0" text="Welcome to Admin Panel">
+      <Label fx:id="nameLabel" layoutX="120.0" layoutY="14.0" prefHeight="45.0" prefWidth="360.0" text="Welcome to Admin Panel">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-            <Button fx:id="logoutButton" layoutX="259.0" layoutY="347.0" mnemonicParsing="false" onAction="#logout" prefHeight="14.0" prefWidth="85.0" text="Logout">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+      <Button fx:id="logoutButton" layoutX="521.0" layoutY="355.0" mnemonicParsing="false" onAction="#logout" prefHeight="31.0" prefWidth="65.0" text="Logout" textAlignment="CENTER" />
+      <Button fx:id="terminal_redirect" layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onAction="#terminal" prefHeight="31.0" prefWidth="65.0" text="Terminal" />
+      <Button fx:id="stats_redirect" layoutX="14.0" layoutY="314.0" mnemonicParsing="false" onAction="#stats" prefHeight="31.0" prefWidth="65.0" text="Stats" />
+      <Text fx:id="error_message" layoutX="97.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

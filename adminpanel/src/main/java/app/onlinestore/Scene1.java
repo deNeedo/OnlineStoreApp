@@ -36,23 +36,23 @@ public class Scene1
     public void setPrevious(StartController previous) {this.previous = previous;}
     public void login(ActionEvent event) throws Exception
     {
+        this.session = this.previous.getSession();
         if (this.base == null)
         {
             this.base = this.loader.load(getClass().getResource("scene2.fxml").openStream());
-            this.next = this.loader.getController(); this.next.setPrevious(this); this.session = this.previous.getSession();
+            this.next = this.loader.getController(); this.next.setPrevious(this);
         }
         String login = txtButton.getText();
         String pass = passButton.getText();
-
-        if(login.isEmpty()) {errMess.setText("Write your username");}
+        if (login.isEmpty()) {errMess.setText("Write your username");}
         else
         {
-            if(pass.isEmpty()) {errMess.setText("Write your password");}
+            if (pass.isEmpty()) {errMess.setText("Write your password");}
             else
             {
-                this.session.getBasicRemote().sendText("admin-login-try " + login + " " + pass);
+                this.session.getBasicRemote().sendText("admin-login " + login + " " + pass);
                 while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-                if (this.message.contains("success"))
+                if (this.message.equals("correct"))
                 {
                     this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                     this.stage.setResizable(false); errMess.setText(""); txtButton.setText(""); passButton.setText("");

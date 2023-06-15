@@ -92,7 +92,8 @@ public class App
     public static String admin_query(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        String[] data_arr = data.split(" "); String result = ""; String row = ""; String temp = ""; ResultSetMetaData rsmd = null; boolean flag = true; int[] data_types = null;
+        String[] data_arr = data.split(" "); String result = ""; String row = ""; String temp = "";
+        ResultSetMetaData rsmd = null; boolean flag = true; int[] data_types = null; String[] column_names = null;
         PreparedStatement stmt = null; ResultSet rs = null; if (data_arr[2].equals("terminal")) {result = "terminal ";} else {result = "stats ";}
         if (data_arr[1].equals("get-elements")) {
             if (data_arr[3].equals("users")) stmt = conn.prepareStatement("select user_id, login from veggiestore.users order by user_id");
@@ -147,15 +148,13 @@ public class App
                 rs = stmt.executeQuery(); rsmd = rs.getMetaData(); data_types = new int[rsmd.getColumnCount()];
                 for (int m = 1; m <= data_types.length; m++) {
                     data_types[m - 1] = rsmd.getColumnType(m);
-                }
-                stmt = conn.prepareStatement("update veggiestore.users set type = (?), first_name = (?), last_name = (?), login = (?), password = (?), phone_number = (?), address = (?) where login = (?)");
+                } stmt = conn.prepareStatement("update veggiestore.users set type = (?), first_name = (?), last_name = (?), login = (?), password = (?), phone_number = (?), address = (?) where login = (?)");
             } else {
                 stmt = conn.prepareStatement("select * from veggiestore.items where item_name = '" + data_arr[4] + "'");
                 rs = stmt.executeQuery(); rsmd = rs.getMetaData(); data_types = new int[rsmd.getColumnCount()];
                 for (int m = 1; m <= data_types.length; m++) {
                     data_types[m - 1] = rsmd.getColumnType(m);
-                }
-                stmt = conn.prepareStatement("update veggiestore.items set item_name = (?), type = (?), price = (?), quantity = (?), input_date = (?), photo = (?), polish_name = (?) where item_name = (?)");
+                } stmt = conn.prepareStatement("update veggiestore.items set item_name = (?), type = (?), price = (?), quantity = (?), input_date = (?), photo = (?), polish_name = (?) where item_name = (?)");
             } stmt.setString(rsmd.getColumnCount(), data_arr[3]);
             String[] update_data = data_arr[4].split("\n");
             for (int m = 1; m < update_data.length; m++) {
@@ -175,6 +174,87 @@ public class App
                 else if (data_types[m] == 91) {
                     try {stmt.setDate(m, java.sql.Date.valueOf(temp));}
                     catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                }
+            }
+            if (flag) {
+                result = "terminal " + stmt.executeUpdate();
+            }
+        }
+        else if (data_arr[1].equals("add")) {
+            result = "terminal 0";
+            if (data_arr.length < 4) {
+                result = "terminal 0";
+            } else {
+                if (data_arr[2].equals("user")) {
+                    stmt = conn.prepareStatement("select * from veggiestore.users limit 1");
+                    rs = stmt.executeQuery(); rsmd = rs.getMetaData(); data_types = new int[rsmd.getColumnCount()]; column_names = new String[rsmd.getColumnCount()];
+                    for (int m = 1; m <= data_types.length; m++) {
+                        data_types[m - 1] = rsmd.getColumnType(m);
+                        column_names[m - 1] = rsmd.getColumnName(m);
+                    } stmt = conn.prepareStatement("insert into veggiestore.users (type, first_name, last_name, login, password, phone_number, address) values (?, ?, ?, ?, ?, ?, ?)");
+                } else {
+                    stmt = conn.prepareStatement("select * from veggiestore.items limit 1");
+                    rs = stmt.executeQuery(); rsmd = rs.getMetaData(); data_types = new int[rsmd.getColumnCount()]; column_names = new String[rsmd.getColumnCount()];
+                    for (int m = 1; m <= data_types.length; m++) {
+                        data_types[m - 1] = rsmd.getColumnType(m);
+                        column_names[m - 1] = rsmd.getColumnName(m);
+                    } stmt = conn.prepareStatement("insert into veggiestore.users (item_name, type, price, quantity, input_date, photo, polish_name) values (?, ?, ?, ?, ?, ?, ?)");
+                }
+                String[] add_data = data_arr[3].split("\n");
+                if (add_data.length != rsmd.getColumnCount()) {
+                    result = "terminal 0";
+                }
+                else {
+                    for (int m = 0; m < rsmd.getColumnCount(); m++) {
+                        String[] single_row_data = add_data[m].split(":");
+                        if (single_row_data[0].equals(column_names[m])) {
+                            if (m == 0 && single_row_data[0].equals("user_id")) {
+                                rs = conn.prepareStatement("select * from veggiestore.users where user_id = '" + single_row_data[1] + "'").executeQuery();
+                                while (rs.next()) {
+                                    result = "terminal 0"; flag = false;
+                                } if (!flag) {break;}
+                            }
+                            else if (m == 0 && single_row_data[0].equals("id_item")) {
+                                rs = conn.prepareStatement("select * from veggiestore.items where id_item = '" + single_row_data[1] + "'").executeQuery();
+                                while (rs.next()) {
+                                    result = "terminal 0"; flag = false;
+                                } if (!flag) {break;}
+                            }
+                            // else if (m == 4 && single_row_data[0].equals("login")) {
+                            //     rs.close();
+                            //     rs = conn.prepareStatement("select * from veggiestore.items where login = '" + single_row_data[1] + "'").executeQuery();
+                            //     while (rs.next()) {
+                            //         result = "terminal 0"; flag = false;
+                            //     } if (!flag) {break;}
+                            // }
+                            // else if (m == 1 && single_row_data[0].equals("item_name")) {
+                            //     rs = conn.prepareStatement("select * from veggiestore.items where item_name = '" + single_row_data[1] + "'").executeQuery();
+                            //     while (rs.next()) {
+                            //         result = "terminal 0"; flag = false;
+                            //     } if (!flag) {break;}
+                            // }
+                            else {
+                                if (data_types[m] == 2) {
+                                    try {stmt.setDouble(m, Double.parseDouble(single_row_data[1]));}
+                                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                                }
+                                else if (data_types[m] == 4) {
+                                    try {stmt.setInt(m, Integer.parseInt(single_row_data[1]));}
+                                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                                }
+                                else if (data_types[m] == 12) {
+                                    try {stmt.setString(m, single_row_data[1]);}
+                                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                                }
+                                else if (data_types[m] == 91) {
+                                    try {stmt.setDate(m, java.sql.Date.valueOf(single_row_data[1]));}
+                                    catch (Exception e) {result = "terminal 0"; flag = false; break;}
+                                }
+                            }
+                        } else {
+                            result = "terminal 0"; break;
+                        }
+                    }
                 }
             }
             if (flag) {

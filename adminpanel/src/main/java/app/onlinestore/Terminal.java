@@ -143,17 +143,18 @@ public class Terminal
     }
     public void add_record(ActionEvent event) throws Exception
     {
-        // this.session = this.previous.getSession();
-        // this.error_message.setText(null); this.message = null;
-        // if (this.content.equals("users")) {
-        //     this.session.getBasicRemote().sendText("admin-query add user " + this.message_box.getText());
-        // } else {
-        //     this.session.getBasicRemote().sendText("admin-query add item " + this.message_box.getText());
-        // } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-        // if (!this.message.equals("0")) {
-        //     this.error_message.setText("Added an element"); this.get_elements(this.content);
-        // } else {
-        //     this.error_message.setText("Unknown error while adding!");
-        // }
+        this.session = this.previous.getSession();
+        this.error_message.setText(null); this.message = null;
+        
+        if (this.add_user_radio.selectedProperty().getValue()) {
+            this.session.getBasicRemote().sendText("admin-query add user " + this.message_box.getText());
+        } else {
+            this.session.getBasicRemote().sendText("admin-query add item " + this.message_box.getText());
+        } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
+        if (!this.message.equals("0")) {
+            this.error_message.setText("Added an element"); this.get_elements(this.content);
+        } else {
+            this.error_message.setText("Unknown error while adding!");
+        }
     }
 }

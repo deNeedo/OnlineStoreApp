@@ -182,7 +182,7 @@ COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, p
 12	Carrot	Vegetable	0.30	200	\N	/../img/carrot.jpeg	Marchewka
 13	Broccoli	Vegetable	1.50	40	\N	/../img/broccoli.jpeg	Brokuł
 14	Garlic	Vegetable	0.25	100	\N	/../img/garlic.jpeg	Czosnek
-15	Zucchini 	Vegetable	0.20	170	\N	/../img/zucchini.jpeg	Cukinia
+15	Zucchini	Vegetable	0.20	170	\N	/../img/zucchini.jpeg	Cukinia
 16	Valerianella	Vegetable	2.50	100	\N	/../img/valerianella.jpeg	Rukola
 17	Spinach	Vegetable	2.50	100	\N	/../img/spinach.jpeg	Szpinka
 18	Rucola	Vegetable	2.50	100	\N	/../img/rucola.jpeg	Rukola

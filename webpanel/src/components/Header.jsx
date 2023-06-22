@@ -21,9 +21,15 @@ export function Header({props}) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const loginRedirect = () => {navigate('/login', {state: {lang: props.lang}})}
-    const registerRedirect = () => {navigate('/register', {state: {lang: props.lang}})}
-    const homeRedirect = () => {navigate('/home', {state: {lang: props.lang}})}
+    const loginRedirect = () => {
+        if (props.auth == true) {navigate('/', {state: {lang: props.lang, auth: false}}); notify(t("log_out_mess"), 'success');}
+        else {navigate('/login', {state: {lang: props.lang, auth: props.auth}})}
+    }
+    const registerRedirect = () => {
+        if (props.auth == true) {notify(t("already_logged_in_mess"), 'info')}
+        else {navigate('/register', {state: {lang: props.lang, auth: props.auth}})}
+    }
+    const homeRedirect = () => {navigate('/home', {state: {lang: props.lang, auth: props.auth}})}
     const handleChange = (e) => {props.setLang(e.target.value);}
     return (
         <nav>
@@ -33,7 +39,7 @@ export function Header({props}) {
                 <span onClick={homeRedirect} className={headerCss['title']}>{t("site_name")}</span>
                 </div>
                 <div className={headerCss['nav']}>
-                    <button onClick={loginRedirect} className={headerCss['link-btn']}>{t("login_button")}</button>
+                    <button onClick={loginRedirect} className={headerCss['link-btn']}>{props.auth == true ? t("logout_button") : t("login_button")}</button>
                     <button onClick={registerRedirect} className={headerCss['link-btn']}>{t("register_button")}</button>
                     <img onClick={homeRedirect} className={headerCss['icon']} src={CartPNG}/>
                     <img onClick={homeRedirect} className={headerCss['icon']} src={WishPNG}/>

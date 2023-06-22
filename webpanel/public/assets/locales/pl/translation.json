@@ -44,6 +44,7 @@
     "register_success_mess" : "Rejestracja powiodła się!",
     "email_in_use_mess": "Email już zarejestrowany. Zaloguj się!",
     "log_out_mess": "Zostałeś wylogowany!",
+    "already_logged_in_mess": "Aby się zarejestrować, wyloguj się.",
 
     "name_err":  "Proszę podaj imię.",
     "surname_err": "Proszę podaj nazwisko.",
@@ -61,6 +62,7 @@
     "contact_info": "Kontant: ",
 
     "login_button": "Zaloguj",
+    "logout_button": "Wyloguj",
     "register_button": "Zarejestruj"
     
 }

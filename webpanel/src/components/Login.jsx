@@ -16,9 +16,10 @@ export function Login() {
     const [input, setInput] = useState({email: '', pass: ''});  
     const [error, setError] = useState({email: '', pass: ''});
     const [lang, setLang] = useState(location.state.lang);
+    const [auth, setAuth] = useState(location.state.auth);
 
-    const registerRedirect = () => {navigate('/register', {state: {lang: lang}})}
-    const forgotPassRedirect = () => {navigate('/password-reset', {state: {lang: lang}})}
+    const registerRedirect = () => {navigate('/register', {state: {lang: lang, auth: auth}})}
+    const forgotPassRedirect = () => {`navigate`('/password-reset', {state: {lang: lang, auth: auth}})}
 
     const onInputChange = e => {
         const { name, value } = e.target;
@@ -65,7 +66,7 @@ export function Login() {
                 message = 'session create '.concat(input.email);
                 socket.send(message, 0, message.length, 80, 'localhost');
                 notify(t("login_correct_mess"), 'success');
-                navigate('/home', {state: {lang: lang}})
+                navigate('/home', {state: {lang: lang, auth: true}})
             }
             else if (event.data == 'error') {notify(t("email_pass_err_mess"), 'error');}
             socket.send('connection-close-try', 0, 'connection-close-try'.length, 80, 'localhost');
@@ -75,7 +76,7 @@ export function Login() {
 
     return (
         <div className={loginCss['wrapper']}>
-            <Header props={{setLang, lang}} />
+            <Header props={{setLang, lang, setAuth, auth}} />
             <div className={loginCss['content-box']}>
                 <div className={loginCss['auth-form-container']}>
                     <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>

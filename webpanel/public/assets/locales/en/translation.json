@@ -44,6 +44,7 @@
     "register_success_mess" : "Registration successful!",
     "email_in_use_mess": "Email already in use. Please Login!",
     "log_out_mess": "Logout successful!",
+    "already_logged_in_mess": "To register, log out first.",
 
     "name_err":  "Please enter name.",
     "surname_err": "Please enter surname.",
@@ -61,6 +62,7 @@
     "contact_info": "Contact: ",
 
     "login_button": "Log In",
+    "logout_button": "Log Out",
     "register_button": "Register"
 
 }

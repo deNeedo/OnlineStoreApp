@@ -16,15 +16,15 @@ export function Home() {
     const {t} = useTranslation();
     const {notifications, dismissNotification} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-    // const [authenticated, setAuthenticated] = useState(false);
+    const [auth, setAuth] = useState();
     const [data, setData] = useState([]);
     const [lang, setLang] = useState('');
     const [error, setError] = useState('');
     const [searchData, setSearchData] = useState({lang: lang, type: 'all', pattern: '', price: '0', order: 'alpha'});
 
     useEffect(() => {
-        if (location.state != null) {setLang(location.state.lang)}
-        else {setLang('en')}
+        if (location.state != null) {setLang(location.state.lang); setAuth(location.state.auth);}
+        else {setLang('en'); setAuth(false);}
     }, [])
     useEffect(() => {setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: searchData.order})}, [lang])
     useEffect(() => {getProducts(searchData)}, [searchData])
@@ -61,7 +61,7 @@ export function Home() {
     }
     return (
         <div className={homeCss['wrapper']}>
-            <Header props={{setLang, lang}} />
+            <Header props={{setLang, lang, setAuth, auth}} />
             <div className={homeCss['content-box']}>
                 <div className={homeCss['search-box']}>
                     <input 

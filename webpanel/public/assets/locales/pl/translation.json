@@ -44,7 +44,7 @@
     "register_success_mess" : "Rejestracja powiodła się!",
     "email_in_use_mess": "Email już zarejestrowany. Zaloguj się!",
     "log_out_mess": "Zostałeś wylogowany!",
-    "already_logged_in_mess": "Aby się zarejestrować, wyloguj się.",
+    "already_logged_in_mess": "Aby się zarejestrować, najpierw wyloguj się.",
 
     "name_err":  "Proszę podaj imię.",
     "surname_err": "Proszę podaj nazwisko.",

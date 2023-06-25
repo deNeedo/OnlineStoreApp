@@ -108,7 +108,7 @@ public class Terminal
                 } else {
                     this.session.getBasicRemote().sendText("admin-query modify item " + this.targetSelect.getValue() + " " + this.message_box.getText());
                 } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-                if (!this.message.equals("0")) {
+                if (!this.message.equals("-1")) {
                     this.error_message.setText("Modified an element"); this.get_elements(this.content);
                 } else {
                     this.error_message.setText("Wrong data types!");
@@ -131,7 +131,7 @@ public class Terminal
                 } else {
                     this.session.getBasicRemote().sendText("admin-query delete item " + this.targetSelect.getValue());
                 } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-                if (!this.message.equals("0")) {
+                if (!this.message.equals("-1")) {
                     this.error_message.setText("Deleted an element"); this.get_elements(this.content);
                 } else {
                     this.error_message.setText("Unknown error while deleting!");
@@ -151,10 +151,12 @@ public class Terminal
         } else {
             this.session.getBasicRemote().sendText("admin-query add item " + this.message_box.getText());
         } while (this.message == null) {TimeUnit.MILLISECONDS.sleep(1);}
-        if (!this.message.equals("0")) {
-            this.error_message.setText("Added an element"); this.get_elements(this.content);
-        } else {
+        if (this.message.equals("-1")) {
             this.error_message.setText("Unknown error while adding!");
+        } else if (this.message.equals("-2")) {
+            this.error_message.setText("Given element already exists!");
+        } else {
+            this.error_message.setText("Added an element"); this.get_elements(this.content);
         }
     }
 }

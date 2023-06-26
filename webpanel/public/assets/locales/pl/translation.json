@@ -3,9 +3,14 @@
     "login": "Zaloguj się",
     "register": "Zarejestruj się",
     "home": "Strona główna",
+    "customer_register": "Rejestracja Klienta",
+    "employee_register": "Rejestracja Pracownika",
+    "customer_account": "Logowanie Klienta",
+    "employee_account": "Logowanie Pracownika",
 
     "login_hello": "Witaj,",
     "login_hello2": "Zaloguj się!",
+    "login_hello_employee": "Witaj Pracowniku,",
     "login_btn": "Zaloguj się",
     "forgot_pass": "Zapomniałeś hasła? Kliknij tu aby zresetować!",
     "no_acc": "Nie masz konta? Zarejestruj się tu!",
@@ -13,6 +18,7 @@
 
     "register_welcome" : "Witaj,",
     "register_welcome2" : "Zarejestruj się!",
+    "register_welcome_employee": "Witaj Pracowniku,",
     "name_placeholder": "Imię",
     "surname_placeholder": "Nazwisko",
     "phone_placeholder": "Nr telefonu",

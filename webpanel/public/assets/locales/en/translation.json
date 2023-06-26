@@ -3,8 +3,13 @@
     "login": "Log in",
     "register": "Register",
     "home": "Home",
+    "customer_register": "Customer Register",
+    "employee_register": "Employee Register",
+    "customer_account": "Customer Account",
+    "employee_account": "Employee Account",
 
     "login_hello": "Hello,",
+    "login_hello_employee": "Hello Employee,",
     "login_hello2": "Please log in!",
     "login_btn": "Log In",
     "forgot_pass": "Forgot password? Click here to reset!",
@@ -13,6 +18,7 @@
 
     "register_welcome": "Welcome,",
     "register_welcome2": "Please register!",
+    "register_welcome_employee": "Hello Employee,",
     "name_placeholder": "Name",
     "surname_placeholder": "Surname",
     "phone_placeholder": "Phone",

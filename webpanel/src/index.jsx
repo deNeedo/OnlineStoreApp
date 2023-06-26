@@ -14,6 +14,8 @@ import Register from "./components/Register";
 import PasswordReset from './components/PasswordReset';
 import Terms from './components/Terms';
 import Home from './components/Home';
+import EmployeeLogin from './components/EmpoyeeLogin.jsx';
+import EmployeeRegister from './components/EmployeeRegister.jsx';
 
 setUpNotifications({
     defaultProps: {
@@ -56,6 +58,8 @@ root.render(
                     <Route path="/password-reset" element={<PasswordReset/>} />
                     <Route path="/terms" element={<Terms/>} />
                     <Route path="/home" element={<Home/>} />
+                    <Route path="/employee-login" element={<EmployeeLogin/>} />
+                    <Route path="/employee-register" element={<EmployeeRegister/>} />
                 </Routes>
             </BrowserRouter>
         </NotificationsProvider>

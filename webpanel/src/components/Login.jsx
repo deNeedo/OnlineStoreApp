@@ -19,7 +19,7 @@ export function Login() {
     const [auth, setAuth] = useState(location.state.auth);
 
     const registerRedirect = () => {navigate('/register', {state: {lang: lang, auth: auth}})}
-    const forgotPassRedirect = () => {`navigate`('/password-reset', {state: {lang: lang, auth: auth}})}
+    const forgotPassRedirect = () => {navigate('/password-reset', {state: {lang: lang, auth: auth}})}
 
     const onInputChange = e => {
         const { name, value } = e.target;

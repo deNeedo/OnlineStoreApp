@@ -26,7 +26,7 @@ input.search-input {
     max-width: 600px;
     width: 100%;
     font-size: 1.25rem;
-    margin: 3% 0% 3% 0%;
+    margin: 19px 0% 3% 0%;
     outline: 0;
     border-width: 0 0 2px;
     border-color: #E5E5E5;
@@ -114,5 +114,21 @@ input.search-input {
     font-weight: bold;
 }
 
+.button-conatiner{
+    display: flex;
+    justify-content: center;
+}
+
+.add-to-cart{
+    background-color: #283618 !important;
+    color: #ffffff !important;
+    margin: 0px 10px 0px 10px !important;
+}
+
+.add-to-wishlist{
+    background-color: #ffffff !important;
+    color: #283618 !important;
+    margin: 0px 10px 0px 10px !important;
+}
 
 

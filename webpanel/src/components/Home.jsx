@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
 import {Grid, Box,Typography} from '@mui/material';
@@ -7,6 +7,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useTranslation } from 'react-i18next'
+import Button from '@mui/material/Button';
+import { CartContext } from '../CartContext';
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';
@@ -59,6 +61,10 @@ export function Home() {
             setData(JSON.parse(event.data)); socket.close();
         };
     }
+
+    const cart = useContext(CartContext);
+    const productQuantity = cart.getProductQuantity(data.id_item);
+
     return (
         <div className={homeCss['wrapper']}>
             <Header props={{setLang, lang, setAuth, auth}} />
@@ -127,6 +133,7 @@ export function Home() {
 
                 </div>
                 <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+                
                 <Grid container className={error ? homeCss['hide-products-container'] : homeCss['products-container']}  sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
@@ -136,6 +143,11 @@ export function Home() {
                             <hr className={homeCss['hr']}></hr>
                             <Typography className={homeCss['product-price']} variant='subtitle1'> {t("price")} {item.price}{t("price_end")} </Typography>
                             <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
+                            <hr className={homeCss['hr']}></hr>
+                            <div className={homeCss['button-conatiner']}>
+                            <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item.id_item)}>Add to cart</Button>
+                            <Button variant="contained" className={homeCss['add-to-wishlist']}>Add to wishlist</Button>
+                            </div>
                         </Grid>
                     ))}
                 </Grid>

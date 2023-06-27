@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useNotifications } from 'reapop';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next'
+import { CartContext } from '../CartContext';
+
 
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -23,7 +28,7 @@ import WishPNG from '../../img/icons8-list-64.png';
 import USFlagPNG from '../../img/united-states.png';
 import PLFlagPNG from '../../img/poland.png'
 import ProfilePNG from '../../img/profile.png'
-import { DialogContent } from '@mui/material';
+import { useControlled } from '@mui/material';
 
 export function Header({props}) {
     const {t} = useTranslation();
@@ -114,6 +119,33 @@ export function Header({props}) {
         };
 
 
+        const [openCartModal, setCartOpen] = React.useState(false);
+        const handleCartOpen = () => setCartOpen(true);
+        const handleCartClose = () => setCartOpen(false);
+
+        // Shopping Cart Modal Styling //
+        const style = {
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '50%',
+          height: '75%',
+          bgcolor: 'background.paper',
+          border: '1px solid #ffffff',
+          // boxShadow: 24,
+          p: 3,
+        };
+
+        const [openListModal, setListOpen] = React.useState(false);
+        const handleListOpen = () => setListOpen(true);
+        const handleListClose = () => setListOpen(false);
+
+        const cart = useContext(CartContext);
+
+        const productCount = cart.items.reduce((sum, product) => sum + product.quantity, 0);
+
+
     return (
         <nav>
             <div className={headerCss['header']}>
@@ -125,6 +157,7 @@ export function Header({props}) {
 
                 <div className={headerCss['register-box']}>
                 <Button
+                    className={headerCss['dropdown-menu']}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     variant="contained"
@@ -152,6 +185,7 @@ export function Header({props}) {
 
                 <div className={headerCss['login-box']}>
                 <Button
+                    className={headerCss['dropdown-menu']}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     variant="contained"
@@ -165,7 +199,7 @@ export function Header({props}) {
                     open={open2}
                     onClose={handleClose2}
                 >
-                    <MenuItem onClick={loginRedirect} disableRipple>
+                    <MenuItem onClick={loginRedirect} disableRipple >
                     <PersonIcon />
                     {t("customer_account")}
                     </MenuItem>
@@ -177,8 +211,8 @@ export function Header({props}) {
                 </StyledMenu>
                 </div>
 
-                    <img onClick={homeRedirect} className={headerCss['icon']} src={CartPNG}/>
-                    <img onClick={homeRedirect} className={headerCss['icon']} src={WishPNG}/>
+                    <img onClick={handleCartOpen} className={headerCss['icon']} src={CartPNG}/><span className={headerCss['product-counter']}>{productCount}</span>
+                    <img onClick={handleListOpen} className={headerCss['icon']} src={WishPNG}/>
                     <img onClick={homeRedirect} className={headerCss['icon']} src={ProfilePNG}/>
 
                     <FormControl className={headerCss['form-control']}>
@@ -197,6 +231,51 @@ export function Header({props}) {
                     </FormControl>
                 </div>
             </div>
+            
+            <Modal
+              open={openCartModal}
+              onClose={handleCartClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Shopping Cart
+                </Typography>
+                <Typography>
+                  {productCount > 0 ?
+                  <>
+                    <p> Item in Your cart:</p>
+                    {cart.items.map((currentProduct, idx) => (
+                      <p>{currentProduct.item_id}</p>
+
+                    ))}
+                      <p>Total: {cart.getTotalCost().toFixed(2)}</p>
+
+                      <Button variant='contained'> Purchase items! </Button>
+                    </>
+                    :
+                    <p>The Cart is empty!</p>
+                  }
+                </Typography>
+
+              </Box>
+            </Modal>
+
+            <Modal
+              open={openListModal}
+              onClose={handleListClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Wishlist
+                </Typography>
+              </Box>
+            </Modal>
+
+
         </nav>
     )
 }

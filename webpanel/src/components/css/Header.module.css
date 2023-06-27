@@ -110,13 +110,19 @@ nav {
     margin: 0px 20px 0px 10px;
 }
 
-.MuiButtonBase-root{
-    background-color: red !important;
+.dropdown-menu{
+    background-color: #ffffff !important;
+    color: #283618 !important;
 }
 
-.MuiButton-root{
-    background-color: red !important;
+.product-counter{
+    color: #fff;
+    font-family: 'Lato';
+    font-weight: bold;
+    font-size: 14px;
+    transform: translateX(-75%) translateY(8%);
 }
+
 
 
 

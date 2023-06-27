@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import i18next from 'i18next';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 import { CartContext } from '../CartContext';
 
 
@@ -26,8 +26,8 @@ import Logo from '../../img/page-icon.ico';
 import CartPNG from '../../img/icons8-cart-96.png';
 import WishPNG from '../../img/icons8-list-64.png';
 import USFlagPNG from '../../img/united-states.png';
-import PLFlagPNG from '../../img/poland.png'
-import ProfilePNG from '../../img/profile.png'
+import PLFlagPNG from '../../img/poland.png';
+import ProfilePNG from '../../img/profile.png';
 import { useControlled } from '@mui/material';
 
 export function Header({props}) {
@@ -56,7 +56,6 @@ export function Header({props}) {
     const homeRedirect = () => {navigate('/home', {state: {lang: props.lang, auth: props.auth}})}
     const handleChange = (e) => {props.setLang(e.target.value);}
 
-
     
     const StyledMenu = styled((props) => (
         <Menu
@@ -71,7 +70,7 @@ export function Header({props}) {
           }}
           {...props}
         />
-      ))(({ theme }) => ({
+      ))(({theme}) => ({
         '& .MuiPaper-root': {
           borderRadius: 6,
           marginTop: theme.spacing(1),
@@ -108,7 +107,6 @@ export function Header({props}) {
           setAnchorEl(null);
         };
 
-
         const [anchorEl2, setAnchorEl2] = React.useState(null);
         const open2 = Boolean(anchorEl2);
         const handleClick2 = (event) => {
@@ -117,7 +115,6 @@ export function Header({props}) {
         const handleClose2 = () => {
           setAnchorEl2(null);
         };
-
 
         const [openCartModal, setCartOpen] = React.useState(false);
         const handleCartOpen = () => setCartOpen(true);
@@ -155,6 +152,21 @@ export function Header({props}) {
                 </div>
                 <div className={headerCss['nav']}>
 
+                {
+                props.auth ?
+                <div className={headerCss['login-box']}>
+                <Button
+                    className={headerCss['dropdown-menu']}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    variant="contained"
+                    onClick={registerRedirect}
+                    endIcon={<KeyboardArrowDownIcon />}
+                >
+                  {t("register")}
+                </Button>
+                </div>
+                :
                 <div className={headerCss['register-box']}>
                 <Button
                     className={headerCss['dropdown-menu']}
@@ -182,7 +194,22 @@ export function Header({props}) {
                     </MenuItem>
                 </StyledMenu>
                 </div>
-
+                }
+                {
+                props.auth ?
+                <div className={headerCss['login-box']}>
+                <Button
+                    className={headerCss['dropdown-menu']}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    variant="contained"
+                    onClick={loginRedirect}
+                    endIcon={<KeyboardArrowDownIcon />}
+                >
+                  {t("logout")}
+                </Button>
+                </div>
+                :
                 <div className={headerCss['login-box']}>
                 <Button
                     className={headerCss['dropdown-menu']}
@@ -209,7 +236,7 @@ export function Header({props}) {
                     {t("employee_account")}
                     </MenuItem>
                 </StyledMenu>
-                </div>
+                </div>}
 
                     <img onClick={handleCartOpen} className={headerCss['icon']} src={CartPNG}/><span className={headerCss['product-counter']}>{productCount}</span>
                     <img onClick={handleListOpen} className={headerCss['icon']} src={WishPNG}/>
@@ -274,8 +301,6 @@ export function Header({props}) {
                 </Typography>
               </Box>
             </Modal>
-
-
         </nav>
     )
 }

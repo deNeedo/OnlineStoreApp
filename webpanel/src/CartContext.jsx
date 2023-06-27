@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import Home from "./components/Home";
 
 export const CartContext = createContext({
-    items: [], 
+    items: [],
     getProductQuantity: () => {},
     AddOneToCart: () => {},
     removeOneFromCart: () => {},

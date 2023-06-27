@@ -1,6 +1,7 @@
 {
     "site_name": "Veggie store",
     "login": "Log in",
+    "logout": "Log Out",
     "register": "Register",
     "home": "Home",
     "customer_register": "Customer Register",

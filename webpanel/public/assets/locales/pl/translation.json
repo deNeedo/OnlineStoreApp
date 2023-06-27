@@ -1,6 +1,7 @@
 {
     "site_name": "Warzywniak",
     "login": "Zaloguj się",
+    "logout": "Wyloguj się",
     "register": "Zarejestruj się",
     "home": "Strona główna",
     "customer_register": "Rejestracja Klienta",

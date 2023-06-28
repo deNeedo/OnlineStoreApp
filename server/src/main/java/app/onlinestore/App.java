@@ -387,4 +387,20 @@ public class App
         stmt.executeUpdate();
         return "gitgut";
     }
+    public static String get_orders() throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.purchases");
+        String result = ""; ResultSet rs = stmt.executeQuery(); ResultSetMetaData rsmd = rs.getMetaData(); int[] data_types = new int[rsmd.getColumnCount()];
+        for (int m = 0; m < rsmd.getColumnCount(); m++) {
+            data_types[m] = rsmd.getColumnType(m + 1);
+        }
+        while (rs.next()) {
+            for (int m = 1; m < rsmd.getColumnCount(); m++) {
+                result += rs.getString(m + 1) + " ";
+            }
+        }
+        System.out.println(result);
+        return result;
+    }
 }

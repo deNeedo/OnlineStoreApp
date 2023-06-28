@@ -35,19 +35,15 @@ export function Home() {
     const handleInputChange = (e) => {
         setSearchData({lang: lang, type: searchData.type, pattern: e.target.value, price: searchData.price, order: searchData.order})
     }
-
     const handleSelectChange = (e) => {
         setSearchData({lang: lang, type: e.target.value, pattern: searchData.pattern, price: searchData.price, order: searchData.order})
     }
-
     const handleSelect2Change = (e) => {
         setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: e.target.value, order: searchData.order})
     }
-
     const handleSelect3Change = (e) => {
         setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: e.target.value})
     }
-
     const getProducts = (e) => {
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()

@@ -394,13 +394,14 @@ public class App
         String result = ""; ResultSet rs = stmt.executeQuery(); ResultSetMetaData rsmd = rs.getMetaData(); int[] data_types = new int[rsmd.getColumnCount()];
         for (int m = 0; m < rsmd.getColumnCount(); m++) {
             data_types[m] = rsmd.getColumnType(m + 1);
-        }
+        } int counter = 0;
         while (rs.next()) {
+            if (counter != 0) {result += "\n";}
             for (int m = 1; m < rsmd.getColumnCount(); m++) {
                 if (m == rsmd.getColumnCount() - 1) {result += rs.getString(m + 1);}
                 else {result += rs.getString(m + 1) + " ";}
             }
-            result += "\n";
+            counter++;
         }
         System.out.println(result);
         return result;

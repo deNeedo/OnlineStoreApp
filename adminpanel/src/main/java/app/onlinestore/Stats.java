@@ -61,9 +61,12 @@ public class Stats
     }
     public void get_stats(ActionEvent event) throws Exception
     {
-        this.session.getBasicRemote().sendText("admin-query get-elements stat users" +  targetSelect.getValue());
-        while (this.message == null) {
-            TimeUnit.MILLISECONDS.sleep(1);
-        } this.statsArea.setText(this.message);
+        if (this.targetSelect.getValue() != null) {
+            this.session = this.previous.getSession(); this.message = null;
+            this.session.getBasicRemote().sendText("admin-query get-info stats user " + targetSelect.getValue());
+            while (this.message == null) {
+                TimeUnit.MILLISECONDS.sleep(1);
+            } this.statsArea.setText(this.message);
+        }
     }
 }

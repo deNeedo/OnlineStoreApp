@@ -18,6 +18,7 @@ import EmployeeLogin from './components/EmpoyeeLogin.jsx';
 import EmployeeRegister from './components/EmployeeRegister.jsx';
 import CartProvider from './components/CartContext.jsx';
 import ListProvider from './components/ListContext.jsx';
+import Orders from './components/Orders.jsx';
 
 setUpNotifications({
     defaultProps: {
@@ -64,6 +65,7 @@ root.render(
                         <Route path="/home" element={<Home/>} />
                         <Route path="/employee-login" element={<EmployeeLogin/>} />
                         <Route path="/employee-register" element={<EmployeeRegister/>} />
+                        <Route path="/orders" element={<Orders/>} />
                     </Routes>
                 </BrowserRouter>
             </NotificationsProvider>

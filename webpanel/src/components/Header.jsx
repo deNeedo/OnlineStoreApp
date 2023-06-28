@@ -54,6 +54,10 @@ export function Header({props}) {
     const homeRedirect = () => {navigate('/home', {state: {lang: props.lang, auth: props.auth}})}
     const handleChange = (e) => {props.setLang(e.target.value);}
 
+    const make_purchase = () => {
+      console.log("siemaneczko");
+    }
+
     
     const StyledMenu = styled((props) => (
         <Menu
@@ -272,7 +276,7 @@ export function Header({props}) {
                       <CartProduct key={Math.random()} item={currentProduct} quantity={currentProduct.quantity} lang={props.lang}> </CartProduct> 
                     ))}
                       <p> {t("total")}: {cart.getTotalCost().toFixed(2)}{t("price_end")} </p>
-                      <Button className={headerCss['purchase_items_btn']} variant='contained'> Purchase items! </Button>
+                      <Button className={headerCss['purchase_items_btn']} onClick={make_purchase} variant='contained'> Purchase items! </Button>
                     </>
                     :
                     <p className={headerCss['cart_empty_message']}>{t("cart_empty")}</p>

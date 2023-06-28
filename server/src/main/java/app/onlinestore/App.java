@@ -73,7 +73,7 @@ public class App
     public static void main(String[] args)
     {
         Server server = new Server("localhost", 80, "", AppServerEndpoint.class);
-        try {server.start(); make_purchase("make_purchase pl e@v.app 7 3.50 Ogórek zielony"); while (true) {}}
+        try {server.start(); while (true) {}}
         catch (Exception e) {e.printStackTrace();}
         finally {server.stop();}
     }
@@ -386,7 +386,6 @@ public class App
         stmt.setDate(5, java.sql.Date.valueOf(dtf.format(now).split(" ")[0]));
         stmt.setTime(6, java.sql.Time.valueOf(dtf.format(now).split(" ")[1]));
         stmt.executeUpdate();
-        System.out.println("Kupowańsko!");
         return "gitgut";
     }
 }

@@ -13,5 +13,6 @@
       <Text layoutX="46.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select User" />
       <Text layoutX="440.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Info" />
       <TextArea fx:id="message_box" layoutX="371.0" layoutY="76.0" prefHeight="200.0" prefWidth="185.0" />
+      <TextArea fx:id="statsArea" layoutX="127.0" layoutY="115.0" prefHeight="161.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

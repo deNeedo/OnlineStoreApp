@@ -16,7 +16,7 @@ import Footer from './Footer';
 
 export function Home() {
     const {t} = useTranslation();
-    const {notifications, dismissNotification} = useNotifications();
+    const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
     const [auth, setAuth] = useState();
     const [data, setData] = useState([]);
@@ -145,7 +145,7 @@ export function Home() {
                             <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
                             <hr className={homeCss['hr']}></hr>
                             <div className={homeCss['button-conatiner']}>
-                            {item.quantity > 0 ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={auth != null ? notify(t("login_correct_mess"), 'success') : () => cart.AddOneToCart(item) }>{t("add_to_cart")}</Button> : <></>}
+                            {item.quantity > 0 && auth != null ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>{t("add_to_cart")}</Button> : <></>}
                             <Button variant="contained" className={homeCss['add-to-wishlist']}>{t("add_to_wishlist")}</Button>
                             </div>
                         </Grid>

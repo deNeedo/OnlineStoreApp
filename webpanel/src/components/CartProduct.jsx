@@ -24,9 +24,11 @@ function CartProduct(props) {
                     <Grid  className={cartProductCss['item_container']} xs={3}>
                         <img className={cartProductCss['img']} src={item.item.photo}/>
                     </Grid>
-                    <Grid className={cartProductCss['item_container']} xs={2}>
+                    {lang == 'en' ? <Grid className={cartProductCss['item_container']} xs={2}>
                         {item.item.item_name}
-                    </Grid>
+                    </Grid> : <Grid className={cartProductCss['item_container']} xs={2}>
+                        {item.item.polish_name}
+                    </Grid>}
                     <Grid className={cartProductCss['item_container']} xs={3}>
                     <Button className={cartProductCss['button']} variant="text" onClick={() => cart.removeOneFromCart(item.item.id_item)}> <IndeterminateCheckBoxOutlinedIcon/> </Button>
                         {quantity}

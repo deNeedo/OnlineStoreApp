@@ -8,6 +8,11 @@
     "employee_register": "Rejestracja Pracownika",
     "customer_account": "Logowanie Klienta",
     "employee_account": "Logowanie Pracownika",
+    "shopping_cart": "Koszyk",
+    "total": "Razem",
+    "cart_empty": "Twój koszyk jest pusty. Dodaj produkty!",
+    "add_to_wishlist": "Dodaj do listy",
+    "add_to_cart": "Do koszyka",
 
     "login_hello": "Witaj,",
     "login_hello2": "Zaloguj się!",

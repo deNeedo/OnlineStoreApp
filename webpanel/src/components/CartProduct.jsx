@@ -1,6 +1,14 @@
-import { Button } from "@mui/base";
+import Button from '@mui/material/Button';
 import { CartContext } from "./CartContext";
 import { useContext } from "react";
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { useTranslation } from 'react-i18next'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import IndeterminateCheckBoxOutlinedIcon from '@mui/icons-material/IndeterminateCheckBoxOutlined';
+
+import cartProductCss from './css/CartProduct.module.css';
 
 function CartProduct(props) {
     console.log(props)
@@ -8,18 +16,31 @@ function CartProduct(props) {
     const item = props.item;
     const quantity = props.quantity;
     const lang = props.lang;
+    const {t} = useTranslation();
     return (
         <>
-            <h3>{item.item.id_item} ID </h3>
-            {lang == 'en' ? <p>{item.item.item_name} Name </p> : <p>{item.item.polish_name} Name </p>}
-            <p>{quantity} total </p>
-            <p>{(item.item.price).toFixed(2)} unit price </p>
-            <p>{(item.item.price * quantity).toFixed(2)} total price </p>
-            <img src={item.item.photo} width="50" height="50"/>
-            <Button variant='contained' onClick={() => cart.deleteFromCart(item.item.id_item)}> Remove </Button>
-            <Button variant='contained' onClick={() => cart.AddOneToCart(item.item)}> + </Button>
-            <Button variant='contained' onClick={() => cart.removeOneFromCart(item.item.id_item)}> - </Button>
-            <hr></hr>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid  className={cartProductCss['item_container']} xs={3}>
+                        <img className={cartProductCss['img']} src={item.item.photo}/>
+                    </Grid>
+                    <Grid className={cartProductCss['item_container']} xs={2}>
+                        {item.item.item_name}
+                    </Grid>
+                    <Grid className={cartProductCss['item_container']} xs={3}>
+                    <Button className={cartProductCss['button']} variant="text" onClick={() => cart.removeOneFromCart(item.item.id_item)}> <IndeterminateCheckBoxOutlinedIcon/> </Button>
+                        {quantity}
+                        <Button className={cartProductCss['button']} variant="text" onClick={() => cart.AddOneToCart(item.item)}> <AddBoxOutlinedIcon/> </Button>
+                    </Grid>
+                    <Grid className={cartProductCss['item_container']} xs={3}>
+                    {t("price")} {(item.item.price * quantity).toFixed(2)}{t("price_end")}
+                    </Grid>
+                    <Grid className={cartProductCss['item_container']} xs={1}>
+                        <Button className={cartProductCss['button']} onClick={() => cart.deleteFromCart(item.item.id_item)}> <DeleteOutlineOutlinedIcon/> </Button>
+                    </Grid>
+                </Grid>
+                <hr></hr>
+            </Box>
         </>
     )
 }

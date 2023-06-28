@@ -252,21 +252,21 @@ export function Header({props}) {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Shopping Cart
+                <Typography id="modal-modal-title" variant="h6">
+                <p className={headerCss['cart_title']}>{t("shopping_cart")}</p>
                 </Typography>
                 <Typography>
                   {productCount > 0 ?
                   <>
-                    <p> Item in Your cart:</p>
+                    <hr></hr>
                     {cart.items.map((currentProduct) => (
                       <CartProduct key={Math.random()} item={currentProduct} quantity={currentProduct.quantity} lang={props.lang}> </CartProduct> 
                     ))}
-                      <p> Total: {cart.getTotalCost().toFixed(2)} </p>
-                      <Button variant='contained'> Purchase items! </Button>
+                      <p> {t("total")}: {cart.getTotalCost().toFixed(2)}{t("price_end")} </p>
+                      <Button className={headerCss['purchase_items_btn']} variant='contained'> Purchase items! </Button>
                     </>
                     :
-                    <p>The Cart is empty!</p>
+                    <p className={headerCss['cart_empty_message']}>{t("cart_empty")}</p>
                   }
                 </Typography>
 

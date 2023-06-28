@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import NotificationsSystem, {atalhoTheme, notify, useNotifications} from 'reapop';
 import {Grid, Box,Typography} from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -145,8 +145,8 @@ export function Home() {
                             <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
                             <hr className={homeCss['hr']}></hr>
                             <div className={homeCss['button-conatiner']}>
-                            <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>Add to cart</Button>
-                            <Button variant="contained" className={homeCss['add-to-wishlist']}>Add to wishlist</Button>
+                            {item.quantity > 0 ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={auth != null ? notify(t("login_correct_mess"), 'success') : () => cart.AddOneToCart(item) }>{t("add_to_cart")}</Button> : <></>}
+                            <Button variant="contained" className={homeCss['add-to-wishlist']}>{t("add_to_wishlist")}</Button>
                             </div>
                         </Grid>
                     ))}

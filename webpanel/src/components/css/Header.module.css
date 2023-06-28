@@ -123,6 +123,20 @@ nav {
     transform: translateX(-75%) translateY(8%);
 }
 
+.cart_empty_message{
+    font-size: 24px;
+    font-family: 'Lato';
+}
+
+.purchase_items_btn{
+    background-color: #283618 !important;
+    font-family: 'Lato';
+}
+
+.cart_title {
+    font-weight: bold;
+    font-family: 'Lato';
+}
 
 
 

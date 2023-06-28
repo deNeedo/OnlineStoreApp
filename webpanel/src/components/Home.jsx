@@ -26,7 +26,7 @@ export function Home() {
 
     useEffect(() => {
         if (location.state != null) {setLang(location.state.lang); setAuth(location.state.auth);}
-        else {setLang('en'); setAuth(false);}
+        else {setLang('en'); setAuth(null);}
     }, [])
     useEffect(() => {setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: searchData.order})}, [lang])
     useEffect(() => {getProducts(searchData)}, [searchData])

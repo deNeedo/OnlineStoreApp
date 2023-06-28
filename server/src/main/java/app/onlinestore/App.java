@@ -81,6 +81,51 @@ public class App
         catch (Exception e) {e.printStackTrace();}
         finally {server.stop();}
     }
+    public static String register(String data) throws Exception
+    {
+        System.out.println(data);
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] + "'");
+		ResultSet rs = stmt.executeQuery(); String message = "success";
+		while (rs.next()) {message = "error";}
+        if (message.contains("success"))
+        {
+            String hash = hash(data.split(" ")[1], data.split(" ")[2]);
+            stmt = conn.prepareStatement("insert into veggiestore.users (type, login, password, first_name, last_name, phone_number) values (?, ?, ?, ?, ?, ?)");
+            if (data.split(" ")[0].contains("admin")) {stmt.setString(1, "administrator");}
+            else if (data.split(" ")[0].contains("employee")) {stmt.setString(1, "employee");}
+            else if (data.split(" ")[0].contains("client")) {stmt.setString(1, "customer");}
+            stmt.setString(2, data.split(" ")[1]);
+            stmt.setString(3, hash); stmt.setString(4, data.split(" ")[3]);
+            stmt.setString(5, data.split(" ")[4]); stmt.setString(6, data.split(" ")[5]);
+            stmt.executeUpdate();
+        }
+        return message;
+    }
+    public static String login(String data) throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        String hash = hash(data.split(" ")[1], data.split(" ")[2]); ResultSet rs = null; String message = null;
+        if (data.split(" ")[0].contains("admin"))
+        {
+            rs = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'administrator'").executeQuery();
+            message = "scene1 error";
+            while (rs.next()) {message = "scene1 success";}
+        }
+        else if (data.split(" ")[0].contains("employee"))
+        {
+            rs = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'employee'").executeQuery();
+            message = "error";
+            while (rs.next()) {message = "success";}
+        }
+        else if (data.split(" ")[0].contains("client"))
+        {
+            rs = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] +"' and password like '" + hash + "' and type like 'customer'").executeQuery();
+            message = "error";
+            while (rs.next()) {message = "success";}
+        }
+        return message;
+    }
     public static String admin_login(String data) throws Exception
     {
 		Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
@@ -342,37 +387,37 @@ public class App
         
         else {return createJSON(stmt.executeQuery(), new JSONArray(), language).toJSONString();}
     }
-    public static String manage_session(String data) throws Exception
-    {
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
-        PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.sessions");
-        ResultSet rs = stmt.executeQuery(); int status = 0; Date date = new Date(); String login = data.split(" ")[2];
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String date_string = formatter.format(date);
-        while (rs.next())
-        {
-            if (rs.getString("login").contains(login))
-            {
-                if (data.contains("create"))
-                {
-                    stmt = conn.prepareStatement("update veggiestore.sessions set expire_time = ? where login like ?");
-                    stmt.setString(1, date_string); stmt.setString(2, login);
-                    stmt.executeQuery(); status = 1; break;
-                }
-                else if (data.contains("check")) {break;}
-            }
-        }
-        if (status == 0)
-        {
-            if (data.contains("create"))
-            {
-                stmt = conn.prepareStatement("insert into veggiestore.sessions (login, expire_time) values (?, ?)");
-                stmt.setString(1, login); stmt.setString(2, date_string);
-                stmt.executeQuery(); status = 1;
-            }
-            else if (data.contains("check")) {}
-        }
-        return null;
-    }
+    // public static String manage_session(String data) throws Exception
+    // {
+    //     Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+    //     PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.sessions");
+    //     ResultSet rs = stmt.executeQuery(); int status = 0; Date date = new Date(); String login = data.split(" ")[2];
+    //     Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String date_string = formatter.format(date);
+    //     while (rs.next())
+    //     {
+    //         if (rs.getString("login").contains(login))
+    //         {
+    //             if (data.contains("create"))
+    //             {
+    //                 stmt = conn.prepareStatement("update veggiestore.sessions set expire_time = ? where login like ?");
+    //                 stmt.setString(1, date_string); stmt.setString(2, login);
+    //                 stmt.executeQuery(); status = 1; break;
+    //             }
+    //             else if (data.contains("check")) {break;}
+    //         }
+    //     }
+    //     if (status == 0)
+    //     {
+    //         if (data.contains("create"))
+    //         {
+    //             stmt = conn.prepareStatement("insert into veggiestore.sessions (login, expire_time) values (?, ?)");
+    //             stmt.setString(1, login); stmt.setString(2, date_string);
+    //             stmt.executeQuery(); status = 1;
+    //         }
+    //         else if (data.contains("check")) {}
+    //     }
+    //     return null;
+    // }
     public static String client_login(String data) throws Exception
     {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);

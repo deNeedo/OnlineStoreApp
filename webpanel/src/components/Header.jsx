@@ -10,8 +10,6 @@ import Typography from '@mui/material/Typography';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { CartContext } from './CartContext';
-
-
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -19,8 +17,6 @@ import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
-
 import headerCss from './css/Header.module.css';
 import Logo from '../../img/page-icon.ico';
 import CartPNG from '../../img/icons8-cart-96.png';
@@ -38,19 +34,19 @@ export function Header({props}) {
     const location = useLocation();
 
     const loginRedirect = () => {
-        if (props.auth == true) {navigate('/', {state: {lang: props.lang, auth: false}}); notify(t("log_out_mess"), 'success');}
+        if (props.auth != null) {props.setAuth(null); notify(t("log_out_mess"), 'success');}
         else {navigate('/login', {state: {lang: props.lang, auth: props.auth}});setAnchorEl(null);}
     }
     const registerRedirect = () => {
-        if (props.auth == true) {notify(t("already_logged_in_mess"), 'info')}
+        if (props.auth != null) {notify(t("already_logged_in_mess"), 'info')}
         else {navigate('/register', {state: {lang: props.lang, auth: props.auth}});setAnchorEl(null);}
     }
     const employeeLoginRedirect = () => {
-        if (props.auth == true) {navigate('/', {state: {lang: props.lang, auth: false}}); notify(t("log_out_mess"), 'success');}
+        if (props.auth != null) {props.setAuth(null); notify(t("log_out_mess"), 'success');}
         else {navigate('/employee-login', {state: {lang: props.lang, auth: props.auth}});setAnchorEl(null);}
     }
     const employeeRegisterRedirect = () => {
-        if (props.auth == true) {notify(t("already_logged_in_mess"), 'info')}
+        if (props.auth != null) {notify(t("already_logged_in_mess"), 'info')}
         else {navigate('/employee-register', {state: {lang: props.lang, auth: props.auth}});setAnchorEl(null);}
     }
 

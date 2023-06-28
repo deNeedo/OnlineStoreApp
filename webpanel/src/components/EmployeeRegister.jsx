@@ -11,7 +11,7 @@ export function Register() {
     const { t } = useTranslation();
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-    const loginRedirect = () => {navigate('/login', {state: {lang: lang, auth: auth}})}
+    const loginRedirect = () => {navigate('/employee-login', {state: {lang: lang, auth: auth}})}
     const termsRedirect = () => {navigate('/terms', {state: {lang: lang, auth: auth}})}
     const [lang, setLang] = useState(location.state.lang);
     const [auth, setAuth] = useState(location.state.auth);
@@ -128,22 +128,17 @@ export function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let socket = new WebSocket('ws://localhost:80/veggiestore');
+        let socket = new WebSocket('ws://localhost:80/veggiestore'); let message;
         socket.onopen = function()
         {
-            let message = 'client-register-try '.concat(input.email).concat(' ').concat(input.pass).concat(' ').concat(input.name).concat(' ').concat(input.surname).concat(' ').concat(input.phone);
+            message = 'employee-register '.concat(input.email).concat(' ').concat(input.pass).concat(' ').concat(input.name).concat(' ').concat(input.surname).concat(' ').concat(input.phone);
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
         {
             if (event.data == 'error') {notify(t("email_in_use_mess"), 'error');}
-            else
-            {
-                notify(t("register_success_mess"), 'success');
-                navigate('/login', {state: {lang: lang, auth: auth}})
-            }
-            let message = 'connection-close-try';
-            socket.send(message, 0, message.length, 80, 'localhost');
+            else {notify(t("register_success_mess"), 'success'); loginRedirect();}
+            message = 'connection-close'; socket.send(message, 0, message.length, 80, 'localhost');
         };
     }
 

@@ -5,17 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-
 import org.glassfish.tyrus.server.Server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Properties;
-
 import java.io.FileInputStream;
 import java.security.MessageDigest;
 

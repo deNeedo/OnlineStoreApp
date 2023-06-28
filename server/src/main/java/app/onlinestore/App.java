@@ -371,8 +371,7 @@ public class App
     }
     public static String make_purchase(String data) throws Exception
     {
-        String temp = null; String[] info = data.split(" ");
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass); 
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass); String[] info = data.split(" ");
 		PreparedStatement stmt = conn.prepareStatement("insert into veggiestore.purchases (login, product_quantity, purchase_price, product_name, purchase_date, purchase_time) values (?, ?, ?, ?, ?, ?)");
         if (info.length > 6) {
             info[5] = info[5] + " " + info[6];

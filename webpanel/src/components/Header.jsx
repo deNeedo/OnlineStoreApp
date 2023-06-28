@@ -55,7 +55,21 @@ export function Header({props}) {
     const handleChange = (e) => {props.setLang(e.target.value);}
 
     const make_purchase = () => {
-      console.log("siemaneczko");
+      let socket = new WebSocket('ws://localhost:80/veggiestore'); let message;
+      socket.onopen = function()
+      {
+        for (let m = 0; m < cart.items.length; m++) {
+          message = 'make-purchase '.concat(props.lang).concat(' ').concat(props.auth).concat(' ').concat(cart.items[m].quantity).concat(' ').concat(cart.items[m].item.price * cart.items[m].quantity).concat(' ').concat(cart.items[m].item.item_name);
+          socket.send(message, 0, message.length, 80, 'localhost');
+        }
+        cart.items.map((currentProduct) => (cart.deleteFromCart(currentProduct.item.id_item)))
+      };
+      // socket.onmessage = function(event)
+      // {
+      //   if (event.data == 'success') {notify(t("login_correct_mess"), 'success'); navigate('/home', {state: {lang: lang, auth: input.email}})}
+      //   else if (event.data == 'error') {notify(t("email_pass_err_mess"), 'error');}
+      //   message = 'connection-close'; socket.send(message, 0, message.length, 80, 'localhost');
+      // };
     }
 
     

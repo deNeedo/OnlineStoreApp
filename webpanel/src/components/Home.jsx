@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button';
-import { CartContext } from '../CartContext';
+import { CartContext } from './CartContext';
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';

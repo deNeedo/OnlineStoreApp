@@ -16,7 +16,7 @@ import Terms from './components/Terms';
 import Home from './components/Home';
 import EmployeeLogin from './components/EmpoyeeLogin.jsx';
 import EmployeeRegister from './components/EmployeeRegister.jsx';
-import CartProvider from './CartContext.jsx';
+import CartProvider from './components/CartContext.jsx';
 
 setUpNotifications({
     defaultProps: {

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import Home from "./components/Home";
+import Home from "./Home";
 
 export const CartContext = createContext({
     items: [],
@@ -7,7 +7,7 @@ export const CartContext = createContext({
     AddOneToCart: () => {},
     removeOneFromCart: () => {},
     deleteFromCart: () => {},
-    getTotalCost: () => {}
+    //getTotalCost: () => {}
 });
 
 export function CartProvider({children}) {
@@ -73,16 +73,15 @@ export function CartProvider({children}) {
         )
     }
 
-    function getTotalCost() {
-        let totalCost = 0;
-        cartProducts.map((cartItem) => {
-            //const productData = items(cartItem.item_id);
-            const productData =cartItem.item_id;
-            totalCost += (productData.price * cartItem.quantity);
-            console.log(cartItem.price);
-        });
-        return totalCost;
-    }
+    // function getTotalCost() {
+    //     let totalCost = 0;
+    //     cartProducts.map((cartItem) => {
+    //         //const productData = items(cartItem.item_id);
+    //         const productData =cartItem.item_id;
+    //         totalCost += (productData.price * cartItem.quantity);
+    //     });
+    //     return totalCost;
+    // }
 
     const contextValue = {
         items: cartProducts, 
@@ -90,7 +89,7 @@ export function CartProvider({children}) {
         AddOneToCart,
         removeOneFromCart,
         deleteFromCart,
-        getTotalCost
+        //getTotalCost
     } 
 
     return (

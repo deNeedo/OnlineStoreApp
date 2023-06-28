@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { CartContext } from '../CartContext';
+import { CartContext } from './CartContext';
 
 
 import { styled, alpha } from '@mui/material/styles';
@@ -29,6 +29,7 @@ import USFlagPNG from '../../img/united-states.png';
 import PLFlagPNG from '../../img/poland.png';
 import ProfilePNG from '../../img/profile.png';
 import { useControlled } from '@mui/material';
+import CartProduct from './CartProduct';
 
 export function Header({props}) {
     const {t} = useTranslation();
@@ -127,7 +128,7 @@ export function Header({props}) {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '50%',
-          height: '75%',
+          // height: '75%',
           bgcolor: 'background.paper',
           border: '1px solid #ffffff',
           // boxShadow: 24,
@@ -263,10 +264,10 @@ export function Header({props}) {
                   <>
                     <p> Item in Your cart:</p>
                     {cart.items.map((currentProduct, idx) => (
-                      <p>{currentProduct.item_id}</p>
-
+                      //<p>{currentProduct.item_id}</p>
+                      <CartProduct key={idx} id={currentProduct.item_id} quantity={currentProduct.quantity}></CartProduct>
                     ))}
-                      <p>Total: {cart.getTotalCost().toFixed(2)}</p>
+                      {/* <p>Total: {cart.getTotalCost().toFixed(2)}</p> */}
 
                       <Button variant='contained'> Purchase items! </Button>
                     </>

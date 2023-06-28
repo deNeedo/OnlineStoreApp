@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.glassfish.tyrus.server.Server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -71,13 +73,12 @@ public class App
     public static void main(String[] args)
     {
         Server server = new Server("localhost", 80, "", AppServerEndpoint.class);
-        try {server.start(); while (true) {}} // for now to make the server run in infinite loop
+        try {server.start(); make_purchase("make_purchase pl e@v.app 7 3.50 Ogórek zielony"); while (true) {}}
         catch (Exception e) {e.printStackTrace();}
         finally {server.stop();}
     }
     public static String register(String data) throws Exception
     {
-        System.out.println(data);
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
 		PreparedStatement stmt = conn.prepareStatement("select * from veggiestore.users where login like '"+ data.split(" ")[1] + "'");
 		ResultSet rs = stmt.executeQuery(); String message = "success";
@@ -236,7 +237,6 @@ public class App
                             temp += (" " + data_arr[m]);
                         } m++;
                     } data_arr[3] = temp;
-                    System.out.println(Arrays.toString(data_arr));
                 }
                 if (data_arr[2].equals("user")) {
                     stmt = conn.prepareStatement("select * from veggiestore.users limit 1");
@@ -367,7 +367,26 @@ public class App
             results = makeUnique(results);
             return results.toJSONString();
         }
-        
         else {return createJSON(stmt.executeQuery(), new JSONArray(), language).toJSONString();}
+    }
+    public static String make_purchase(String data) throws Exception
+    {
+        String temp = null; String[] info = data.split(" ");
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass); 
+		PreparedStatement stmt = conn.prepareStatement("insert into veggiestore.purchases (login, product_quantity, purchase_price, product_name, purchase_date, purchase_time) values (?, ?, ?, ?, ?, ?)");
+        if (info.length > 6) {
+            info[5] = info[5] + " " + info[6];
+        }
+        for (int m = 2; m < info.length; m++) {
+            if (m == 3) {stmt.setInt(m - 1, Integer.parseInt(info[m]));}
+            else if (m == 4) {stmt.setDouble(m - 1, Double.parseDouble(info[m]));}
+            else {stmt.setString(m - 1, info[m]);}
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); LocalDateTime now = LocalDateTime.now();
+        stmt.setDate(5, java.sql.Date.valueOf(dtf.format(now).split(" ")[0]));
+        stmt.setTime(6, java.sql.Time.valueOf(dtf.format(now).split(" ")[1]));
+        stmt.executeUpdate();
+        System.out.println("Kupowańsko!");
+        return "gitgut";
     }
 }

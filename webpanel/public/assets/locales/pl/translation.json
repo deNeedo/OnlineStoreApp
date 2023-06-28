@@ -13,6 +13,8 @@
     "cart_empty": "Twój koszyk jest pusty. Dodaj produkty!",
     "add_to_wishlist": "Dodaj do listy",
     "add_to_cart": "Do koszyka",
+    "wishlist": "Lista życzeń",
+    "wishlist_empty": "Twoja lista jest pusta.",
 
     "login_hello": "Witaj,",
     "login_hello2": "Zaloguj się!",

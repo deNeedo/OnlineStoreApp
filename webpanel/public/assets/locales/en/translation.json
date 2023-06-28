@@ -13,6 +13,8 @@
     "cart_empty": "The cart is empty. Please add some products!",
     "add_to_wishlist": "Add to wishlist",
     "add_to_cart": "Add to cart",
+    "wishlist": "Wishlist",
+    "wishlist_empty": "Your wishlist is empty.",
 
     "login_hello": "Hello,",
     "login_hello_employee": "Hello Employee,",

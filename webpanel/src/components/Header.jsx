@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { CartContext } from './CartContext';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -24,8 +23,10 @@ import WishPNG from '../../img/icons8-list-64.png';
 import USFlagPNG from '../../img/united-states.png';
 import PLFlagPNG from '../../img/poland.png';
 import ProfilePNG from '../../img/profile.png';
-import { useControlled } from '@mui/material';
 import CartProduct from './CartProduct';
+import ListProduct from './ListProduct';
+import { ListContext } from './ListContext';
+import { CartContext } from './CartContext';
 
 export function Header({props}) {
     const {t} = useTranslation();
@@ -142,8 +143,10 @@ export function Header({props}) {
         const handleListClose = () => setListOpen(false);
 
         const cart = useContext(CartContext);
+        const list = useContext(ListContext);
 
         const productCount = cart.items.reduce((sum, product) => sum + product.quantity, 0);
+        const ListproductCount = list.items.reduce((sum, product) => sum + product.quantity, 0);
 
 
     return (
@@ -231,7 +234,7 @@ export function Header({props}) {
                 }
 
                     <img onClick={handleCartOpen} className={headerCss['icon']} src={CartPNG}/><span className={headerCss['product-counter']}>{productCount}</span>
-                    <img onClick={handleListOpen} className={headerCss['icon']} src={WishPNG}/>
+                    <img onClick={handleListOpen} className={headerCss['icon']} src={WishPNG}/><span className={headerCss['product-counter']}>{ListproductCount}</span>
                     <img onClick={homeRedirect} className={headerCss['icon']} src={ProfilePNG}/>
 
                     <FormControl className={headerCss['form-control']}>
@@ -286,8 +289,20 @@ export function Header({props}) {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Wishlist
+              <Typography id="modal-modal-title" variant="h6">
+                <p className={headerCss['cart_title']}>{t("wishlist")}</p>
+                </Typography>
+                <Typography>
+                  {ListproductCount > 0 ?
+                  <>
+                    <hr></hr>
+                    {list.items.map((currentProduct) => (
+                      <ListProduct key={Math.random()} item={currentProduct} quantity={currentProduct.quantity} lang={props.lang}> </ListProduct> 
+                    ))}
+                    </>
+                    :
+                    <p className={headerCss['cart_empty_message']}>{t("wishlist_empty")}</p>
+                  }
                 </Typography>
               </Box>
             </Modal>

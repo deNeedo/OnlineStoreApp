@@ -17,6 +17,7 @@ import Home from './components/Home';
 import EmployeeLogin from './components/EmpoyeeLogin.jsx';
 import EmployeeRegister from './components/EmployeeRegister.jsx';
 import CartProvider from './components/CartContext.jsx';
+import ListProvider from './components/ListContext.jsx';
 
 setUpNotifications({
     defaultProps: {
@@ -50,6 +51,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
     <CartProvider>
+    <ListProvider>
         <StrictMode>
             <NotificationsProvider>
                 <BrowserRouter>
@@ -66,5 +68,6 @@ root.render(
                 </BrowserRouter>
             </NotificationsProvider>
         </StrictMode>
+    </ListProvider>
     </CartProvider>
 );

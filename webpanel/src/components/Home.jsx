@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import { useTranslation } from 'react-i18next'
 import Button from '@mui/material/Button';
 import { CartContext } from './CartContext';
+import { ListContext } from './ListContext';
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';
@@ -64,6 +65,8 @@ export function Home() {
 
     const cart = useContext(CartContext);
     const productQuantity = cart.getProductQuantity(data.id_item);
+
+    const list = useContext(ListContext);
 
     return (
         <div className={homeCss['wrapper']}>
@@ -146,7 +149,7 @@ export function Home() {
                             <hr className={homeCss['hr']}></hr>
                             <div className={homeCss['button-conatiner']}>
                             {item.quantity > 0 && auth != null ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>{t("add_to_cart")}</Button> : <></>}
-                            {auth != null ? <Button variant="contained" className={homeCss['add-to-wishlist']}>{t("add_to_wishlist")}</Button> : <></>}
+                            {auth != null ? <Button variant="contained" className={homeCss['add-to-wishlist']} onClick={() => list.AddOneToCart(item)}>{t("add_to_wishlist")}</Button> : <></>}
                             </div>
                         </Grid>
                     ))}

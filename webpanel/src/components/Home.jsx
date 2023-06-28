@@ -146,7 +146,7 @@ export function Home() {
                             <hr className={homeCss['hr']}></hr>
                             <div className={homeCss['button-conatiner']}>
                             {item.quantity > 0 && auth != null ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>{t("add_to_cart")}</Button> : <></>}
-                            <Button variant="contained" className={homeCss['add-to-wishlist']}>{t("add_to_wishlist")}</Button>
+                            {auth != null ? <Button variant="contained" className={homeCss['add-to-wishlist']}>{t("add_to_wishlist")}</Button> : <></>}
                             </div>
                         </Grid>
                     ))}

@@ -75,6 +75,8 @@
 
     "login_button": "Zaloguj",
     "logout_button": "Wyloguj",
-    "register_button": "Zarejestruj"
+    "register_button": "Zarejestruj",
+    "feature_message": "Aby użyć tej funkcji, zaloguj się!",
+    "unit": "szt."
     
 }

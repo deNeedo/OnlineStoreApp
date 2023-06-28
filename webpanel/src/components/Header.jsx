@@ -114,7 +114,10 @@ export function Header({props}) {
         };
 
         const [openCartModal, setCartOpen] = React.useState(false);
-        const handleCartOpen = () => setCartOpen(true);
+        const handleCartOpen = () => {
+          if (props.auth != null) {setCartOpen(true);}
+          else {notify(t("feature_message"), 'info');}
+        }
         const handleCartClose = () => setCartOpen(false);
 
         // Shopping Cart Modal Styling //
@@ -132,7 +135,10 @@ export function Header({props}) {
         };
 
         const [openListModal, setListOpen] = React.useState(false);
-        const handleListOpen = () => setListOpen(true);
+        const handleListOpen = () => {
+          if (props.auth != null) {setListOpen(true);}
+          else {notify(t("feature_message"), 'info');}
+        }
         const handleListClose = () => setListOpen(false);
 
         const cart = useContext(CartContext);

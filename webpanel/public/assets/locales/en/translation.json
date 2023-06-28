@@ -75,6 +75,8 @@
 
     "login_button": "Log In",
     "logout_button": "Log Out",
-    "register_button": "Register"
+    "register_button": "Register",
+    "feature_message": "To use this feature, log in first!",
+    "unit": "unit"
 
 }

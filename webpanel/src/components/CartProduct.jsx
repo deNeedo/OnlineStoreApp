@@ -21,7 +21,7 @@ function CartProduct(props) {
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
-                    <Grid  className={cartProductCss['item_container']} xs={3}>
+                    <Grid  className={cartProductCss['item_container']} xs={2}>
                         <img className={cartProductCss['img']} src={item.item.photo}/>
                     </Grid>
                     {lang == 'en' ? <Grid className={cartProductCss['item_container']} xs={2}>
@@ -34,7 +34,10 @@ function CartProduct(props) {
                         {quantity}
                         <Button className={cartProductCss['button']} variant="text" onClick={() => cart.AddOneToCart(item.item)}> <AddBoxOutlinedIcon/> </Button>
                     </Grid>
-                    <Grid className={cartProductCss['item_container']} xs={3}>
+                    <Grid className={cartProductCss['item_container']} xs={2}>
+                    {(item.item.price).toFixed(2)}{t("price_end")}/{t("unit")}
+                    </Grid>
+                    <Grid className={cartProductCss['item_container']} xs={2}>
                     {t("price")} {(item.item.price * quantity).toFixed(2)}{t("price_end")}
                     </Grid>
                     <Grid className={cartProductCss['item_container']} xs={1}>

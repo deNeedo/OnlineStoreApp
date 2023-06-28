@@ -263,12 +263,10 @@ export function Header({props}) {
                   {productCount > 0 ?
                   <>
                     <p> Item in Your cart:</p>
-                    {cart.items.map((currentProduct, idx) => (
-                      //<p>{currentProduct.item_id}</p>
-                      <CartProduct key={idx} id={currentProduct.item_id} quantity={currentProduct.quantity}></CartProduct>
+                    {cart.items.map((currentProduct) => (
+                      <CartProduct key={Math.random()} item={currentProduct} quantity={currentProduct.quantity}> </CartProduct> 
                     ))}
-                      {/* <p>Total: {cart.getTotalCost().toFixed(2)}</p> */}
-
+                      <p> Total: {cart.getTotalCost().toFixed(2)} </p>
                       <Button variant='contained'> Purchase items! </Button>
                     </>
                     :

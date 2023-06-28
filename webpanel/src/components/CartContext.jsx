@@ -7,30 +7,30 @@ export const CartContext = createContext({
     AddOneToCart: () => {},
     removeOneFromCart: () => {},
     deleteFromCart: () => {},
-    //getTotalCost: () => {}
+    getTotalCost: () => {}
 });
 
 export function CartProvider({children}) {
     const [cartProducts, setCartProducts] =  useState([]);
 
-    function getProductQuantity(item_id){
-        const quantity = cartProducts.find(product => product.item_id === item_id)?.quantity;
-        
-        if(quantity === undefined){
+    function getProductQuantity(id_item) {
+        const quantity = cartProducts.find(product => product.item.id_item === id_item)?.quantity;
+        if (quantity === undefined) {
             return 0;
+        } else {
+            return quantity;
         }
-    return quantity;
     }
 
-    function AddOneToCart(item_id) {
-        const quantity = getProductQuantity(item_id);
-
-        if (quantity === 0) {
+    function AddOneToCart(item) {
+    
+        const quantity = getProductQuantity(item.id_item);
+        if (quantity == 0) {
             setCartProducts(
                 [
                     ...cartProducts,
                     {
-                        item_id: item_id,
+                        item: item,
                         quantity: 1
                     }
                 ]
@@ -39,7 +39,7 @@ export function CartProvider({children}) {
             setCartProducts(
                 cartProducts.map(
                 product => 
-                product.item_id === item_id
+                product.item.id_item === item.id_item 
                 ? { ...product, quantity: product.quantity + 1} 
                 : product 
                 )
@@ -47,16 +47,16 @@ export function CartProvider({children}) {
         }
     }
 
-    function removeOneFromCart(item_id) {
-        const quantity = getProductQuantity(item_id);
+    function removeOneFromCart(id_item) {
+        const quantity = getProductQuantity(id_item);
 
         if(quantity == 1){
-             deleteFromCart(item_id);
+             deleteFromCart(id_item);
         } else {
             setCartProducts(
                 cartProducts.map(
                     product => 
-                    product.item_id === item_id
+                    product.item.id_item === id_item
                     ? { ...product, quantity: product.quantity - 1} 
                     : product 
                     )
@@ -64,24 +64,24 @@ export function CartProvider({children}) {
         }
     }
 
-    function deleteFromCart(item_id) {
+    function deleteFromCart(id_item) {
         setCartProducts(
             cartProducts => 
-            cartProducts.filter(currnetProduct => {
-                return currnetProduct.item_id != item_id;
+            cartProducts.filter(currentProduct => {
+                return currentProduct.item.id_item != id_item;
             })
         )
     }
 
-    // function getTotalCost() {
-    //     let totalCost = 0;
-    //     cartProducts.map((cartItem) => {
-    //         //const productData = items(cartItem.item_id);
-    //         const productData =cartItem.item_id;
-    //         totalCost += (productData.price * cartItem.quantity);
-    //     });
-    //     return totalCost;
-    // }
+    function getTotalCost() {
+        let totalCost = 0;
+        cartProducts.map((cartItem) => {
+            // const productData = items(cartItem.id_item);
+            // const productData = cartItem.item.id_item;
+            totalCost += (cartItem.item.price * cartItem.quantity);
+        });
+        return totalCost;
+    }
 
     const contextValue = {
         items: cartProducts, 
@@ -89,7 +89,7 @@ export function CartProvider({children}) {
         AddOneToCart,
         removeOneFromCart,
         deleteFromCart,
-        //getTotalCost
+        getTotalCost
     } 
 
     return (

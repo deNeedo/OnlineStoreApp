@@ -145,7 +145,7 @@ export function Home() {
                             <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
                             <hr className={homeCss['hr']}></hr>
                             <div className={homeCss['button-conatiner']}>
-                            <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item.id_item)}>Add to cart</Button>
+                            <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>Add to cart</Button>
                             <Button variant="contained" className={homeCss['add-to-wishlist']}>Add to wishlist</Button>
                             </div>
                         </Grid>

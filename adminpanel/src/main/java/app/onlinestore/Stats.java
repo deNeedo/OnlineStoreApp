@@ -19,6 +19,7 @@ public class Stats
 {
     @FXML TextArea message_box;
     @FXML ComboBox<String> targetSelect;
+    @FXML TextArea statsArea;
 
     public Scene2 previous;
     public Session session;
@@ -57,5 +58,12 @@ public class Stats
                 TimeUnit.MILLISECONDS.sleep(1);
             } this.message_box.setText(this.message);
         }
+    }
+    public void get_stats(ActionEvent event) throws Exception
+    {
+        this.session.getBasicRemote().sendText("admin-query get-elements stat users" +  targetSelect.getValue());
+        while (this.message == null) {
+            TimeUnit.MILLISECONDS.sleep(1);
+        } this.statsArea.setText(this.message);
     }
 }

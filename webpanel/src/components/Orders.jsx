@@ -9,8 +9,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TermsCss from './css/Terms.module.css';
+import Button from '@mui/material/Button';
 import Header from './Header';
 import Footer from './Footer';
+
+import OrdersCss from './css/Orders.module.css';
 
 export function Orders() {
     const {notifications, dismissNotification, notify} = useNotifications();
@@ -36,33 +39,44 @@ export function Orders() {
         
         <div onLoad={get_orders} className={TermsCss['wrapper']}>
             <Header props={{setLang, lang, setAuth, auth}} />
-                <button onClick={get_orders}> REFRESH </button>
 
-        <TableContainer component={Paper}>
+        <TableContainer className={OrdersCss['table_container']} component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                 <TableRow>
-                    <TableCell>Email</TableCell>
-                    <TableCell align="right">Item</TableCell>
-                    <TableCell align="right">Quantity</TableCell>
-                    <TableCell align="right">Data</TableCell>
-                    <TableCell align="right">Time</TableCell>
-                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Date</TableCell>
+                    <TableCell align="center">Time</TableCell>
+                    <TableCell align="center">Product Name</TableCell>
+                    <TableCell align="center">Quantity</TableCell>
+                    <TableCell align="center">Total Price</TableCell>
+                    <TableCell align="center">Status</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {orders.map((order) => ( <TableRow>
-                <TableCell align="right">{order.split(" ")[0]}</TableCell>
-                <TableCell align="right">{order.split(" ")[1]}</TableCell>
-                <TableCell align="right">{order.split(" ")[2]}</TableCell>
-                <TableCell align="right">{order.split(" ")[3]}</TableCell>
-                <TableCell align="right">{order.split(" ")[4]}</TableCell>
-                <TableCell align="right">{order.split(" ")[5]}</TableCell>
-                </TableRow>
+                {orders.map((order) => ( order.split(" ").length > 6 ? <TableRow>
+                <TableCell align="center">{order.split(" ")[0]}</TableCell>
+                <TableCell align="center">{order.split(" ")[1]}</TableCell>
+                <TableCell align="center">{order.split(" ")[2]}</TableCell>
+                <TableCell align="center">{order.split(" ")[3] + " " + order.split(" ")[4]}</TableCell>
+                <TableCell align="center">{order.split(" ")[5]}</TableCell>
+                <TableCell align="center">{order.split(" ")[6]}</TableCell>
+                <TableCell align="center"><Button variant='contained' className={OrdersCss['btn']}>CONFIRM</Button></TableCell>
+                </TableRow> : <TableRow>
+                <TableCell align="center">{order.split(" ")[0]}</TableCell>
+                <TableCell align="center">{order.split(" ")[1]}</TableCell>
+                <TableCell align="center">{order.split(" ")[2]}</TableCell>
+                <TableCell align="center">{order.split(" ")[3]}</TableCell>
+                <TableCell align="center">{order.split(" ")[4]}</TableCell>
+                <TableCell align="center">{order.split(" ")[5]}</TableCell>
+                <TableCell align="center"><Button variant='contained' className={OrdersCss['btn']}>CONFIRM</Button></TableCell>
+                </TableRow> 
                 ))}
                 </TableBody>
             </Table>
             </TableContainer>
+
+            <Button className={OrdersCss['btn']} variant="contained" onClick={get_orders}> REFRESH </Button>
 
             <Footer/>
         </div>

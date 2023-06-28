@@ -153,90 +153,79 @@ export function Header({props}) {
                 <div className={headerCss['nav']}>
 
                 {
-                props.auth ?
-                <div className={headerCss['login-box']}>
-                <Button
-                    className={headerCss['dropdown-menu']}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    onClick={registerRedirect}
-                    endIcon={<KeyboardArrowDownIcon />}
-                >
-                  {t("register")}
-                </Button>
-                </div>
-                :
-                <div className={headerCss['register-box']}>
-                <Button
-                    className={headerCss['dropdown-menu']}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    onClick={handleClick}
-                    endIcon={<KeyboardArrowDownIcon />}
-                >
-                    {t("register")}
-                </Button>
-                <StyledMenu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={registerRedirect} disableRipple>
-                    <PersonIcon />
-                    {t("customer_register")}
-                    </MenuItem>
-                    <Divider sx={{ my: 0.5 }} />
-                    <MenuItem onClick={employeeRegisterRedirect} disableRipple>
-                    <ConstructionIcon />
-                    {t("employee_register")}
-                    </MenuItem>
-                </StyledMenu>
-                </div>
+                  props.auth ?
+                  <></>
+                  :
+                    <div className={headerCss['register-box']}>
+                      <Button
+                          className={headerCss['dropdown-menu']}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          variant="contained"
+                          onClick={handleClick}
+                          endIcon={<KeyboardArrowDownIcon />}
+                      >
+                          {t("register")}
+                      </Button>
+                      <StyledMenu
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                      >
+                          <MenuItem onClick={registerRedirect} disableRipple>
+                          <PersonIcon />
+                          {t("customer_register")}
+                          </MenuItem>
+                          <Divider sx={{ my: 0.5 }} />
+                          <MenuItem onClick={employeeRegisterRedirect} disableRipple>
+                          <ConstructionIcon />
+                          {t("employee_register")}
+                          </MenuItem>
+                      </StyledMenu>
+                    </div>
                 }
                 {
-                props.auth ?
-                <div className={headerCss['login-box']}>
-                <Button
-                    className={headerCss['dropdown-menu']}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    onClick={loginRedirect}
-                    endIcon={<KeyboardArrowDownIcon />}
-                >
-                  {t("logout")}
-                </Button>
-                </div>
-                :
-                <div className={headerCss['login-box']}>
-                <Button
-                    className={headerCss['dropdown-menu']}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    onClick={handleClick2}
-                    endIcon={<KeyboardArrowDownIcon />}
-                >
-                    {t("login")}
-                </Button>
-                <StyledMenu
-                    anchorEl={anchorEl2}
-                    open={open2}
-                    onClose={handleClose2}
-                >
-                    <MenuItem onClick={loginRedirect} disableRipple >
-                    <PersonIcon />
-                    {t("customer_account")}
-                    </MenuItem>
-                    <Divider sx={{ my: 0.5 }} />
-                    <MenuItem onClick={employeeLoginRedirect} disableRipple>
-                    <ConstructionIcon />
-                    {t("employee_account")}
-                    </MenuItem>
-                </StyledMenu>
-                </div>}
+                  props.auth ?
+                    <div className={headerCss['login-box']}>
+                      <Button
+                          className={headerCss['dropdown-menu']}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          variant="contained"
+                          onClick={loginRedirect}
+                      >
+                        {t("logout")}
+                      </Button>
+                    </div>
+                  :
+                    <div className={headerCss['login-box']}>
+                      <Button
+                          className={headerCss['dropdown-menu']}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          variant="contained"
+                          onClick={handleClick2}
+                          endIcon={<KeyboardArrowDownIcon />}
+                      >
+                          {t("login")}
+                      </Button>
+                      <StyledMenu
+                          anchorEl={anchorEl2}
+                          open={open2}
+                          onClose={handleClose2}
+                      >
+                          <MenuItem onClick={loginRedirect} disableRipple >
+                          <PersonIcon />
+                          {t("customer_account")}
+                          </MenuItem>
+                          <Divider sx={{ my: 0.5 }} />
+                          <MenuItem onClick={employeeLoginRedirect} disableRipple>
+                          <ConstructionIcon />
+                          {t("employee_account")}
+                          </MenuItem>
+                      </StyledMenu>
+                    </div>
+                }
 
                     <img onClick={handleCartOpen} className={headerCss['icon']} src={CartPNG}/><span className={headerCss['product-counter']}>{productCount}</span>
                     <img onClick={handleListOpen} className={headerCss['icon']} src={WishPNG}/>

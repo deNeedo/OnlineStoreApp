@@ -13,7 +13,6 @@ import homeCss from './css/Home.module.css';
 function ListProduct(props) {
 
     const cart = useContext(CartContext);
-    //const productQuantity = cart.getProductQuantity(data.id_item);  
 
     const list = useContext(ListContext);
     const item = props.item;

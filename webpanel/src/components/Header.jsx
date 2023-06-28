@@ -51,6 +51,11 @@ export function Header({props}) {
         else {navigate('/employee-register', {state: {lang: props.lang, auth: props.auth}});setAnchorEl(null);}
     }
 
+    const OrdersRedirect = () => {
+      if (props.auth != null) {navigate('/orders', {state: {lang: props.lang, auth: props.auth}})}
+      else {notify(t("feature_message"), 'info');}
+    }
+
     const homeRedirect = () => {navigate('/home', {state: {lang: props.lang, auth: props.auth}})}
     const handleChange = (e) => {props.setLang(e.target.value);}
 
@@ -235,7 +240,7 @@ export function Header({props}) {
 
                     <img onClick={handleCartOpen} className={headerCss['icon']} src={CartPNG}/><span className={headerCss['product-counter']}>{productCount}</span>
                     <img onClick={handleListOpen} className={headerCss['icon']} src={WishPNG}/><span className={headerCss['product-counter']}>{ListproductCount}</span>
-                    <img onClick={homeRedirect} className={headerCss['icon']} src={ProfilePNG}/>
+                    <img onClick={OrdersRedirect} className={headerCss['icon']} src={ProfilePNG}/>
 
                     <FormControl className={headerCss['form-control']}>
                         <Select className={headerCss['select']} 

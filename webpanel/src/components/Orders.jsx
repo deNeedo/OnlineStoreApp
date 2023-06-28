@@ -18,19 +18,6 @@ export function Orders() {
     const [lang, setLang] = useState(location.state.lang);
     const [auth, setAuth] = useState(location.state.auth);
     const [orders, setOrders] = useState([]);
-    const order_arr = [];
-
-    function createData(email, item, quantity, data, time, price) {
-        return { email, item, quantity, data, time, price };
-      }
-      
-    //   const rows = [
-    //     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    //     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    //     createData('Eclair', 262, 16.0, 24, 6.0),
-    //     createData('Cupcake', 305, 3.7, 67, 4.3),
-    //     createData('Gingerbread', 356, 16.0, 49, 3.9),
-    //   ];
 
     const get_orders = () => {
         let socket = new WebSocket('ws://localhost:80/veggiestore'); let message;
@@ -40,7 +27,9 @@ export function Orders() {
         }
         socket.onmessage = function(event) {
             let arr = event.data.split("\n")
-            setOrders(arr); socket.close();
+            setOrders(arr);
+            console.log(event.data)
+            socket.close();
         };
     }
     return (
@@ -48,7 +37,6 @@ export function Orders() {
         <div onLoad={get_orders} className={TermsCss['wrapper']}>
             <Header props={{setLang, lang, setAuth, auth}} />
                 <button onClick={get_orders}> REFRESH </button>
-                {/* {orders.map((order) => (order))} */}
 
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -72,20 +60,6 @@ export function Orders() {
                 <TableCell align="right">{order.split(" ")[5]}</TableCell>
                 </TableRow>
                 ))}
-                {/* {rows.map((row) => (
-                    <TableRow
-                    key={row.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                    <TableCell component="th" scope="row">
-                        {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                    </TableRow>
-                ))} */}
                 </TableBody>
             </Table>
             </TableContainer>

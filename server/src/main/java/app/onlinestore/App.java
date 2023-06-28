@@ -397,8 +397,10 @@ public class App
         }
         while (rs.next()) {
             for (int m = 1; m < rsmd.getColumnCount(); m++) {
-                result += rs.getString(m + 1) + " ";
+                if (m == rsmd.getColumnCount() - 1) {result += rs.getString(m + 1);}
+                else {result += rs.getString(m + 1) + " ";}
             }
+            result += "\n";
         }
         System.out.println(result);
         return result;

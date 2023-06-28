@@ -76,8 +76,6 @@ export function CartProvider({children}) {
     function getTotalCost() {
         let totalCost = 0;
         cartProducts.map((cartItem) => {
-            // const productData = items(cartItem.id_item);
-            // const productData = cartItem.item.id_item;
             totalCost += (cartItem.item.price * cartItem.quantity);
         });
         return totalCost;

@@ -3,15 +3,18 @@ import { CartContext } from "./CartContext";
 import { useContext } from "react";
 
 function CartProduct(props) {
+    console.log(props)
     const cart = useContext(CartContext);
     const item = props.item;
     const quantity = props.quantity;
+    const lang = props.lang;
     return (
         <>
             <h3>{item.item.id_item} ID </h3>
-            <p>{item.item.item_name} Name </p>
+            {lang == 'en' ? <p>{item.item.item_name} Name </p> : <p>{item.item.polish_name} Name </p>}
             <p>{quantity} total </p>
-            <p>{(item.item.price * quantity).toFixed(2)} price </p>
+            <p>{(item.item.price).toFixed(2)} unit price </p>
+            <p>{(item.item.price * quantity).toFixed(2)} total price </p>
             <img src={item.item.photo} width="50" height="50"/>
             <Button variant='contained' onClick={() => cart.deleteFromCart(item.item.id_item)}> Remove </Button>
             <Button variant='contained' onClick={() => cart.AddOneToCart(item.item)}> + </Button>

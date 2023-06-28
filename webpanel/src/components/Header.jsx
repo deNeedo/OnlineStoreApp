@@ -260,7 +260,7 @@ export function Header({props}) {
                   <>
                     <p> Item in Your cart:</p>
                     {cart.items.map((currentProduct) => (
-                      <CartProduct key={Math.random()} item={currentProduct} quantity={currentProduct.quantity}> </CartProduct> 
+                      <CartProduct key={Math.random()} item={currentProduct} quantity={currentProduct.quantity} lang={props.lang}> </CartProduct> 
                     ))}
                       <p> Total: {cart.getTotalCost().toFixed(2)} </p>
                       <Button variant='contained'> Purchase items! </Button>

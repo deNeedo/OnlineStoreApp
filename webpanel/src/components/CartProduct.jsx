@@ -34,7 +34,7 @@ function CartProduct(props) {
                         <Button className={cartProductCss['button']} variant="text" onClick={() => cart.AddOneToCart(item.item)}> <AddBoxOutlinedIcon/> </Button>
                     </Grid>
                     <Grid className={cartProductCss['item_container']} xs={2}>
-                    {(item.item.price).toFixed(2)}{t("price_end")}/{t("unit")}
+                    {(item.item.price)}{t("price_end")}/{t("unit")}
                     </Grid>
                     <Grid className={cartProductCss['item_container']} xs={2}>
                     {t("price")} {(item.item.price * quantity).toFixed(2)}{t("price_end")}

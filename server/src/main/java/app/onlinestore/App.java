@@ -330,7 +330,7 @@ public class App
             if (query[1].contains("en")) {sql_query[sql_query.length - 1] = "order by item_name";}
             if (query[1].contains("pl")) {sql_query[sql_query.length - 1] = "order by polish_name";}
         }
-        if (query[4].contains("price")) {sql_query[sql_query.length - 1] = "order by price";}
+        else if (query[4].contains("price")) {sql_query[sql_query.length - 1] = "order by price";}
         String string_sql_query = "select * from veggiestore.items ";
         for (int m = 0; m < sql_query.length; m++)
         {
@@ -385,7 +385,20 @@ public class App
         stmt.setDate(5, java.sql.Date.valueOf(dtf.format(now).split(" ")[0]));
         stmt.setTime(6, java.sql.Time.valueOf(dtf.format(now).split(" ")[1]));
         stmt.executeUpdate();
-        return "gitgut";
+        return "success";
+    }
+    public static String get_stats(String data) throws Exception
+    {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", App.postgrespass);
+        ResultSet rs = conn.prepareStatement("select login, sum(purchase_price) from veggiestore.purchases where login like '" + data.split(" ")[1] + "' group by login").executeQuery();
+        String result = "stats Total_price: "; while (rs.next()) {result += rs.getString(2);} rs.close();
+        rs = conn.prepareStatement("select product_name, sum(product_quantity) from veggiestore.purchases where login like '" + data.split(" ")[1] + "' group by product_name").executeQuery();
+        result += "\nProducts_bought: "; while (rs.next()) {result += rs.getString(1) + ":" + rs.getString(2) + " ";} rs.close();
+        rs = conn.prepareStatement("select sum(purchase_price) from veggiestore.purchases").executeQuery();
+        result += "\nTotal_store_price: "; while (rs.next()) {result += rs.getString(1);} rs.close();
+        rs = conn.prepareStatement("select product_name, sum(product_quantity) as count from veggiestore.purchases group by product_name order by count desc").executeQuery();
+        result += "\nProduct_popularity: "; while (rs.next()) {result += rs.getString(1) + " ";} rs.close();
+        return result;
     }
     public static String get_orders() throws Exception
     {

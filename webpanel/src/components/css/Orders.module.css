@@ -10,11 +10,11 @@
 
 .table_container {
     margin-top: 3%;
-    height: auto;
+    height: 70vh;
 }
 
 .footer{
-    position: absolute;
+    position: absolute !important;
     bottom: 0;
 }
 

@@ -13,7 +13,6 @@ import Button from '@mui/material/Button';
 import Header from './Header';
 import Footer from './Footer';
 import { Typography } from '@mui/material';
-
 import OrdersCss from './css/Orders.module.css';
 
 export function Orders() {
@@ -41,7 +40,7 @@ export function Orders() {
         <div onLoad={get_orders} className={TermsCss['wrapper']}>
             <Header props={{setLang, lang, setAuth, auth}} />
 
-            <Typography variant='h5' className={OrdersCss['title']}>Orders</Typography>
+            <Typography variant='h5' className={OrdersCss['title']}>ORDERS</Typography>
 
             <TableContainer className={OrdersCss['table_container']} component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

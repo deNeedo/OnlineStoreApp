@@ -11,12 +11,9 @@ import cartProductCss from './css/CartProduct.module.css';
 import homeCss from './css/Home.module.css';
 
 function ListProduct(props) {
-
     const cart = useContext(CartContext);
-
     const list = useContext(ListContext);
-    const item = props.item;
-    const lang = props.lang;
+    const item = props.item; const lang = props.lang;
     const {t} = useTranslation();
     return (
         <>
@@ -34,7 +31,7 @@ function ListProduct(props) {
                     {(item.item.price).toFixed(2)}{t("price_end")}/{t("unit")}
                     </Grid>
                     <Grid className={cartProductCss['item_container']} xs={3}>
-                    {item.quantity > 0 ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>{t("add_to_cart")}</Button> : <></>}
+                    {item.item.quantity > 0 ? item.quantity > 0 ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item.item)}>{t("add_to_cart")}</Button> : <></> : <p className={homeCss['unavailable']}>{t('unavailable')}</p>}
                     </Grid>
                     <Grid className={cartProductCss['item_container']} xs={2}>
                         <Button className={cartProductCss['button']} onClick={() => list.deleteFromCart(item.item.id_item)}> <DeleteOutlineOutlinedIcon/> </Button>

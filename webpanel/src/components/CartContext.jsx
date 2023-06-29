@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Home from "./Home";
 
 export const CartContext = createContext({
@@ -12,6 +12,7 @@ export const CartContext = createContext({
 
 export function CartProvider({children}) {
     const [cartProducts, setCartProducts] =  useState([]);
+    useEffect(() => {console.log(cartProducts)}, [cartProducts])
 
     function getProductQuantity(id_item) {
         const quantity = cartProducts.find(product => product.item.id_item === id_item)?.quantity;
@@ -23,7 +24,6 @@ export function CartProvider({children}) {
     }
 
     function AddOneToCart(item) {
-    
         const quantity = getProductQuantity(item.id_item);
         if (quantity == 0) {
             setCartProducts(

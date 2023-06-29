@@ -79,6 +79,7 @@
     "logout_button": "Wyloguj",
     "register_button": "Zarejestruj",
     "feature_message": "Aby użyć tej funkcji, zaloguj się!",
-    "unit": "szt."
+    "unit": "szt.",
+    "item_already_wishlist": "Przedmiot jest już na liście!"
     
 }

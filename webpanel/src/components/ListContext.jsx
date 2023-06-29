@@ -4,9 +4,7 @@ export const ListContext = createContext({
     items: [],
     getProductQuantity: () => {},
     AddOneToCart: () => {},
-    removeOneFromCart: () => {},
-    deleteFromCart: () => {},
-    getTotalCost: () => {}
+    deleteFromCart: () => {}
 });
 
 export function ListProvider({children}) {
@@ -22,7 +20,6 @@ export function ListProvider({children}) {
     }
 
     function AddOneToCart(item) {
-    
         const quantity = getProductQuantity(item.id_item);
         if (quantity == 0) {
             setCartProducts(
@@ -34,35 +31,8 @@ export function ListProvider({children}) {
                     }
                 ]
             )
-        } else {
-            setCartProducts(
-                cartProducts.map(
-                product => 
-                product.item.id_item === item.id_item 
-                ? { ...product, quantity: product.quantity + 1} 
-                : product 
-                )
-            )
         }
     }
-
-    function removeOneFromCart(id_item) {
-        const quantity = getProductQuantity(id_item);
-
-        if(quantity == 1){
-             deleteFromCart(id_item);
-        } else {
-            setCartProducts(
-                cartProducts.map(
-                    product => 
-                    product.item.id_item === id_item
-                    ? { ...product, quantity: product.quantity - 1} 
-                    : product 
-                    )
-            )
-        }
-    }
-
     function deleteFromCart(id_item) {
         setCartProducts(
             cartProducts => 
@@ -71,22 +41,11 @@ export function ListProvider({children}) {
             })
         )
     }
-
-    function getTotalCost() {
-        let totalCost = 0;
-        cartProducts.map((cartItem) => {
-            totalCost += (cartItem.item.price * cartItem.quantity);
-        });
-        return totalCost;
-    }
-
     const contextValue = {
         items: cartProducts, 
         getProductQuantity,
         AddOneToCart,
-        removeOneFromCart,
-        deleteFromCart,
-        getTotalCost
+        deleteFromCart
     } 
 
     return (

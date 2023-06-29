@@ -49,21 +49,19 @@ public class Stats
             options.add(data[m]);
         } this.targetSelect.setItems(options);
     }
-    public void get_info(ActionEvent event) throws Exception
-    {
+    public void get_info(ActionEvent event) throws Exception {
         if (this.targetSelect.getValue() != null) {
             this.session = this.previous.getSession(); this.message = null;
             this.session.getBasicRemote().sendText("admin-query get-info stats user " + targetSelect.getValue());
             while (this.message == null) {
                 TimeUnit.MILLISECONDS.sleep(1);
             } this.message_box.setText(this.message);
-        }
+        } this.get_stats();
     }
-    public void get_stats(ActionEvent event) throws Exception
-    {
+    public void get_stats() throws Exception {
         if (this.targetSelect.getValue() != null) {
             this.session = this.previous.getSession(); this.message = null;
-            this.session.getBasicRemote().sendText("admin-query get-info stats user " + targetSelect.getValue());
+            this.session.getBasicRemote().sendText("get-stats " + targetSelect.getValue());
             while (this.message == null) {
                 TimeUnit.MILLISECONDS.sleep(1);
             } this.statsArea.setText(this.message);

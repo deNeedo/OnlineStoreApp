@@ -1,9 +1,25 @@
-.btn{
+.confirm_btn{
     background-color: #283618 !important;
-    margin: 2%;
+    margin: 10%;
+}
 
+.refresh_btn{
+    background-color: #283618 !important;
+    margin: 2% !important;
 }
 
 .table_container {
     margin-top: 3%;
+    height: auto;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+}
+
+.title {
+    font-family: 'Lato';
+    font-weight: bold;
+    margin-top: 2% !important;
 }

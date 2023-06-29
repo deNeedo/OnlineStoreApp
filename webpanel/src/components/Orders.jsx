@@ -12,6 +12,7 @@ import TermsCss from './css/Terms.module.css';
 import Button from '@mui/material/Button';
 import Header from './Header';
 import Footer from './Footer';
+import { Typography } from '@mui/material';
 
 import OrdersCss from './css/Orders.module.css';
 
@@ -40,45 +41,50 @@ export function Orders() {
         <div onLoad={get_orders} className={TermsCss['wrapper']}>
             <Header props={{setLang, lang, setAuth, auth}} />
 
-        <TableContainer className={OrdersCss['table_container']} component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                <TableRow>
-                    <TableCell align="center">Email</TableCell>
-                    <TableCell align="center">Date</TableCell>
-                    <TableCell align="center">Time</TableCell>
-                    <TableCell align="center">Product Name</TableCell>
-                    <TableCell align="center">Quantity</TableCell>
-                    <TableCell align="center">Total Price</TableCell>
-                    <TableCell align="center">Status</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {orders.map((order) => ( order.split(" ").length > 6 ? <TableRow>
-                <TableCell align="center">{order.split(" ")[0]}</TableCell>
-                <TableCell align="center">{order.split(" ")[1]}</TableCell>
-                <TableCell align="center">{order.split(" ")[2]}</TableCell>
-                <TableCell align="center">{order.split(" ")[3] + " " + order.split(" ")[4]}</TableCell>
-                <TableCell align="center">{order.split(" ")[5]}</TableCell>
-                <TableCell align="center">{order.split(" ")[6]}</TableCell>
-                <TableCell align="center"><Button variant='contained' className={OrdersCss['btn']}>CONFIRM</Button></TableCell>
-                </TableRow> : <TableRow>
-                <TableCell align="center">{order.split(" ")[0]}</TableCell>
-                <TableCell align="center">{order.split(" ")[1]}</TableCell>
-                <TableCell align="center">{order.split(" ")[2]}</TableCell>
-                <TableCell align="center">{order.split(" ")[3]}</TableCell>
-                <TableCell align="center">{order.split(" ")[4]}</TableCell>
-                <TableCell align="center">{order.split(" ")[5]}</TableCell>
-                <TableCell align="center"><Button variant='contained' className={OrdersCss['btn']}>CONFIRM</Button></TableCell>
-                </TableRow> 
-                ))}
-                </TableBody>
-            </Table>
+            <Typography variant='h5' className={OrdersCss['title']}>Orders</Typography>
+
+            <TableContainer className={OrdersCss['table_container']} component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                    <TableRow>
+                        <TableCell align="center">Email</TableCell>
+                        <TableCell align="center">Date</TableCell>
+                        <TableCell align="center">Time</TableCell>
+                        <TableCell align="center">Product Name</TableCell>
+                        <TableCell align="center">Quantity</TableCell>
+                        <TableCell align="center">Total Price</TableCell>
+                        <TableCell align="center">Status</TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {orders.map((order) => ( order.split(" ").length > 6 ? 
+                    <TableRow>
+                        <TableCell align="center">{order.split(" ")[0]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[1]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[2]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[3] + " " + order.split(" ")[4]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[5]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[6]}</TableCell>
+                        <TableCell align="center"><Button variant='contained' className={OrdersCss['confirm_btn']}>CONFIRM</Button></TableCell>
+                    </TableRow> 
+                    : 
+                    <TableRow>
+                        <TableCell align="center">{order.split(" ")[0]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[1]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[2]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[3]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[4]}</TableCell>
+                        <TableCell align="center">{order.split(" ")[5]}</TableCell>
+                        <TableCell align="center"><Button variant='contained' className={OrdersCss['confirm_btn']}>CONFIRM</Button></TableCell>
+                    </TableRow> 
+                    ))}
+                    </TableBody>
+                </Table>
             </TableContainer>
 
-            <Button className={OrdersCss['btn']} variant="contained" onClick={get_orders}> REFRESH </Button>
+            <Button className={OrdersCss['refresh_btn']} variant="contained" onClick={get_orders}> REFRESH </Button>
 
-            <Footer/>
+            <Footer className={OrdersCss['footer']}/>
         </div>
     )
 };

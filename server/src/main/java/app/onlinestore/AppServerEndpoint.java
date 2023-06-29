@@ -24,6 +24,7 @@ public class AppServerEndpoint
         else if (message.contains("get-products")) {return App.get_products(message);}
         else if (message.contains("make-purchase")) {return App.make_purchase(message);}
         else if (message.contains("get-orders")) {return App.get_orders();}
+        else if (message.contains("get-stats")) {return App.get_stats(message);}
         else {session.close(new CloseReason(CloseCodes.NORMAL_CLOSURE, "")); return null;}
     }
 }

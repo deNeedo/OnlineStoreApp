@@ -195,8 +195,9 @@ public class App
                     data_types[m - 1] = rsmd.getColumnType(m);
                 } stmt = conn.prepareStatement("update veggiestore.items set item_name = (?), type = (?), price = (?), quantity = (?), input_date = (?), photo = (?), polish_name = (?) where item_name = (?)");
             } stmt.setString(rsmd.getColumnCount(), data_arr[3]);
-            String[] update_data = data_arr[4].split("\n");
+            String[] update_data = data_arr[4].split("\n"); String login = null;
             for (int m = 1; m < update_data.length; m++) {
+
                 temp = update_data[m].split(":")[1];
                 if (data_types[m] == 2) {
                     try {stmt.setDouble(m, Double.parseDouble(temp));}
@@ -209,7 +210,11 @@ public class App
                 else if (data_types[m] == 12) {
                     try {
                         if (temp.equals("null")) {stmt.setString(m, null);}
-                        else {stmt.setString(m, temp);}
+                        else {
+                            if (update_data[m].split(":")[0].equals("login")) {login = temp;}
+                            if (update_data[m].split(":")[0].equals("password")) {temp = hash(login, temp);}
+                            stmt.setString(m, temp);
+                        }
                     } catch (Exception e) {result = "terminal -1"; flag = false; break;}
                 }
                 else if (data_types[m] == 91) {

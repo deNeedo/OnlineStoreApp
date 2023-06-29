@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import NotificationsSystem, {atalhoTheme, useNotifications} from 'reapop';
+import NotificationsSystem, {atalhoTheme, notify, useNotifications} from 'reapop';
 import {Grid, Box,Typography} from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useTranslation } from 'react-i18next'
+import Button from '@mui/material/Button';
+import { CartContext } from './CartContext';
+import { ListContext } from './ListContext';
 
 import homeCss from './css/Home.module.css';
 import Header from './Header';
@@ -14,17 +17,17 @@ import Footer from './Footer';
 
 export function Home() {
     const {t} = useTranslation();
-    const {notifications, dismissNotification} = useNotifications();
+    const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-    // const [authenticated, setAuthenticated] = useState(false);
+    const [auth, setAuth] = useState();
     const [data, setData] = useState([]);
     const [lang, setLang] = useState('');
     const [error, setError] = useState('');
     const [searchData, setSearchData] = useState({lang: lang, type: 'all', pattern: '', price: '0', order: 'alpha'});
 
     useEffect(() => {
-        if (location.state != null) {setLang(location.state.lang)}
-        else {setLang('en')}
+        if (location.state != null) {setLang(location.state.lang); setAuth(location.state.auth);}
+        else {setLang('en'); setAuth(null);}
     }, [])
     useEffect(() => {setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: searchData.order})}, [lang])
     useEffect(() => {getProducts(searchData)}, [searchData])
@@ -32,19 +35,15 @@ export function Home() {
     const handleInputChange = (e) => {
         setSearchData({lang: lang, type: searchData.type, pattern: e.target.value, price: searchData.price, order: searchData.order})
     }
-
     const handleSelectChange = (e) => {
         setSearchData({lang: lang, type: e.target.value, pattern: searchData.pattern, price: searchData.price, order: searchData.order})
     }
-
     const handleSelect2Change = (e) => {
         setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: e.target.value, order: searchData.order})
     }
-
     const handleSelect3Change = (e) => {
         setSearchData({lang: lang, type: searchData.type, pattern: searchData.pattern, price: searchData.price, order: e.target.value})
     }
-
     const getProducts = (e) => {
         let socket = new WebSocket('ws://localhost:80/veggiestore');
         socket.onopen = function()
@@ -59,9 +58,15 @@ export function Home() {
             setData(JSON.parse(event.data)); socket.close();
         };
     }
+
+    const cart = useContext(CartContext);
+    const productQuantity = cart.getProductQuantity(data.id_item);
+
+    const list = useContext(ListContext);
+
     return (
         <div className={homeCss['wrapper']}>
-            <Header props={{setLang, lang}} />
+            <Header props={{setLang, lang, setAuth, auth}} />
             <div className={homeCss['content-box']}>
                 <div className={homeCss['search-box']}>
                     <input 
@@ -127,6 +132,7 @@ export function Home() {
 
                 </div>
                 <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
+                
                 <Grid container className={error ? homeCss['hide-products-container'] : homeCss['products-container']}  sx={{display: 'grid', gap: 3, gridTemplateColumns: 'repeat(3, 1fr)'}}>
                     {data.map((item) => (
                         <Grid item key={item.id_item} className={homeCss['product-box']}>
@@ -136,6 +142,11 @@ export function Home() {
                             <hr className={homeCss['hr']}></hr>
                             <Typography className={homeCss['product-price']} variant='subtitle1'> {t("price")} {item.price}{t("price_end")} </Typography>
                             <Typography className={homeCss['product-quantity']} variant='subtitle1'> {t("quantity")} {item.quantity > 0 ? item.quantity : <span className={homeCss['unavailable']}>{t("unavailable")}</span>} </Typography>
+                            <hr className={homeCss['hr']}></hr>
+                            <div className={homeCss['button-conatiner']}>
+                            {item.quantity > 0 && auth != null ? <Button variant="contained" className={homeCss['add-to-cart']} onClick={() => cart.AddOneToCart(item)}>{t("add_to_cart")}</Button> : <></>}
+                            {auth != null ? <Button variant="contained" className={homeCss['add-to-wishlist']} onClick={() => list.AddOneToCart(item)}>{t("add_to_wishlist")}</Button> : <></>}
+                            </div>
                         </Grid>
                     ))}
                 </Grid>

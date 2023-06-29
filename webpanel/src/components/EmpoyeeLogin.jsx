@@ -18,7 +18,7 @@ export function Login() {
     const [lang, setLang] = useState(location.state.lang);
     const [auth, setAuth] = useState(location.state.auth);
 
-    const registerRedirect = () => {navigate('/register', {state: {lang: lang, auth: auth}})}
+    const registerRedirect = () => {navigate('/employee-register', {state: {lang: lang, auth: auth}})}
     const forgotPassRedirect = () => {navigate('/password-reset', {state: {lang: lang, auth: auth}})}
 
     const onInputChange = e => {
@@ -56,12 +56,12 @@ export function Login() {
         let socket = new WebSocket('ws://localhost:80/veggiestore'); let message;
         socket.onopen = function()
         {
-            message = 'client-login '.concat(input.email).concat(' ').concat(input.pass);
+            message = 'employee-login '.concat(input.email).concat(' ').concat(input.pass);
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
         {
-            if (event.data == 'success') {notify(t("login_correct_mess"), 'success'); navigate('/home', {state: {lang: lang, auth: input.email}})}
+            if (event.data == 'success') {notify(t("login_correct_mess"), 'success'); navigate('/home', {state: {lang: lang, auth: input.email}});}
             else if (event.data == 'error') {notify(t("email_pass_err_mess"), 'error');}
             message = 'connection-close'; socket.send(message, 0, message.length, 80, 'localhost');
         };
@@ -74,7 +74,7 @@ export function Login() {
             <div className={loginCss['content-box']}>
                 <div className={loginCss['auth-form-container']}>
                     <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
-                    <div className={loginCss['welcome-mess-box']}><span className={loginCss['welcome-mess']}> {t("login_hello")} </span><span className='wave'>👋</span><span className={loginCss['welcome-mess']}> {t("login_hello2")}</span></div>
+                    <div className={loginCss['welcome-mess-box']}><span className={loginCss['welcome-mess']}> {t("login_hello_employee")} </span><span className='wave'>👋</span><span className={loginCss['welcome-mess']}> {t("login_hello2")}</span></div>
                     <form className={loginCss['login-form']} onSubmit={handleSubmit}>
                         <input 
                                 type='email'

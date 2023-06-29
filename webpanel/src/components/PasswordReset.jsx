@@ -12,15 +12,14 @@ export function PasswordReset() {
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
     const [lang, setLang] = useState(location.state.lang);
+    const [auth, setAuth] = useState(location.state.auth);
 
     return ( 
         <div className={passCss['wrapper']}>
-            <Header props={{setLang, lang}} />
-            
+            <Header props={{setLang, lang, setAuth, auth}} />
             <div className={passCss['content-box']}>
                 <p className={passCss['message']}> Reset password site </p>
             </div>
-
             <Footer/>
         </div>
     );

@@ -11,7 +11,7 @@ export function Register() {
     const { t } = useTranslation();
     const {notifications, dismissNotification, notify} = useNotifications();
     const navigate = useNavigate(); const location = useLocation();
-    const loginRedirect = () => {navigate('/login', {state: {lang: lang, auth: auth}})}
+    const loginRedirect = () => {navigate('/employee-login', {state: {lang: lang, auth: auth}})}
     const termsRedirect = () => {navigate('/terms', {state: {lang: lang, auth: auth}})}
     const [lang, setLang] = useState(location.state.lang);
     const [auth, setAuth] = useState(location.state.auth);
@@ -131,7 +131,7 @@ export function Register() {
         let socket = new WebSocket('ws://localhost:80/veggiestore'); let message;
         socket.onopen = function()
         {
-            message = 'client-register '.concat(input.email).concat(' ').concat(input.pass).concat(' ').concat(input.name).concat(' ').concat(input.surname).concat(' ').concat(input.phone);
+            message = 'employee-register '.concat(input.email).concat(' ').concat(input.pass).concat(' ').concat(input.name).concat(' ').concat(input.surname).concat(' ').concat(input.phone);
             socket.send(message, 0, message.length, 80, 'localhost');
         };
         socket.onmessage = function(event)
@@ -153,7 +153,7 @@ export function Register() {
                     <NotificationsSystem notifications={notifications} dismissNotification={(id) => dismissNotification(id)} theme={atalhoTheme}/>
 
                     <div className={registerCss['welcome-mess-box']}>
-                        <span className={registerCss['welcome-mess']}> {t("register_welcome")} </span><span className='wave'>👋</span><span className={registerCss['welcome-mess']}> {t("register_welcome2")}</span>
+                        <span className={registerCss['welcome-mess']}> {t("register_welcome_employee")} </span><span className='wave'>👋</span><span className={registerCss['welcome-mess']}> {t("register_welcome2")}</span>
                     </div>
                         
                     <form className={registerCss['register-form']} onSubmit={handleSubmit}>

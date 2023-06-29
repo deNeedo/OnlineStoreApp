@@ -1,11 +1,24 @@
 {
     "site_name": "Warzywniak",
     "login": "Zaloguj się",
+    "logout": "Wyloguj się",
     "register": "Zarejestruj się",
     "home": "Strona główna",
+    "customer_register": "Rejestracja Klienta",
+    "employee_register": "Rejestracja Pracownika",
+    "customer_account": "Logowanie Klienta",
+    "employee_account": "Logowanie Pracownika",
+    "shopping_cart": "Koszyk",
+    "total": "Razem",
+    "cart_empty": "Twój koszyk jest pusty. Dodaj produkty!",
+    "add_to_wishlist": "Dodaj do listy",
+    "add_to_cart": "Do koszyka",
+    "wishlist": "Lista życzeń",
+    "wishlist_empty": "Twoja lista jest pusta.",
 
     "login_hello": "Witaj,",
     "login_hello2": "Zaloguj się!",
+    "login_hello_employee": "Witaj Pracowniku,",
     "login_btn": "Zaloguj się",
     "forgot_pass": "Zapomniałeś hasła? Kliknij tu aby zresetować!",
     "no_acc": "Nie masz konta? Zarejestruj się tu!",
@@ -13,6 +26,7 @@
 
     "register_welcome" : "Witaj,",
     "register_welcome2" : "Zarejestruj się!",
+    "register_welcome_employee": "Witaj Pracowniku,",
     "name_placeholder": "Imię",
     "surname_placeholder": "Nazwisko",
     "phone_placeholder": "Nr telefonu",
@@ -44,6 +58,7 @@
     "register_success_mess" : "Rejestracja powiodła się!",
     "email_in_use_mess": "Email już zarejestrowany. Zaloguj się!",
     "log_out_mess": "Zostałeś wylogowany!",
+    "already_logged_in_mess": "Aby się zarejestrować, najpierw wyloguj się.",
 
     "name_err":  "Proszę podaj imię.",
     "surname_err": "Proszę podaj nazwisko.",
@@ -61,6 +76,10 @@
     "contact_info": "Kontant: ",
 
     "login_button": "Zaloguj",
-    "register_button": "Zarejestruj"
+    "logout_button": "Wyloguj",
+    "register_button": "Zarejestruj",
+    "feature_message": "Aby użyć tej funkcji, zaloguj się!",
+    "unit": "szt.",
+    "item_already_wishlist": "Przedmiot jest już na liście!"
     
 }

@@ -1,5 +1,5 @@
 DROP TABLE veggiestore.items;
-DROP TABLE veggiestore.sessions;
+DROP TABLE veggiestore.purchases;
 DROP TABLE veggiestore.users;
 DROP SCHEMA veggiestore;
 
@@ -71,20 +71,24 @@ ALTER SEQUENCE veggiestore.items_id_item_seq OWNED BY veggiestore.items.id_item;
 -- Name: sessions; Type: TABLE; Schema: veggiestore; Owner: postgres
 --
 
-CREATE TABLE veggiestore.sessions (
-    id_session integer NOT NULL,
+CREATE TABLE veggiestore.purchases (
+    id_purchase integer NOT NULL,
     login character varying(50),
-    expire_time character varying(20)
+    purchase_date date,
+    purchase_time time,
+    product_name character varying(50),
+    product_quantity integer,
+    purchase_price numeric(10,2)
 );
 
 
-ALTER TABLE veggiestore.sessions OWNER TO postgres;
+ALTER TABLE veggiestore.purchases OWNER TO postgres;
 
 --
 -- Name: sessions_id_session_seq; Type: SEQUENCE; Schema: veggiestore; Owner: postgres
 --
 
-CREATE SEQUENCE veggiestore.sessions_id_session_seq
+CREATE SEQUENCE veggiestore.purchases_id_purchase_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -93,13 +97,13 @@ CREATE SEQUENCE veggiestore.sessions_id_session_seq
     CACHE 1;
 
 
-ALTER TABLE veggiestore.sessions_id_session_seq OWNER TO postgres;
+ALTER TABLE veggiestore.purchases_id_purchase_seq OWNER TO postgres;
 
 --
 -- Name: sessions_id_session_seq; Type: SEQUENCE OWNED BY; Schema: veggiestore; Owner: postgres
 --
 
-ALTER SEQUENCE veggiestore.sessions_id_session_seq OWNED BY veggiestore.sessions.id_session;
+ALTER SEQUENCE veggiestore.purchases_id_purchase_seq OWNED BY veggiestore.purchases.id_purchase;
 
 
 --
@@ -153,7 +157,7 @@ ALTER TABLE ONLY veggiestore.items ALTER COLUMN id_item SET DEFAULT nextval('veg
 -- Name: sessions id_session; Type: DEFAULT; Schema: veggiestore; Owner: postgres
 --
 
-ALTER TABLE ONLY veggiestore.sessions ALTER COLUMN id_session SET DEFAULT nextval('veggiestore.sessions_id_session_seq'::regclass);
+ALTER TABLE ONLY veggiestore.purchases ALTER COLUMN id_purchase SET DEFAULT nextval('veggiestore.purchases_id_purchase_seq'::regclass);
 
 
 --
@@ -229,7 +233,7 @@ COPY veggiestore.items (id_item, item_name, type, price, quantity, input_date, p
 -- Data for Name: sessions; Type: TABLE DATA; Schema: veggiestore; Owner: postgres
 --
 
-COPY veggiestore.sessions (id_session, login, expire_time) FROM stdin;
+COPY veggiestore.purchases (id_purchase, login, purchase_date, purchase_time, product_name, product_quantity, purchase_price) FROM stdin;
 \.
 
 
@@ -253,7 +257,7 @@ SELECT pg_catalog.setval('veggiestore.items_id_item_seq', 54, true);
 -- Name: sessions_id_session_seq; Type: SEQUENCE SET; Schema: veggiestore; Owner: postgres
 --
 
-SELECT pg_catalog.setval('veggiestore.sessions_id_session_seq', 1, false);
+SELECT pg_catalog.setval('veggiestore.purchases_id_purchase_seq', 1, false);
 
 
 --
@@ -275,8 +279,8 @@ ALTER TABLE ONLY veggiestore.items
 -- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: veggiestore; Owner: postgres
 --
 
-ALTER TABLE ONLY veggiestore.sessions
-    ADD CONSTRAINT sessions_pkey PRIMARY KEY (id_session);
+ALTER TABLE ONLY veggiestore.purchases
+    ADD CONSTRAINT purchases_pkey PRIMARY KEY (id_purchase);
 
 
 --

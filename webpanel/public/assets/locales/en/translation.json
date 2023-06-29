@@ -1,10 +1,23 @@
 {
     "site_name": "Veggie store",
     "login": "Log in",
+    "logout": "Log Out",
     "register": "Register",
     "home": "Home",
+    "customer_register": "Customer Register",
+    "employee_register": "Employee Register",
+    "customer_account": "Customer Account",
+    "employee_account": "Employee Account",
+    "shopping_cart": "Shopping Cart",
+    "total": "Total",
+    "cart_empty": "The cart is empty. Please add some products!",
+    "add_to_wishlist": "Add to wishlist",
+    "add_to_cart": "Add to cart",
+    "wishlist": "Wishlist",
+    "wishlist_empty": "Your wishlist is empty.",
 
     "login_hello": "Hello,",
+    "login_hello_employee": "Hello Employee,",
     "login_hello2": "Please log in!",
     "login_btn": "Log In",
     "forgot_pass": "Forgot password? Click here to reset!",
@@ -13,6 +26,7 @@
 
     "register_welcome": "Welcome,",
     "register_welcome2": "Please register!",
+    "register_welcome_employee": "Hello Employee,",
     "name_placeholder": "Name",
     "surname_placeholder": "Surname",
     "phone_placeholder": "Phone",
@@ -44,6 +58,7 @@
     "register_success_mess" : "Registration successful!",
     "email_in_use_mess": "Email already in use. Please Login!",
     "log_out_mess": "Logout successful!",
+    "already_logged_in_mess": "To register, log out first.",
 
     "name_err":  "Please enter name.",
     "surname_err": "Please enter surname.",
@@ -61,6 +76,10 @@
     "contact_info": "Contact: ",
 
     "login_button": "Log In",
-    "register_button": "Register"
+    "logout_button": "Log Out",
+    "register_button": "Register",
+    "feature_message": "To use this feature, log in first!",
+    "unit": "unit",
+    "item_already_wishlist": "Item already on the wishlist!"
 
 }

@@ -14,6 +14,11 @@ import Register from "./components/Register";
 import PasswordReset from './components/PasswordReset';
 import Terms from './components/Terms';
 import Home from './components/Home';
+import EmployeeLogin from './components/EmpoyeeLogin.jsx';
+import EmployeeRegister from './components/EmployeeRegister.jsx';
+import CartProvider from './components/CartContext.jsx';
+import ListProvider from './components/ListContext.jsx';
+import Orders from './components/Orders.jsx';
 
 setUpNotifications({
     defaultProps: {
@@ -46,18 +51,25 @@ i18next
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-    <StrictMode>
-        <NotificationsProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Navigate to="/home"/>}/>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/password-reset" element={<PasswordReset/>} />
-                    <Route path="/terms" element={<Terms/>} />
-                    <Route path="/home" element={<Home/>} />
-                </Routes>
-            </BrowserRouter>
-        </NotificationsProvider>
-    </StrictMode>
+    <CartProvider>
+    <ListProvider>
+        <StrictMode>
+            <NotificationsProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/home"/>}/>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/password-reset" element={<PasswordReset/>} />
+                        <Route path="/terms" element={<Terms/>} />
+                        <Route path="/home" element={<Home/>} />
+                        <Route path="/employee-login" element={<EmployeeLogin/>} />
+                        <Route path="/employee-register" element={<EmployeeRegister/>} />
+                        <Route path="/orders" element={<Orders/>} />
+                    </Routes>
+                </BrowserRouter>
+            </NotificationsProvider>
+        </StrictMode>
+    </ListProvider>
+    </CartProvider>
 );
